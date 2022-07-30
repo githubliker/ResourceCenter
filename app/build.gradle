@@ -48,4 +48,5 @@ dependencies {
     implementation 'com.lxj:statelayout:1.1.1'
     implementation 'io.github.youth5201314:banner:2.2.2'
     implementation project(':labelpanel')
+    implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.1'
 }

@@ -48,12 +48,13 @@
             android:configChanges="orientation|screenSize"></activity>
         <activity android:name=".ui.shiyan.DoTaskActivity"
             android:screenOrientation="landscape">
-
         </activity>
         <activity android:name=".ui.usrManager.UsrManagerActivity"></activity>
         <activity android:name=".ui.device.GongQuManagerActivity"
             android:configChanges="orientation|screenSize">
-
+        </activity>
+        <activity android:name=".ui.device.GongQuDetailActivity"
+            android:configChanges="orientation|screenSize">
         </activity>
     </application>
 

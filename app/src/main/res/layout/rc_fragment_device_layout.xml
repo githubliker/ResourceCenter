@@ -4,21 +4,14 @@
     android:layout_height="match_parent"
     android:background="@color/usercenterbg">
 
-    <LinearLayout
-        android:id="@+id/container"
+
+    <include
+        layout="@layout/rcbase_title"/>
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_centerInParent="true">
-
-     <include
-         layout="@layout/rcbase_title"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:id="@+id/recyclerView"/>
-    </LinearLayout>
-
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:id="@+id/recyclerView"/>
 </RelativeLayout>

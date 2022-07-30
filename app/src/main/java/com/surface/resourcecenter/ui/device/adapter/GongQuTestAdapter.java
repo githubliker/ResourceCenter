@@ -6,27 +6,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
-import com.surface.resourcecenter.ui.home.adapter.bean.HomeItem;
 
-import java.io.IOException;
 import java.util.List;
 
-public class GongQuAdapter extends RecyclerView.Adapter<GongQuAdapter.ViewHolder> {
+public class GongQuTestAdapter extends RecyclerView.Adapter<GongQuTestAdapter.ViewHolder> {
 
     private List<String> mItemList;
     private RecyclerView mRootRecycler;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView itemName;
+        TextView itemDevice;
         Button del,edit;
         public ViewHolder(View view) {
             super(view);
+            itemDevice = (TextView) view.findViewById(R.id.item_device);
             itemName = (TextView) view.findViewById(R.id.item_name);
             del = (Button) view.findViewById(R.id.btnDelete);
             edit = (Button) view.findViewById(R.id.btnEdit);
@@ -34,14 +33,13 @@ public class GongQuAdapter extends RecyclerView.Adapter<GongQuAdapter.ViewHolder
 
     }
 
-    public GongQuAdapter(List<String> fruitList) {
+    public GongQuTestAdapter(List<String> fruitList) {
         mItemList = fruitList;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rc_fragment_device_gongqu_item, parent, false);
-        mRootRecycler = (RecyclerView) parent;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rc_fragment_device_gongqu_test_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
 
         return holder;
@@ -50,7 +48,10 @@ public class GongQuAdapter extends RecyclerView.Adapter<GongQuAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        (holder.itemName).setOnClickListener(new View.OnClickListener() {
+        String fruit = mItemList.get(position);
+        holder.itemName.setText(fruit);
+
+        (holder.itemDevice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(listener != null){
@@ -77,8 +78,6 @@ public class GongQuAdapter extends RecyclerView.Adapter<GongQuAdapter.ViewHolder
                 }
             }
         });
-        String fruit = mItemList.get(position);
-        holder.itemName.setText(fruit);
     }
 
     @Override

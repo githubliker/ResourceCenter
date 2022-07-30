@@ -28,11 +28,32 @@
     </string-array>
 
     <string-array name="device_gongqu">
-        <item >角钢塔工区</item>
-        <item >变压器工区</item>
-        <item >工频耐压工位</item>
-        <item >开关柜工位</item>
-        <item >线缆工位</item>
-        <item >材料工位</item>
+        <item >局放检测工位</item>
+        <item >变压器温升试验工区</item>
+        <item >变压器综合检测工位</item>
+        <item >雷电冲击试验工位</item>
+        <item >低压表箱检测工位</item>
+        <item >大电流温升试验工位</item>
+        <item >高压开关检测工位</item>
+        <item >线缆检测工位</item>
+    </string-array>
+
+    <string-array name="device_test1">
+        <item >主回路电阻测试</item>
+        <item >机械操作</item>
+        <item >机械特性</item>
+        <item >电气联锁试验</item>
+        <item >开关温升试验</item>
+    </string-array>
+
+    <string-array name="gongqu_person">
+        <item >张三</item>
+        <item >李四</item>
+        <item >王五</item>
+        <item >张思德</item>
+        <item >王圣迪</item>
+        <item >卢克田</item>
+        <item >周大福</item>
+        <item >郝庄</item>
     </string-array>
 </resources>

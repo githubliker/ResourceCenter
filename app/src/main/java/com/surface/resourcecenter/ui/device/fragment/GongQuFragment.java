@@ -5,12 +5,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.Consts;
 import com.surface.resourcecenter.ui.BaseFragment;
+import com.surface.resourcecenter.ui.device.GongQuDetailActivity;
 import com.surface.resourcecenter.ui.device.adapter.GongQuAdapter;
 import com.surface.resourcecenter.ui.home.adapter.HomePageToDoTaskAdapter;
 import com.surface.resourcecenter.ui.home.adapter.bean.TaskItem;
@@ -35,10 +37,21 @@ public class GongQuFragment extends BaseFragment implements View.OnClickListener
     View.OnClickListener mItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            SampleRecvActivity.launch(getContext());
+            GongQuDetailActivity.launch(getContext());
         }
     };
 
+    GongQuAdapter.onSwipeListener onSwipeListener = new GongQuAdapter.onSwipeListener() {
+        @Override
+        public void onDel(int pos) {
+
+        }
+
+        @Override
+        public void onEdit(int pos) {
+
+        }
+    };
 
     void initHomeData(){
         String[] gongQu = getResources().getStringArray(R.array.device_gongqu);
@@ -63,12 +76,13 @@ public class GongQuFragment extends BaseFragment implements View.OnClickListener
         mRecyclerView = view.findViewById(R.id.recyclerView);
         initHomeData();
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),5);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         mRecyclerView.setLayoutManager(layoutManager);
         GongQuAdapter adapter = new GongQuAdapter(itemList);
         mRecyclerView.setAdapter(adapter);
         adapter.setOnClickListener(mItemClickListener);
+        adapter.setOnSwipeListener(onSwipeListener);
         initTitle(view);
     }
 
