@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login">
+
+    <TextView
+        android:id="@+id/login_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="204dp"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:text="莆田物资检测中心\n数据管理系统"/>
+
+    <RelativeLayout
+        android:id="@+id/login_all_num"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="150dp"
+        android:layout_below="@+id/login_logo">
+
+        <ImageView
+            android:id="@+id/login_num_logo"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/phone_number"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/login_num"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="24dp"
+            android:background="@null"
+            android:hint="请输入已绑定的手机号"
+            android:inputType="text"
+            android:textColorHint="#888888"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/login_num_logo"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#d8d8d8"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="150dp"
+        android:layout_below="@+id/login_all_num"/>
+
+    <RelativeLayout
+        android:id="@+id/login_all_password"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="150dp"
+        android:layout_below="@+id/login_all_num">
+
+        <ImageView
+            android:id="@+id/login_password_logo"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/password"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="24dp"
+            android:layout_toLeftOf="@+id/login_is_look"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:textColorHint="#888888"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/login_password_logo"/>
+
+        <ImageView
+            android:id="@+id/login_is_look"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/login_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#d8d8d8"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="150dp"
+        android:layout_below="@+id/login_all_password"/>
+
+    <Button
+        android:id="@+id/login_commit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/login_line"
+        android:layout_marginTop="52dp"
+        android:layout_marginRight="150dp"
+        android:layout_marginLeft="150dp"
+        android:textColor="@color/app_main_color"
+        android:textSize="16sp"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@drawable/login_commit_shape"
+        android:text="登录"/>
+
+    <TextView
+        android:id="@+id/login_forget_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_commit"
+        android:layout_marginTop="18dp"
+        android:text="忘记密码"
+        android:textColor="#888888"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:visibility="gone"/>
+</RelativeLayout>

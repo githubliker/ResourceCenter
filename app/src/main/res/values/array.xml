@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="shenheren">
+        <item >张三</item>
+        <item >李四</item>
+        <item >王五</item>
+        <item >赵柳</item>
+    </string-array>
+
+    <string-array name="jiaozhunren">
+        <item >张三丰</item>
+        <item >李四光</item>
+        <item >王五四</item>
+        <item >朱重八</item>
+    </string-array>
+
+    <string-array name="wuliumoshi">
+        <item >人工模式</item>
+        <item >机械模式</item>
+    </string-array>
+    <string-array name="diaodumoshi">
+        <item >人工模式</item>
+        <item >机械模式</item>
+    </string-array>
+    <string-array name="test_result">
+        <item >合格</item>
+        <item >不合格</item>
+    </string-array>
+
+    <string-array name="device_gongqu">
+        <item >角钢塔工区</item>
+        <item >变压器工区</item>
+        <item >工频耐压工位</item>
+        <item >开关柜工位</item>
+        <item >线缆工位</item>
+        <item >材料工位</item>
+    </string-array>
+</resources>

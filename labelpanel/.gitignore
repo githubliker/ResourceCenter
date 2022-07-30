@@ -1,0 +1,17 @@
+.DS_Store
+/captures
+/.externalNativeBuild/
+/.idea/
+/.gradle/
+/build/
+local.properties
+/gradlew
+/gradlew.bat
+*.iml
+
+.gradle
+/local.properties
+/build
+.idea
+*.apk #optional
+/src/test/java/com/android/hcpd/ExampleUnitTest.java

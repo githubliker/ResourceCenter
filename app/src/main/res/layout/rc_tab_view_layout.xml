@@ -1,0 +1,88 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#ECECEC"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
+
+        <LinearLayout
+            android:id="@+id/tabHomeLayout"
+            style="@style/TabView_LinearLayout">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/tabImgHome"
+                    style="@style/TabView_Lottie"
+                    android:src="@drawable/fecore_home_tab_selector"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tabTvHome"
+                style="@style/TabView_Text"
+                android:text="首页"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabSecondLayout"
+            style="@style/TabView_LinearLayout"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/tabImgSecond"
+                    style="@style/TabView_Lottie"
+                    android:src="@drawable/fecore_middle_tab_selector"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tabTvSecond"
+                style="@style/TabView_Text"
+                android:text="任务"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabMineLayout"
+            style="@style/TabView_LinearLayout">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/tabImgMine"
+                    style="@style/TabView_Lottie"
+                    android:src="@drawable/fecore_mine_tab_selector"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tabTvMine"
+                style="@style/TabView_Text"
+                android:text="我的"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

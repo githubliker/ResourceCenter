@@ -1,0 +1,3 @@
+include ':labelpanel'
+include ':app'
+rootProject.name = "ResourceCenter"
