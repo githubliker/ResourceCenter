@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.ui.BaseFragment;
+import com.surface.resourcecenter.ui.chart.ChartManagerActivity;
 import com.surface.resourcecenter.ui.device.DeviceManagerActivity;
 import com.surface.resourcecenter.ui.device.GongQuManagerActivity;
 import com.surface.resourcecenter.ui.dispatch.DispatchTaskActivity;
@@ -45,6 +46,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 DoTaskActivity.launch(getContext());
             } else if(tag.equals("报告管理")){
 
+            } else if(tag.equals("数据分析")){
+                ChartManagerActivity.launch(getContext());
             } else if(tag.equals("仪器管理")){
                 DeviceManagerActivity.launch(getContext());
             } else if(tag.equals("工区管理")){
