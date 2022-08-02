@@ -56,4 +56,12 @@
         <item >周大福</item>
         <item >郝庄</item>
     </string-array>
+
+    <string-array name="device_detail">
+        <item >局部放电巡检仪</item>
+        <item >回路电阻测试仪</item>
+        <item >介质损耗测试仪</item>
+        <item >直阻测试仪</item>
+        <item >雷电冲击测试仪</item>
+    </string-array>
 </resources>

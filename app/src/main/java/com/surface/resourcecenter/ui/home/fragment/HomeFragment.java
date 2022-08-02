@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.ui.BaseFragment;
+import com.surface.resourcecenter.ui.device.DeviceManagerActivity;
 import com.surface.resourcecenter.ui.device.GongQuManagerActivity;
 import com.surface.resourcecenter.ui.dispatch.DispatchTaskActivity;
 import com.surface.resourcecenter.ui.home.adapter.HomePageTaskAdapter;
@@ -44,8 +45,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 DoTaskActivity.launch(getContext());
             } else if(tag.equals("报告管理")){
 
-            } else if(tag.equals("资产管理")){
-
+            } else if(tag.equals("仪器管理")){
+                DeviceManagerActivity.launch(getContext());
             } else if(tag.equals("工区管理")){
                 GongQuManagerActivity.launch(getContext());
             } else if(tag.equals("用户管理")){
@@ -61,7 +62,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         itemList.add(new HomeItem("试验管理",R.mipmap.icon_test_manager));
         itemList.add(new HomeItem("报告管理",R.mipmap.icon_report_manager));
         itemList.add(new HomeItem("数据分析",R.mipmap.icon_data_manager));
-        itemList.add(new HomeItem("资产管理",R.mipmap.icon_money_manager));
+        itemList.add(new HomeItem("仪器管理",R.mipmap.icon_money_manager));
         itemList.add(new HomeItem("工区管理",R.mipmap.icon_device_manager));
         itemList.add(new HomeItem("用户管理",R.mipmap.icon_usr_manager));
     }

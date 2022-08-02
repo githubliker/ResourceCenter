@@ -60,7 +60,7 @@ public class GongQuTestFragment extends BaseFragment implements View.OnClickList
     };
 
     private void initAllDeviceList(){
-        String[] gongQu = getResources().getStringArray(R.array.device_test1);
+        String[] gongQu = getResources().getStringArray(R.array.device_detail);
         new XPopup.Builder(getContext())
                 .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
                 .asBottomList("请选择所需要的的试验仪器", gongQu, null, 3, new OnSelectListener() {
