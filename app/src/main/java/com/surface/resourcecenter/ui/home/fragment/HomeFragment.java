@@ -17,6 +17,7 @@ import com.surface.resourcecenter.ui.dispatch.DispatchTaskActivity;
 import com.surface.resourcecenter.ui.home.adapter.HomePageTaskAdapter;
 import com.surface.resourcecenter.ui.home.adapter.bean.DataBean;
 import com.surface.resourcecenter.ui.home.adapter.bean.HomeItem;
+import com.surface.resourcecenter.ui.sample.SampleListActivity;
 import com.surface.resourcecenter.ui.sample.SampleRecvActivity;
 import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
 import com.surface.resourcecenter.ui.usrManager.UsrManagerActivity;
@@ -41,7 +42,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             if(tag.equals("收样")){
                 SampleRecvActivity.launch(getContext());
             } else if(tag.equals("样品管理")){
-                DispatchTaskActivity.launch(getContext());
+                SampleListActivity.launch(getContext());
             } else if(tag.equals("试验管理")){
                 DoTaskActivity.launch(getContext());
             } else if(tag.equals("报告管理")){

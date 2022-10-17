@@ -82,6 +82,18 @@ public class GridImageAdapter extends
         return list == null ? new ArrayList<>() : list;
     }
 
+    public void setImageStatus(int position,String path){
+       list.get(position).setOriginal(true);
+        list.get(position).setChecked(false);
+       list.get(position).setOriginalPath(path);
+       notifyItemChanged(position);
+    }
+    public void setImageStatusError(int position){
+        list.get(position).setOriginal(true);
+        list.get(position).setChecked(true);
+        notifyItemChanged(position);
+    }
+
     public void remove(int position) {
         if (list != null && position < list.size()) {
             list.remove(position);
@@ -92,12 +104,14 @@ public class GridImageAdapter extends
 
         ImageView mImg;
         ImageView mIvDel;
+        ImageView mIvStatus;
         TextView tvDuration;
 
         public ViewHolder(View view) {
             super(view);
             mImg = view.findViewById(R.id.fiv);
             mIvDel = view.findViewById(R.id.iv_del);
+            mIvStatus = view.findViewById(R.id.iv_status);
             tvDuration = view.findViewById(R.id.tv_duration);
         }
     }
@@ -146,7 +160,9 @@ public class GridImageAdapter extends
             viewHolder.mImg.setImageResource(R.mipmap.ic_add_image);
             viewHolder.mImg.setOnClickListener(v -> mOnAddPicClickListener.onAddPicClick());
             viewHolder.mIvDel.setVisibility(View.INVISIBLE);
+            viewHolder.mIvStatus.setVisibility(View.INVISIBLE);
         } else {
+            viewHolder.mIvStatus.setVisibility(View.VISIBLE);
             viewHolder.mIvDel.setVisibility(View.VISIBLE);
             viewHolder.mIvDel.setOnClickListener(view -> {
                 int index = viewHolder.getAdapterPosition();
@@ -158,6 +174,7 @@ public class GridImageAdapter extends
                     notifyItemRangeChanged(index, list.size());
                 }
             });
+
             LocalMedia media = list.get(position);
             if (media == null
                     || TextUtils.isEmpty(media.getPath())) {
@@ -165,16 +182,7 @@ public class GridImageAdapter extends
             }
             int chooseModel = media.getChooseModel();
             String path;
-            if (media.isCut() && !media.isCompressed()) {
-                // 裁剪过
-                path = media.getCutPath();
-            } else if (media.isCompressed() || (media.isCut() && media.isCompressed())) {
-                // 压缩过,或者裁剪同时压缩过,以最终压缩过图片为准
-                path = media.getCompressPath();
-            } else {
-                // 原图
-                path = media.getPath();
-            }
+            path = media.getPath();
 
             Log.i(TAG, "原图地址::" + media.getPath());
 
@@ -216,6 +224,13 @@ public class GridImageAdapter extends
                         .placeholder(R.color.app_color_f6)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(viewHolder.mImg);
+            }
+            if(media.isOriginal()){
+                if(media.isChecked()){
+                    viewHolder.mIvStatus.setImageResource(R.drawable.icon_pic_upload);
+                } else {
+                    viewHolder.mIvStatus.setImageResource(R.drawable.icon_pic_finish);
+                }
             }
             //itemView 的点击事件
             if (mItemClickListener != null) {

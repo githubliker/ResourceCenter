@@ -4,6 +4,17 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.surface.resourcecenter.data.network.ApiUrl;
+import com.surface.resourcecenter.data.network.HttpListener;
+import com.surface.resourcecenter.data.network.NetworkService;
+import com.yanzhenjie.nohttp.rest.CacheMode;
+import com.yanzhenjie.nohttp.rest.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +36,8 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     @Override
     public void loginCommit(final String phone, final String password) {
-        loginView.loginSuccessForUI();
+        LoginToService(phone,password);
+
 //        if(!CheckUtil.checkPhoneNumber(phone)){
 //            loginView.loginDataError("请输入正确的手机号");
 //            return;
@@ -58,10 +70,29 @@ public class LoginPresenterImpl implements LoginPresenter {
 //        });
     }
 
-    private void LoginToService(String phone, String password){
-        Map<String, String> map = new HashMap<>();
-        map.put("loginName", phone);
 
+    private void LoginToService(String phone, String password){
+        JSONObject json = new JSONObject();
+
+//        map.put("name", phone);
+//        map.put("password",password);
+        try {
+            json.put("name", "hcAdmin");
+            json.put("password","hcdq@123");
+        }catch (JSONException e){}
+        NetworkService service = new NetworkService();
+        service.setRequestForJson(0, json.toString(), ApiUrl.URL_LOGIN, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
+            @Override
+            public void onSucceed(int what, Response<String> response) {
+                Log.e("TAG",""+response.get().toString());
+                loginView.loginSuccessForUI();
+            }
+
+            @Override
+            public void onFailed(int what, Response<String> response) {
+
+            }
+        });
     }
     private void queryUserRole() {
 

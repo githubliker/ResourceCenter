@@ -25,6 +25,7 @@ import com.surface.resourcecenter.ui.dispatch.adapter.StandardAdapter;
 import com.surface.resourcecenter.ui.dispatch.adapter.bean.standardItem;
 import com.surface.resourcecenter.ui.dispatch.fragment.TestStandardFragment;
 import com.surface.resourcecenter.ui.home.adapter.bean.PageInfo;
+import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ import java.util.List;
 public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
     private final static String TAG = DispatchTaskActivity.class.getSimpleName();
     private RecyclerView mRecyclerView;
-    private List<standardItem> mStandardList = new ArrayList<>();
+    private List<TestItemsBean> mStandardList = new ArrayList<>();
     private RadioGroup mStandardGrop;
     StandardAdapter adapter;
     private List<PageInfo> pageInfos = new ArrayList<>();
@@ -85,35 +86,9 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
 
     private void initStandardList(){
         mStandardList.clear();
-        mStandardList.add(new standardItem("外观尺寸检查",false));
-        mStandardList.add(new standardItem("密度测量",false));
-        mStandardList.add(new standardItem("环刚度",false));
-        mStandardList.add(new standardItem("压扁试验",false));
-        mStandardList.add(new standardItem("落锤冲击",false));
-        mStandardList.add(new standardItem("堆卡软化温度",false));
-        mStandardList.add(new standardItem("图层厚度试验",false));
-    }
-    private void initStandardList1(){
-        mStandardList.clear();
-        mStandardList.add(new standardItem("外观尺寸检查",true));
-        mStandardList.add(new standardItem("密度测量",true));
-        mStandardList.add(new standardItem("环刚度",true));
-        mStandardList.add(new standardItem("压扁试验",true));
-        mStandardList.add(new standardItem("落锤冲击",true));
-        mStandardList.add(new standardItem("堆卡软化温度",true));
-        mStandardList.add(new standardItem("图层厚度试验",false));
+
     }
 
-    private void initStandardList2(){
-        mStandardList.clear();
-        mStandardList.add(new standardItem("外观尺寸检查",false));
-        mStandardList.add(new standardItem("密度测量",true));
-        mStandardList.add(new standardItem("环刚度",false));
-        mStandardList.add(new standardItem("压扁试验",true));
-        mStandardList.add(new standardItem("落锤冲击",true));
-        mStandardList.add(new standardItem("堆卡软化温度",false));
-        mStandardList.add(new standardItem("图层厚度试验",true));
-    }
     private void initTitle() {
         ImageView leftButton = findViewById(R.id.leftButton);
         leftButton.setVisibility(View.VISIBLE);
@@ -134,13 +109,8 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         RadioButton rb_temp = findViewById(group.getCheckedRadioButtonId());
         String position = (String)rb_temp.getTag();
         Log.d("tag","------------"+position);
-        if(position.equals("1")){
-            initStandardList();
-        } else if(position.equals("2")){
-            initStandardList1();
-        } else if(position.equals("3")){
-            initStandardList2();
-        }
+        initStandardList();
+
         adapter.initData(mStandardList);
         adapter.notifyDataSetChanged();
         initFragment();
@@ -149,8 +119,8 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
     private void initFragment(){
         pageInfos.clear();
         for(int i = 0;i<mStandardList.size();i++){
-            if(mStandardList.get(i).isItemStatus()){
-                pageInfos.add(new PageInfo(mStandardList.get(i).getItemName(),new TestStandardFragment()));
+            if(mStandardList.get(i).isChecked()){
+                pageInfos.add(new PageInfo(mStandardList.get(i).getName(),new TestStandardFragment()));
             }
         }
         pagerAdapter.notifyDataSetChanged();

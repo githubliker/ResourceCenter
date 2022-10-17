@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.ui.dispatch.adapter.bean.standardItem;
+import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ import java.util.Map;
 
 public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyViewHolder> {
 
-    private List<standardItem> list;
+    private List<TestItemsBean> list;
     private Context mContext;
     //用来记录所有checkbox的状态
     private Map<Integer, Boolean> checkStatus = new HashMap<>();
@@ -36,9 +37,9 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
         this.mContext = mContext;
     }
 
-    public void initData(List<standardItem> mData) {
+    public void initData(List<TestItemsBean> mData) {
         if(list == null){
-            list = new ArrayList<standardItem>();
+            list = new ArrayList<TestItemsBean>();
         } else {
             list.clear();
         }
@@ -62,7 +63,7 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
     public void initCheck(boolean flag) {
         for (int i = 0; i < list.size(); i++) {
             //更改指定位置的数据
-            checkStatus.put(i, list.get(i).isItemStatus());
+            checkStatus.put(i, list.get(i).isChecked());
         }
     }
 
@@ -75,7 +76,7 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.checkBox.setText(list.get(position).getItemName());
+        holder.checkBox.setText(list.get(position).getName());
         //清除监听器
         holder.checkBox.setOnCheckedChangeListener(null);
         //设置选中状态

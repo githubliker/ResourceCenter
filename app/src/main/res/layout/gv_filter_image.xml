@@ -23,6 +23,14 @@
         android:src="@mipmap/ic_delete_menu"
         android:visibility="gone"
         tools:visibility="visible" />
+    <ImageView
+        android:id="@+id/iv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingLeft="10dp"
+        android:paddingBottom="10dp"
+        android:scaleType="centerInside" />
 
     <TextView
         android:id="@+id/tv_duration"

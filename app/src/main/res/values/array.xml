@@ -27,6 +27,17 @@
         <item >不合格</item>
     </string-array>
 
+    <string-array name="sample_status">
+        <item >正常</item>
+        <item >检修</item>
+    </string-array>
+
+    <string-array name="sample_youxianji">
+        <item >普通</item>
+        <item >重要</item>
+        <item >紧急</item>
+    </string-array>
+
     <string-array name="device_gongqu">
         <item >局放检测工位</item>
         <item >变压器温升试验工区</item>
@@ -63,5 +74,275 @@
         <item >介质损耗测试仪</item>
         <item >直阻测试仪</item>
         <item >雷电冲击测试仪</item>
+    </string-array>
+
+    <string-array name="sample_type">
+        <item >高压开关柜</item>
+        <item >低压开关柜</item>
+        <item >JP柜</item>
+        <item >柱上开关</item>
+        <item >隔离开关</item>
+        <item >电力电缆</item>
+        <item >电缆保护管</item>
+        <item >0.4kV电缆分支箱</item>
+        <item >电能计量箱</item>
+        <item >干式变压器</item>
+        <item >油浸式变压器</item>
+        <item >美式箱变</item>
+        <item >欧式箱变</item>
+    </string-array>
+    <string-array name="kgg_gaoya_test_items">
+        <item >一次接线型式、相序、安全净距检查</item>
+        <item >工频耐压试验</item>
+        <item >辅助和控制回路的绝缘试验</item>
+        <item >机械操作和机械特性试验</item>
+        <item >电气联锁试验</item>
+        <item >柜体尺寸、厚度、材质检测</item>
+        <item >隔离开关触头镀银层厚度检测</item>
+        <item >主回路电阻测量</item>
+        <item >雷电冲击电压试验</item>
+        <item >温升试验</item>
+        <item >防护等级检验</item>
+        <item >密封试验（适用于充气柜）</item>
+    </string-array>
+    <string-array name="kgg_diya_test_items">
+        <item >布线、操作性能和功能</item>
+        <item >提升试验</item>
+        <item >机械碰撞试验</item>
+        <item >电气间隙和爬电距离</item>
+        <item >标志试验</item>
+        <item >电击防护和保护电路完整性</item>
+        <item >介电性能试验</item>
+        <item >温升试验</item>
+        <item >机械操作试验</item>
+        <item >柜体尺寸、厚度、材质检测</item>
+    </string-array>
+    <string-array name="kgg_zhushang_test_items">
+        <item >结构、外观检查</item>
+        <item >机械操作和机械特性试验</item>
+        <item >温升试验</item>
+        <item >主回路电阻测量</item>
+        <item >工频耐压试验</item>
+        <item >雷电冲击电压试验</item>
+        <item >密封试验</item>
+        <item >辅助和控制回路的绝缘试验</item>
+    </string-array>
+    <string-array name="kgg_jp_test_items">
+        <item >布线、操作性能和功能</item>
+        <item >电气间隙与爬电距离</item>
+        <item >标志</item>
+        <item >电击防护和保护电路完整性</item>
+        <item >介电性能试验</item>
+        <item >工频过电压保护试验</item>
+        <item >柜体材质、厚度及尺寸检测</item>
+        <item >机械操作试验</item>
+        <item >温升试验</item>
+        <item >提升</item>
+        <item >机械碰撞试验</item>
+        <item >成套设备的防护等级验证</item>
+    </string-array>
+    <string-array name="kgg_geli_test_items">
+        <item >镀层测量</item>
+        <item >主回路绝缘试验（干式）</item>
+        <item >主回路电阻测量</item>
+        <item >温升试验</item>
+        <item >机械操作和联锁功能试验</item>
+        <item >外观检查</item>
+        <item >辅助和控制回路的绝缘试验</item>
+    </string-array>
+    <string-array name="dianlanfenzhixiang_test_items">
+        <item >布线、操作性能和功能</item>
+        <item >电气间隙和爬电距离</item>
+        <item >标志</item>
+        <item >电击防护和保护电路完整性</item>
+        <item >介电性能试验</item>
+        <item >柜体材质、厚度及尺寸检测</item>
+        <item >机械操作</item>
+        <item >温升试验</item>
+        <item >提升</item>
+        <item >机械碰撞试验</item>
+    </string-array>
+    <string-array name="diannengjiliangxiang_test_items">
+        <item >一般检查</item>
+        <item >电气间隙与爬电距离</item>
+        <item >电击防护和保护电路完整性</item>
+        <item >介电性能试验</item>
+        <item >绝缘电阻试验</item>
+        <item >封闭防护等级（IP代码）验证试验</item>
+        <item >外壳刚度</item>
+        <item >外壳耐静力验证</item>
+        <item >外壳耐扭力验证</item>
+        <item >门的机械强度的验证</item>
+        <item >冲击载荷试验</item>
+    </string-array>
+    <string-array name="dianlidianlan_test_items">
+        <item >外观与结构检查</item>
+        <item >导体直流电阻试验</item>
+        <item >绝缘、护套老化前的机械性能</item>
+        <item >绝缘热延伸试验</item>
+        <item >XLPE绝缘收缩试验</item>
+        <item >绝缘和非金属护套的高温压力试验</item>
+        <item >PVC绝缘和护套抗开裂试验检测</item>
+        <item >半导电屏蔽电阻</item>
+    </string-array>
+    <string-array name="dianlan_baohuguan_test_items">
+        <item >外观尺寸检查</item>
+        <item >密度测量</item>
+        <item >环刚度</item>
+        <item >落锤冲击</item>
+        <item >维卡软化温度</item>
+        <item >纵向回缩率</item>
+    </string-array>
+    <string-array name="byq_test_items">
+        <item >绕组对地及绕组间直流绝缘电阻测量</item>
+        <item >吸收比测量</item>
+        <item >绝缘系统电容的介质损耗因数（tanδ）测量</item>
+        <item >绕组对地和绕组间电容测量</item>
+        <item >绕组电阻测量</item>
+        <item >电压比测量和联结组标号检定</item>
+        <item >空载损耗和空载电流测量</item>
+        <item >在90%、110%电压下空载损耗和空载电流测量</item>
+        <item >短路阻抗和负载损耗测量</item>
+        <item >外施耐压试验</item>
+        <item >感应耐压试验</item>
+        <item >绝缘油试验</item>
+        <item >温升试验</item>
+        <item >雷电冲击试验</item>
+        <item >压力密封试验</item>
+        <item >压力变形试验</item>
+        <item >声级测定</item>
+        <item >三相变压器零序阻抗测量</item>
+        <item >绝缘液中溶解气体测量</item>
+        <item >短时过负载能力试验</item>
+        <item >局部放电试验</item>
+    </string-array>
+
+    <string-array name="ms_byq_test_items">
+        <item >绕组对地绝缘电阻的测量</item>
+        <item >直流电阻不平衡率测量</item>
+        <item >电压比测量和联结组标号检定</item>
+        <item >空载电流和空载损耗测量</item>
+        <item >短路阻抗和负载损耗测量</item>
+        <item >外施耐压试验</item>
+        <item >感应耐压试验</item>
+        <item >绝缘油试验</item>
+        <item >油箱密封试验</item>
+        <item >一般检查</item>
+        <item >机械操作试验</item>
+        <item >温升试验</item>
+        <item >雷电冲击试验（全波和截波）</item>
+        <item >声级测定</item>
+        <item >油箱机械强度试验</item>
+        <item >空载电流谐波测量</item>
+        <item >三相变压器零序阻抗测量</item>
+    </string-array>
+
+    <string-array name="os_byq_test_items">
+        <item >设计和外观检查</item>
+        <item >接线正确性检查</item>
+        <item >高压连接线工频电压耐受试验</item>
+        <item >低压连接线工频电压耐受试验</item>
+        <item >高压连接线雷电冲击电压试验</item>
+        <item >低压连接线雷电冲击电压试验</item>
+        <item >辅助和控制回路的绝缘试验</item>
+        <item >接地连续性试验</item>
+        <item >功能试验</item>
+        <item >温升试验</item>
+        <item >防护等级验证</item>
+        <item >验证预装式变电站耐受机械应力的试验</item>
+        <item >验证预装式变电站声级的试验</item>
+    </string-array>
+
+    <!--
+    低压开关柜、高压开关柜、柱上断路器
+    -->
+    <string-array name="kgg_main_params">
+        <item >额定电压</item>
+        <item >额定电流</item>
+        <item >额定频率</item>
+        <item >额定峰值耐受电流</item>
+        <item >额定短路开断电流</item>
+        <item >出厂编号</item>
+    </string-array>
+    <!--
+        隔离开关
+    -->
+    <string-array name="kgg_main_params_1">
+        <item >额定电压（kV）</item>
+        <item >额定电流（A）</item>
+        <item >额定频率（Hz）</item>
+        <item >额定短路开断电流（kA）</item>
+        <item >出厂编号</item>
+    </string-array>
+    <!--
+        JP柜
+   -->
+    <string-array name="jp_main_params">
+        <item >额定工作电压Ue（V）</item>
+        <item >额定电流In（A)</item>
+        <item >额定绝缘电压Ui（V）</item>
+        <item >额定容量Ui（V）</item>
+        <item >防护等级</item>
+        <item >额定频率 fn(Hz)</item>
+        <item >出厂编号</item>
+        <item >额定冲击耐受电压（kV）</item>
+    </string-array>
+
+    <!--
+        电缆保护管
+    -->
+    <string-array name="dl_bhg_main_params">
+        <item >样品型号及规格</item>
+    </string-array>
+
+    <!--
+        电能计量箱
+    -->
+    <string-array name="dn_jlx_main_params">
+        <item >额定电压Ue（V）</item>
+        <item >额定电流In（A)</item>
+        <item >额定绝缘电压Ui（V）</item>
+        <item >额定冲击耐受电压（kV）</item>
+        <item >防护等级</item>
+        <item >出厂编号</item>
+    </string-array>
+    <!--
+    0.4kV电缆分支箱
+    -->
+    <string-array name="dl_fzhx_main_params">
+        <item >额定工作电压Ue（V）</item>
+        <item >额定电流In（A)</item>
+        <item >额定绝缘电压Ui（V）</item>
+        <item >辅助电路绝缘电压Ui（V）</item>
+        <item >额定冲击耐受电压Uimp（kV）</item>
+        <item >额定频率 fn(Hz)</item>
+        <item >出厂编号</item>
+    </string-array>
+
+    <!--
+        变压器
+    -->
+    <string-array name="byq_main_params">
+        <item >额定容量（kVA）</item>
+        <item >联结组标号</item>
+        <item >额定电压（kV）</item>
+        <item >额定电流（A）</item>
+        <item >分接范围</item>
+        <item >额定频率（Hz） fn(Hz)</item>
+        <item >冷却方式</item>
+        <item >绝缘水平（kV）</item>
+    </string-array>
+    <!--
+        美式 欧式箱变
+    -->
+    <string-array name="byq_main_params_1">
+        <item >额定容量（kVA）</item>
+        <item >联结组标号</item>
+        <item >额定电压（kV）</item>
+        <item >额定电流（A）</item>
+        <item >分接范围</item>
+        <item >额定频率（Hz） fn(Hz)</item>
+        <item >冷却方式</item>
+        <item >相数</item>
     </string-array>
 </resources>

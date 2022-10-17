@@ -87,7 +87,7 @@ public class LoginFragment extends Fragment implements LoginView {
         commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                commit.setEnabled(false);
+//                commit.setEnabled(false);
                 String number = phone.getText().toString();
                 String login_password = password.getText().toString();
                 presenter.loginCommit(number,login_password);

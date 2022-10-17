@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.BaseFragment;
