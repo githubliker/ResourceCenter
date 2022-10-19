@@ -1,7 +1,6 @@
-package com.surface.resourcecenter.ui.device.adapter;
+package com.surface.resourcecenter.ui.dispatch.adapter;
 
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.listener.onRecycleViewItemClickListener;
-import com.surface.resourcecenter.ui.device.adapter.bean.person;
+import com.surface.resourcecenter.ui.dispatch.bean.InstrumentBean;
 import com.surface.resourcecenter.ui.dispatch.bean.SystemRole;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class GongQuPersonAdapter extends RecyclerView.Adapter<GongQuPersonAdapter.ViewHolder> {
+public class InstrumentAdapter extends RecyclerView.Adapter<InstrumentAdapter.ViewHolder> {
 
-    private List<SystemRole> mItemList;
+    private List<InstrumentBean> mItemList;
     private RecyclerView mRootRecycler;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -35,7 +33,7 @@ public class GongQuPersonAdapter extends RecyclerView.Adapter<GongQuPersonAdapte
 
     }
 
-    public GongQuPersonAdapter(List<SystemRole> fruitList) {
+    public InstrumentAdapter(List<InstrumentBean> fruitList) {
         mItemList = fruitList;
     }
 
@@ -59,7 +57,7 @@ public class GongQuPersonAdapter extends RecyclerView.Adapter<GongQuPersonAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        SystemRole fruit = mItemList.get(position);
+        InstrumentBean fruit = mItemList.get(position);
         holder.itemName.setText(fruit.getName());
         if(fruit.isSelect()){
             holder.status.setVisibility(View.VISIBLE);

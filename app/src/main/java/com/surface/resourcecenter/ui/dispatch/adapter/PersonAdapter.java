@@ -1,7 +1,6 @@
-package com.surface.resourcecenter.ui.device.adapter;
+package com.surface.resourcecenter.ui.dispatch.adapter;
 
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.listener.onRecycleViewItemClickListener;
-import com.surface.resourcecenter.ui.device.adapter.bean.person;
 import com.surface.resourcecenter.ui.dispatch.bean.SystemRole;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class GongQuPersonAdapter extends RecyclerView.Adapter<GongQuPersonAdapter.ViewHolder> {
+public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder> {
 
     private List<SystemRole> mItemList;
     private RecyclerView mRootRecycler;
@@ -35,7 +32,7 @@ public class GongQuPersonAdapter extends RecyclerView.Adapter<GongQuPersonAdapte
 
     }
 
-    public GongQuPersonAdapter(List<SystemRole> fruitList) {
+    public PersonAdapter(List<SystemRole> fruitList) {
         mItemList = fruitList;
     }
 

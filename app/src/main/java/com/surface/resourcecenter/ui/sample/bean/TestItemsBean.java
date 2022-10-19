@@ -14,6 +14,33 @@ public class TestItemsBean {
     private String type;
     private String sign;
     private boolean isChecked;
+    private String area;
+    private String person;
+    private String instrument;
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getPerson() {
+        return person;
+    }
+
+    public void setPerson(String person) {
+        this.person = person;
+    }
+
+    public String getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(String instrument) {
+        this.instrument = instrument;
+    }
 
     public boolean isChecked() {
         return isChecked;

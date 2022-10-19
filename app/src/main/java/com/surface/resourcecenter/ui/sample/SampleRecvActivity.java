@@ -39,7 +39,6 @@ import com.surface.resourcecenter.data.network.HttpListener;
 import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.dispatch.adapter.StandardAdapter;
-import com.surface.resourcecenter.ui.dispatch.adapter.bean.standardItem;
 import com.surface.resourcecenter.ui.sample.adapter.FullyGridLayoutManager;
 import com.surface.resourcecenter.ui.sample.adapter.GridImageAdapter;
 import com.surface.resourcecenter.ui.sample.bean.SampleImageBean;

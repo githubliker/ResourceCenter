@@ -1,37 +1,29 @@
-package com.surface.resourcecenter.ui.sample;
+package com.surface.resourcecenter.ui.dispatch;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.ui.BaseActivity;
-import com.surface.resourcecenter.ui.home.fragment.MainFragment;
-import com.surface.resourcecenter.ui.home.fragment.TodoTaskFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.surface.resourcecenter.ui.dispatch.fragment.TodoTaskFragment;
 
 
 /**
  * Created by yangzhipeng on 2018/6/4.
  */
 
-public class SampleListActivity extends BaseActivity {
+public class DispatchTaskListActivity extends BaseActivity {
 
     private String TAG = "HomeActivity";
     private static final int REQUEST_CODE_PERMISSION_LOCATION = 2;
     public static void launch(Context context){
-        Intent intent = new Intent(context, SampleListActivity.class);
+        Intent intent = new Intent(context, DispatchTaskListActivity.class);
         context.startActivity(intent);
     }
 

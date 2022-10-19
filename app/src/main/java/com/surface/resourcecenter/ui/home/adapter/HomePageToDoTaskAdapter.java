@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.listener.onRecycleViewItemClickListener;
+import com.surface.resourcecenter.ui.dispatch.bean.DispatchBean;
 import com.surface.resourcecenter.ui.home.adapter.bean.HomeItem;
 import com.surface.resourcecenter.ui.home.adapter.bean.TaskItem;
 
@@ -17,7 +19,7 @@ import java.util.List;
 
 public class HomePageToDoTaskAdapter extends RecyclerView.Adapter<HomePageToDoTaskAdapter.ViewHolder> {
 
-    private List<TaskItem> mItemList;
+    private List<DispatchBean> mItemList;
     private RecyclerView mRootRecycler;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -41,10 +43,14 @@ public class HomePageToDoTaskAdapter extends RecyclerView.Adapter<HomePageToDoTa
 
     }
 
-    public HomePageToDoTaskAdapter(List<TaskItem> fruitList) {
+    public HomePageToDoTaskAdapter(List<DispatchBean> fruitList) {
         mItemList = fruitList;
     }
 
+    public void setAdapterData(List<DispatchBean> fruitList){
+        mItemList.clear();
+        mItemList.addAll(fruitList);
+    }
     @Override
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -56,8 +62,7 @@ public class HomePageToDoTaskAdapter extends RecyclerView.Adapter<HomePageToDoTa
             public void onClick(View v) {
                 if(listener != null){
                     int position = mRootRecycler.getChildAdapterPosition(v);
-                    v.setTag(mItemList.get(position).getSampleName());
-                    listener.onClick(v);
+                    listener.onClick(v,position);
                 }
             }
         });
@@ -67,13 +72,13 @@ public class HomePageToDoTaskAdapter extends RecyclerView.Adapter<HomePageToDoTa
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        TaskItem fruit = mItemList.get(position);
-        holder.itemName.setText(fruit.getSampleName());
+        DispatchBean fruit = mItemList.get(position);
+        holder.itemName.setText(fruit.getSampleName()+"1");
         holder.itemStartTime.setText("任务开始时间:"+fruit.getStartTime());
-        holder.itemUpdataTime.setText("上次更新时间:"+fruit.getUpdateTime());
-        holder.itemCurrentPersion.setText(fruit.getCurrentPersion());
-        holder.itemStartPersion.setText(fruit.getStartPersion());
-        holder.itemStatus.setText(fruit.getSampleStatus());
+        holder.itemUpdataTime.setText("上次更新时间:"+fruit.getEndTime());
+        holder.itemCurrentPersion.setText(fruit.getHandlerName());
+        holder.itemStartPersion.setText(fruit.getInitiatorName());
+        holder.itemStatus.setText(fruit.getState()+"");
     }
 
     @Override
@@ -81,8 +86,8 @@ public class HomePageToDoTaskAdapter extends RecyclerView.Adapter<HomePageToDoTa
         return mItemList.size();
     }
 
-    private View.OnClickListener listener;
-    public void setOnClickListener(View.OnClickListener listener){
+    private onRecycleViewItemClickListener listener;
+    public void setOnClickListener(onRecycleViewItemClickListener listener){
         this.listener = listener;
     }
 }

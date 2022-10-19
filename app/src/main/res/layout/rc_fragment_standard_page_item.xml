@@ -8,8 +8,53 @@
     >
     <CheckBox
         android:id="@+id/checkbox"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"/>
+        android:textSize="24sp"
+        android:layout_weight="1"
+        android:layout_gravity="left|center_vertical"/>
+
+    <LinearLayout
+        android:id="@+id/detail_layout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/area_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="20sp"
+            android:text="试验工区"
+            android:singleLine="true" />
+        <TextView
+            android:id="@+id/person_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="start"
+            android:singleLine="true"
+            android:textSize="20sp"
+            android:text="实验人员"/>
+        <TextView
+            android:id="@+id/instrument_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="20sp"
+            android:text="试验仪器"/>
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

@@ -47,7 +47,7 @@
         <activity android:name=".ui.sample.SampleRecvActivity"
             android:configChanges="orientation|screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
-        <activity android:name=".ui.sample.SampleListActivity"
+        <activity android:name=".ui.dispatch.DispatchTaskListActivity"
             android:configChanges="orientation|screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
         <activity android:name=".ui.dispatch.DispatchTaskActivity"

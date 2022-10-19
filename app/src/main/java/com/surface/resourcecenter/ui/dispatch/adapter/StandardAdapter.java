@@ -1,19 +1,24 @@
 package com.surface.resourcecenter.ui.dispatch.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
-import com.surface.resourcecenter.ui.dispatch.adapter.bean.standardItem;
+import com.surface.resourcecenter.data.listener.onItemCheckChangeListener;
 import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
 
+import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,8 +48,8 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
         } else {
             list.clear();
         }
-        list.addAll(mData);
-        initCheck(false);
+        list = mData;
+        initCheck(true);
     }
 
     //全选
@@ -63,7 +68,8 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
     public void initCheck(boolean flag) {
         for (int i = 0; i < list.size(); i++) {
             //更改指定位置的数据
-            checkStatus.put(i, list.get(i).isChecked());
+            list.get(i).setChecked(flag);
+            checkStatus.put(i, flag);
         }
     }
 
@@ -76,7 +82,23 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.checkBox.setText(list.get(position).getName());
+        TestItemsBean bean = list.get(position);
+        if(!TextUtils.isEmpty(bean.getArea())){
+            holder.mArea.setText(bean.getArea());
+        } else {
+            holder.mArea.setText("试验工区");
+        }
+        if(!TextUtils.isEmpty(bean.getPerson())){
+            holder.mPerson.setText(bean.getPerson());
+        } else {
+            holder.mPerson.setText("试验人员");
+        }
+        if(!TextUtils.isEmpty(bean.getInstrument())){
+            holder.mInstrument.setText(bean.getInstrument());
+        } else {
+            holder.mInstrument.setText("试验设备");
+        }
+        holder.checkBox.setText(bean.getName());
         //清除监听器
         holder.checkBox.setOnCheckedChangeListener(null);
         //设置选中状态
@@ -87,6 +109,17 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 checkStatus.put(position, isChecked);
                 //check状态一旦改变，保存的check值也要发生相应的变化
+                if(onCheckChangeListener != null){
+                    onCheckChangeListener.onItemClick(holder.checkBox,position,isChecked);
+                }
+            }
+        });
+        holder.mDetailLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onCheckChangeListener != null&& checkStatus.get(position)){
+                    onCheckChangeListener.onItemClick(holder.mDetailLayout,position,true);
+                }
             }
         });
     }
@@ -99,13 +132,23 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
         return 0;
     }
 
+    onItemCheckChangeListener onCheckChangeListener;
+    public void setOnCheckChangeListener(onItemCheckChangeListener onCheckChangeListener){
+        this.onCheckChangeListener = onCheckChangeListener;
+    }
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         private CheckBox checkBox;
+        private LinearLayout mDetailLayout;
+        private TextView mArea,mPerson,mInstrument;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             checkBox = itemView.findViewById(R.id.checkbox);
+            mDetailLayout = itemView.findViewById(R.id.detail_layout);
+            mArea = itemView.findViewById(R.id.area_text);
+            mInstrument = itemView.findViewById(R.id.instrument_text);
+            mPerson = itemView.findViewById(R.id.person_text);
         }
     }
 }

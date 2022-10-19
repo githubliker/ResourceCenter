@@ -18,6 +18,7 @@ import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.device.adapter.GongQuAdapter;
 import com.surface.resourcecenter.ui.device.adapter.GongQuPersonAdapter;
 import com.surface.resourcecenter.ui.device.adapter.bean.person;
+import com.surface.resourcecenter.ui.dispatch.bean.SystemRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class GongQuPersonFragment extends BaseFragment implements View.OnClickLi
     private String TAG = "GongQuPersonFragment";
     private RecyclerView mRecyclerView;
     GongQuPersonAdapter adapter;
-    private List<person> itemList = new ArrayList<>();
+    private List<SystemRole> itemList = new ArrayList<>();
 
     public static GongQuPersonFragment newInstance() {
 
@@ -55,25 +56,25 @@ public class GongQuPersonFragment extends BaseFragment implements View.OnClickLi
     onRecycleViewItemClickListener mItemClickListener = new onRecycleViewItemClickListener() {
         @Override
         public void onClick(View v,int position) {
-            boolean status = itemList.get(position).isSelected();
-            itemList.get(position).setSelected(!status);
+            boolean status = itemList.get(position).isSelect();
+            itemList.get(position).setSelect(!status);
             adapter.notifyDataSetChanged();
         }
     };
     void initGroupUsrList() {
         String[] gongQu = getResources().getStringArray(R.array.gongqu_person);
         for(int i = 0;i< gongQu.length;i++){
-            person p = new person();
+            SystemRole p = new SystemRole();
             p.setName(gongQu[i]);
             if(i%3 ==0){
-                p.setSelected(true);
+                p.setSelect(true);
             } else
-                p.setSelected(false);
+                p.setSelect(false);
             itemList.add(p);
         }
-        person p1 = new person();
+        SystemRole p1 = new SystemRole();
         p1.setName("<添加>");
-        p1.setSelected(false);
+        p1.setSelect(false);
         itemList.add(p1);
     }
 
