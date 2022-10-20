@@ -41,6 +41,7 @@ import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.dispatch.adapter.StandardAdapter;
 import com.surface.resourcecenter.ui.sample.adapter.FullyGridLayoutManager;
 import com.surface.resourcecenter.ui.sample.adapter.GridImageAdapter;
+import com.surface.resourcecenter.ui.sample.adapter.TestAdapter;
 import com.surface.resourcecenter.ui.sample.bean.SampleImageBean;
 import com.surface.resourcecenter.ui.sample.bean.SampleTypeBean;
 import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
@@ -66,7 +67,7 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
     private GridImageAdapter mImageAdapter;
     private RecyclerView mRecyclerView;
     private LinearLayout mExtraParamsLayout;
-    StandardAdapter adapter;
+    TestAdapter adapter;
     private Spinner mSampleType;
     private String[] mSampleTypeData;
     private TextView mSampleDate,mDataUpload;
@@ -88,7 +89,7 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         GridLayoutManager layoutManager = new GridLayoutManager(this,2);
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new StandardAdapter(this);
+        adapter = new TestAdapter(this);
         adapter.initData(mStandardList);
         mRecyclerView.setAdapter(adapter);
 

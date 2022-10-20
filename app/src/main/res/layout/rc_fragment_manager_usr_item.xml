@@ -25,12 +25,11 @@
         android:id="@+id/text_role"
         android:layout_width="wrap_content"
         android:layout_height="5dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_marginTop="-8dp"
-        android:layout_below="@+id/text_item"/>
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_alignBottom="@+id/text_item"
+        android:layout_alignLeft="@id/text_item"
+        android:layout_alignRight="@id/text_item"/>
 
     <ImageView
         android:id="@+id/icon_delete"

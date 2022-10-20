@@ -1,7 +1,6 @@
-package com.surface.resourcecenter.ui.dispatch.adapter;
+package com.surface.resourcecenter.ui.sample.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.listener.onItemCheckChangeListener;
 import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
 
-import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,14 +28,14 @@ import java.util.Map;
  * 博客地址: http://www.jianshu.com/u/dfbde65a03fc
  */
 
-public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyViewHolder> {
+public class TestAdapter extends RecyclerView.Adapter<TestAdapter.MyViewHolder> {
 
     private List<TestItemsBean> list;
     private Context mContext;
     //用来记录所有checkbox的状态
     private Map<Integer, Boolean> checkStatus = new HashMap<>();
 
-    public StandardAdapter(Context mContext) {
+    public TestAdapter(Context mContext) {
 
         this.mContext = mContext;
     }
@@ -83,27 +81,6 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         TestItemsBean bean = list.get(position);
-        if(!TextUtils.isEmpty(bean.getArea())){
-            holder.mArea.setText(bean.getArea());
-            holder.mArea.setTextColor(mContext.getResources().getColor(R.color.app_main_color));
-        } else {
-            holder.mArea.setText("试验工区");
-            holder.mArea.setTextColor(mContext.getResources().getColor(R.color.text_noselected));
-        }
-        if(!TextUtils.isEmpty(bean.getPerson())){
-            holder.mPerson.setText(bean.getPerson());
-            holder.mPerson.setTextColor(mContext.getResources().getColor(R.color.app_main_color));
-        } else {
-            holder.mPerson.setText("试验人员");
-            holder.mPerson.setTextColor(mContext.getResources().getColor(R.color.text_noselected));
-        }
-        if(!TextUtils.isEmpty(bean.getInstrument())){
-            holder.mInstrument.setText(bean.getInstrument());
-            holder.mInstrument.setTextColor(mContext.getResources().getColor(R.color.app_main_color));
-        } else {
-            holder.mInstrument.setText("试验设备");
-            holder.mInstrument.setTextColor(mContext.getResources().getColor(R.color.text_noselected));
-        }
         holder.checkBox.setText(bean.getName());
         //清除监听器
         holder.checkBox.setOnCheckedChangeListener(null);
@@ -120,14 +97,7 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
                 }
             }
         });
-        holder.mDetailLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(onCheckChangeListener != null&& checkStatus.get(position)){
-                    onCheckChangeListener.onItemClick(holder.mDetailLayout,position,true);
-                }
-            }
-        });
+
     }
 
     @Override
@@ -152,6 +122,7 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
             super(itemView);
             checkBox = itemView.findViewById(R.id.checkbox);
             mDetailLayout = itemView.findViewById(R.id.detail_layout);
+            mDetailLayout.setVisibility(View.GONE);
             mArea = itemView.findViewById(R.id.area_text);
             mInstrument = itemView.findViewById(R.id.instrument_text);
             mPerson = itemView.findViewById(R.id.person_text);

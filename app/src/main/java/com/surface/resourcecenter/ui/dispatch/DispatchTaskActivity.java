@@ -47,6 +47,7 @@ import com.surface.resourcecenter.ui.view.CustomSignPopup;
 import com.yanzhenjie.nohttp.rest.CacheMode;
 import com.yanzhenjie.nohttp.rest.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,7 +57,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, onItemCheckChangeListener {
+public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, onItemCheckChangeListener, View.OnClickListener {
     private final static String TAG = DispatchTaskActivity.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private List<TestItemsBean> mStandardList = new ArrayList<>();
@@ -65,6 +66,7 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
     private List<TestArea> mAreaList = new ArrayList<>();
     private RadioGroup mStandardGrop;
     StandardAdapter adapter;
+    private TextView mSave;
 
     private DispatchBean dispatchBean;
     @Override
@@ -75,6 +77,7 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         dispatchBean = (DispatchBean) getIntent().getSerializableExtra("data");
         initTitle();
 
+        mSave = findViewById(R.id.save);
         mStandardGrop = findViewById(R.id.radioGroup_gender);
         mRecyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -87,6 +90,7 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         adapter.setOnCheckChangeListener(this);
         mRecyclerView.setAdapter(adapter);
         mStandardGrop.setOnCheckedChangeListener(this);
+        mSave.setOnClickListener(this);
 
         getTestItems(dispatchBean.getSampleType());
         getSystemRoles();
@@ -236,9 +240,9 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         if(view instanceof CheckBox){
             mStandardList.get(position).setChecked(isChecked);
             if(!isChecked){
-                mStandardList.get(position).setArea("试验工区");
-                mStandardList.get(position).setPerson("试验人员");
-                mStandardList.get(position).setInstrument("试验仪器");
+                mStandardList.get(position).setArea("");
+                mStandardList.get(position).setPerson("");
+                mStandardList.get(position).setInstrument("");
                 adapter.notifyDataSetChanged();
             }
         } else if(view instanceof LinearLayout){
@@ -257,7 +261,7 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         @Override
         public void onDismiss(int index) {
             Log.d(TAG,"popup dismiss");
-            String area = "试验工区",per="试验人员",instru ="试验仪器";
+            String area = "",per="",instru ="";
             for(int i =0;i<mAreaList.size();i++){
                 if(mAreaList.get(i).isSelect()){
                     area =mAreaList.get(i).getName();
@@ -289,5 +293,38 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         bundle.putSerializable("data",bean);
         intent.putExtras(bundle);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.save:
+                String param = generDispatchData();
+                Log.e(TAG,"待上传参数"+param);
+                break;
+        }
+    }
+
+    private String generDispatchData(){
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for(int i = 0;i<mStandardList.size();i++){
+                if(mStandardList.get(i).isChecked()){
+                    JSONObject json = new JSONObject();
+                    json.put("dispatch_id","");
+                    json.put("experiment_id","");
+                    json.put("area_id","");
+                    json.put("operater_id","");
+                    json.put("instrument_id","");
+                    json.put("state","");
+                    json.put("start_time","");
+                    json.put("end_time","");
+                    jsonArray.put(json);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonArray.toString();
     }
 }

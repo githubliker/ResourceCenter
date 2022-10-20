@@ -11,6 +11,7 @@ public class ApiUrl {
     public static String URL_TEST_ITEMS = URL+"/ptwz/experiment/get";
     public static String URL_DISPATCH_LIST = URL+"/ptwz/dispatch/pageDisp";
     public static String URL_SAMPLE_DISPATCH = URL+"/ptwz/dispatch/save";
+    public static String URL_TEST_DISPATCH = URL+"/ptwz/task/save";
     public static String URL_SYSTEM_ROLES = URL+"/ptwz/sys-role/list";
     public static String URL_TEST_AREAS = URL+"/ptwz/test-area/list";
     public static String URL_INSTRUMENTS= URL+"/ptwz/instrument/list";
