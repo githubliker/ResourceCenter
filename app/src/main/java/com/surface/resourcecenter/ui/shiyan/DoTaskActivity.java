@@ -76,6 +76,7 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaJueyuanSh
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaLeidianChongjiIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaLiansuoShiyanIndex7;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaWenshengIndex4;
+import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HWYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangGuiTiJianCeIndex10;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangJixieCaozuoIndex12;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangJuFangIndex13;
@@ -135,7 +136,7 @@ public class DoTaskActivity extends BaseActivity {
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         initTitle();
-        initJPGuiFragment();
+        initHuanwangGuiFragment();
     }
 
 
@@ -291,7 +292,7 @@ public class DoTaskActivity extends BaseActivity {
     private void initHuanwangGuiFragment(){
         pageInfos.clear();
         int i = 0;
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaLeidianChongjiIndex1()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new HWYibanJianceIndex1()));
         pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaGongpinNaiyaIndex2()));
         pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaHuiluDianzuIndex3()));
         pageInfos.add(new PageInfo(huanwangguitest[i++],new HuanwangGuiTiJianCeIndex10()));
@@ -308,13 +309,13 @@ public class DoTaskActivity extends BaseActivity {
         int i = 0;
         pageInfos.add(new PageInfo(jpguitest[i++],new JPYibanJianceIndex1()));
         pageInfos.add(new PageInfo(jpguitest[i++],new JPYibanJianceIndex2()));
-        pageInfos.add(new PageInfo(jpguitest[i++],new JPYibanJianceIndex3()));
-        pageInfos.add(new PageInfo(jpguitest[i++],new JPFanghuDengjiIndex4()));
-        pageInfos.add(new PageInfo(jpguitest[i++],new HuanwangWenshengIndex11()));
-        pageInfos.add(new PageInfo(jpguitest[i++],new GaoyaJueyuanShiyanIndex5()));
-        pageInfos.add(new PageInfo(jpguitest[i++],new HuanwangJixieCaozuoIndex12()));
-        pageInfos.add(new PageInfo(jpguitest[i++],new GaoyaLiansuoShiyanIndex7()));
-        pageInfos.add(new PageInfo(jpguitest[i++],new HuanwangJuFangIndex13()));
+//        pageInfos.add(new PageInfo(jpguitest[i++],new JPYibanJianceIndex3()));
+//        pageInfos.add(new PageInfo(jpguitest[i++],new JPFanghuDengjiIndex4()));
+//        pageInfos.add(new PageInfo(jpguitest[i++],new HuanwangWenshengIndex11()));
+//        pageInfos.add(new PageInfo(jpguitest[i++],new GaoyaJueyuanShiyanIndex5()));
+//        pageInfos.add(new PageInfo(jpguitest[i++],new HuanwangJixieCaozuoIndex12()));
+//        pageInfos.add(new PageInfo(jpguitest[i++],new GaoyaLiansuoShiyanIndex7()));
+//        pageInfos.add(new PageInfo(jpguitest[i++],new HuanwangJuFangIndex13()));
         pagerAdapter.notifyDataSetChanged();
     }
     class MainAdapter extends FragmentPagerAdapter {

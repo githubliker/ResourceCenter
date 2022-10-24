@@ -19,13 +19,13 @@ import com.surface.resourcecenter.ui.BaseFragment;
  * @date 2018/6/21
  */
 
-public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickListener {
+public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickListener {
 
 
     private TextView deviceName,deviceTypeId,deviceId,remark,mPicTitle;
     private TextView mGridTitle,mGridTitle1,mGridTitle2,mGridTitle3,mGridTitle4,mGridTitle5;
     GridLayout mGridLayout, mGridLayout1, mGridLayout2, mGridLayout3, mGridLayout4, mGridLayout5;
-    public JPYibanJianceIndex2(){
+    public HWYibanJianceIndex1(){
 
     }
 
@@ -60,28 +60,35 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
         deviceId.setText("/");
         remark.setText("");
 
-        mGridTitle.setText("提升试验");
-        mGridTitle1.setText("机械碰撞试验");
-        mGridTitle2.setText("成套设备的防护等级验证");
-        mGridTitle3.setText("");
-        mGridTitle4.setText("");
-        mGridTitle5.setText("");
-
+        mGridTitle.setText("接线形式、相序、空气净距检查");
+        mGridTitle1.setText("柜体材质、厚度及尺寸检测");
+        mGridTitle2.setText("3.\t电气联锁试验");
+        mGridTitle3.setText("机械操作");
+        mGridTitle4.setText("防护等级检验");
+        mGridTitle5.setText("密封试验（适用于气体绝缘环网柜）");
 
         initGridLayout();
         initGridLayout1();
         initGridLayout2();
+        initGridLayout3();
+        initGridLayout4();
+        initGridLayout5();
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initGridLayout(){
-        String[] header = {"最大运输质量（Kg) "," ","1.25倍最大运输质量（Kg)"," "};
-        String[] leftheader = {"提升1","提升高度（m)","水平移动距离（m)","悬吊时间（min)"};
-        String[] leftheader1 = {"提升2","提升高度（m)","水平移动距离（m)","水平移动时间（S)"};
-        String[] leftheader2 = {"第一次","第二次","第三次"};
+        String[] header = {"项目","检测要求","测量或观察结果"};
+        String[] leftheader = {"接线形式","相序","安全净距"};
+        String[] leftheader1 = {"水平出线、垂直出线或品形出线","面对柜体前面板：\n" +
+                "①左中右对应相序为ABC\n" +
+                "②上中下对应相序为ABC\n" +
+                "③远中近对应相序为ABC\n" +
+                "④其他",
+                "12kV：检查以空气为绝缘介质的开关柜，母线室、电缆室内的相间\n和相对地最小空气间隙：\n" +
+                "相间和相对地≥125mm，带电体至门≥155mm;"};
         int ColumnNum = header.length;
-        int RowNum = leftheader2.length*2+3;
+        int RowNum = leftheader.length+1;
         mGridLayout.setColumnCount(ColumnNum);
         mGridLayout.setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
@@ -91,17 +98,10 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
-                } else if(m == 1){
-                    editText.setText(leftheader[i]);
-                } else if(m == 5){
-                    editText.setText(leftheader1[i]);
                 } else if(i == 0){
-                    if(m < 5){
-                        editText.setText(leftheader2[(m -2) %3]);
-                    } else {
-                        editText.setText(leftheader2[(m -6) %3]);
-                    }
-
+                    editText.setText(leftheader[m-1]);
+                } else if(i == 1){
+                    editText.setText(leftheader1[m-1]);
                 }
                 editText.setPadding(20,20,20,20);
 
@@ -120,19 +120,16 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
                 mGridLayout.addView(editText,params);
             }
-
-
         }
 
     }
 
     private void initGridLayout1(){
-        String[] header = {"检测项目及检测要求","观察结果"};
-        String[] leftheader = {"壳体应达到外部机械撞击防护等级（IK）","施加撞击能量（J）","撞击元件等效质量（kg）","跌落高度（mm）",
-                "对最大尺寸超过1m的正常使用的每个外露面冲击5次",
-                "试验后：壳体IP代码和介电强度不变：可移式覆板可以移开和装上，门可以打开和关闭"};
+        String[] header = {"检测项目","技术要求值(mm)","测量结果"};
+        String[] leftHeader = {"柜体材质","柜体厚度","柜体尺寸（高×宽×深）",""};
+        String[] leftHeader1 = {"柜体应采用敷铝锌钢板、镀锌板弯折后栓接而成，\n或采用优质防锈处理的冷轧钢板制成，\n或采用不锈钢制成"," ","提供实测值"};
         int ColumnNum = header.length;
-        int RowNum = leftheader.length+1;
+        int RowNum = leftHeader1.length+1;
         mGridLayout1.setColumnCount(ColumnNum);
         mGridLayout1.setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
@@ -143,13 +140,14 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
                 if(m == 0){
                     editText.setText(header[i]);
                 } else if(i == 0){
-                    editText.setText(leftheader[m-1]);
+                    editText.setText(leftHeader[m-1]);
+                } else if(i == 1){
+                    editText.setText(leftHeader1[m-1]);
                 }
                 editText.setPadding(20,20,20,20);
 
                 GridLayout.Spec rowSpec;
                 GridLayout.Spec columnSpec;
-
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
                 if(i  == ColumnNum -1){
@@ -159,7 +157,9 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
                     //表示起始位置为i，占据1列
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
+
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
+
                 mGridLayout1.addView(editText,params);
             }
         }
@@ -167,8 +167,10 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
     }
 
     private void initGridLayout2(){
-        String[] header = {"检测项目及检验要求","观察结果"};
-        String[] leftheader = {"用直径为 1.0 mm的试验棒，试验用力为（1.0±0.1）N进行试验，试具不得进入壳内。","防止溅水，向外壳各方面溅水应无有害影响。"};
+        String[] header = {"技术要求","观察结果"};
+        String[] leftheader = {"负荷开关/断路器合闸，隔离开关不能操作，\n接地开关不能合闸","负荷开关/断路器分闸，隔离开关分闸，\n接地开关可以合闸",
+                "接地开关处于合闸位置，隔离开关不能操作，\n负荷开关/断路器不能合闸，可以打开电缆室门","负荷开关/断路器合闸，柜门不允许打开","负荷开关合闸，接地开关不能合闸"
+        ,"接地开关处于合闸位置，负荷开关不能合闸","负荷开关合闸，柜门不允许打开","模拟熔断器动作后未更换熔断器前，负荷开关不允许合闸，\n也不允许保持在合闸位置"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mGridLayout2.setColumnCount(ColumnNum);
@@ -207,8 +209,11 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
     }
 
     private void initGridLayout3(){
-        String[] header = {"检测要求","检测结果"};
-        String[] leftheader = {"元器件的工作状态未受损伤，且所要求的操作力与试验前一样。","联锁机构的工作状态未受损伤，且所要求的操作力与试验前一样。","规定的防护等级状态未受损伤，且所要求的操作力与试验前一样。"};
+        String[] header = {"技术要求","观察结果"};
+        String[] leftheader = {"合闸电压低于额定30%，操作5次应均可靠不动作","合闸电压85%~110%范围内操作5次应均可靠动作",
+                "分闸电压低于额定30%，操作5次应均可靠不动作","分闸电压65%~110%范围内操作5次应均可靠动作",
+                "额定操作电压下操作分合闸各5次，应均可靠动作","人力操作分合闸各5次，应均可靠动作",
+                "额定操作电压“分-0.3-合分”，操作5次应均可靠动作","储能电机85%和110%操作电压，操作5次储能应均可靠动作"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mGridLayout3.setColumnCount(ColumnNum);
@@ -245,8 +250,94 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
         }
 
     }
+    private void initGridLayout4(){
+        String[] header = {"检测部位","技术标准","检测方法","检测结果"};
+        String[] leftheader = {"柜体外壳","隔板","活门","盖板"};
+        String[] leftheader1 = {"柜体外壳防护等级\n达到IP4X及以上，\n隔室之间\n达到IP2X及以上。"};
+        int ColumnNum = header.length;
+        int RowNum = leftheader.length+1;
+        mGridLayout4.setColumnCount(ColumnNum);
+        mGridLayout4.setRowCount(RowNum);
+        for(int m = 0 ;m<RowNum;m++){
+            for(int i = 0;i<ColumnNum;i++){
+                TextView editText = new TextView(getContext());
+                editText.setBackgroundResource(R.drawable.chart_item_shape);
+                editText.setGravity(Gravity.CENTER);
+                if(m == 0){
+                    editText.setText(header[i]);
+                } else if(i == 0){
+                    editText.setText(leftheader[m-1]);
+                } else if(i == 1){
+//                    editText.setText(leftheader1[m-1]);
+                }
+                editText.setPadding(20,10,20,10);
+
+                GridLayout.Spec rowSpec;
+                GridLayout.Spec columnSpec;
+
+                //表示起始位置为m，占据1行
+                rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
+                if(i == 1 && m != 0){
+                    if(m == 1){
+                        rowSpec=GridLayout.spec(m, 4, GridLayout.FILL);
+                        editText.setText(leftheader1[i-1]);
+                    } else {
+                        continue;
+                    }
+                }
+                if(i  == ColumnNum -1){
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1,0.25f);
+                } else {
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1, 1.75f);
+                }
+                GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
+                mGridLayout4.addView(editText,params);
+            }
 
 
+        }
+
+    }
+    private void initGridLayout5(){
+        String[] header = {"检测项目","观察结果"};
+        String[] leftheader = {"充入气体性质",
+                "试验前压力","试验后压力","密封罩的体积"};
+        int ColumnNum = header.length;
+        int RowNum = leftheader.length+1;
+        mGridLayout5.setColumnCount(ColumnNum);
+        mGridLayout5.setRowCount(RowNum);
+        for(int m = 0 ;m<RowNum;m++){
+            for(int i = 0;i<ColumnNum;i++){
+                TextView editText = new TextView(getContext());
+                editText.setBackgroundResource(R.drawable.chart_item_shape);
+                editText.setGravity(Gravity.CENTER);
+                if(m == 0){
+                    editText.setText(header[i]);
+                } else if(i == 0){
+                    editText.setText(leftheader[m-1]);
+                }
+                editText.setPadding(20,20,20,20);
+
+                GridLayout.Spec rowSpec;
+                GridLayout.Spec columnSpec;
+
+                //表示起始位置为m，占据1行
+                rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
+                if(i  == ColumnNum -1){
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1,0.25f);
+                } else {
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1, 1.75f);
+                }
+                GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
+                mGridLayout5.addView(editText,params);
+            }
+        }
+
+    }
     @Override
     public void onClick(View v) {
 //        Router.launchRender3DActivity(getContext(),new Bundle());
