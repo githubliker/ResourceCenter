@@ -61,11 +61,11 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
         remark.setText("");
 
         mGridTitle.setText("布线、操作性能和功能");
-        mGridTitle1.setText("耐腐性能");
-        mGridTitle2.setText("外壳热稳定性验证（非金属外壳适用）");
-        mGridTitle3.setText("绝缘材料耐受内部电效应引起的非正常发热和着火的验证");
-        mGridTitle4.setText("耐紫外线（UV）辐射验证");
-        mGridTitle5.setText("提升");
+        mGridTitle1.setText("电气间隙和爬电距离");
+        mGridTitle2.setText("标志检验");
+        mGridTitle3.setText("工频过电压保护试验");
+        mGridTitle4.setText("柜体材质、厚度及尺寸检测");
+        mGridTitle5.setText("机械操作试验");
 
         initGridLayout();
         initGridLayout1();
@@ -79,10 +79,25 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initGridLayout(){
         String[] header = {"检测要求 ","检测结果"};
-        String[] leftheader = {"机械操作元件有效性检查","连锁有效性检查","锁扣有效性检查","导线和电缆的布线检查","螺钉连接应接触良好，稳固。"
-                ,"铭牌应完整无缺。","铭牌应坚固、耐久。"
-                ,"综合配电箱应与铭牌内容相符，铭牌应包括的内容：\n□制造商名称或商标，□型号，□生产日期，□执行标准，□额定电压，□出厂编号，□额定容量。"
-                ,"标志应完整无缺。","综合配电箱应与制造厂提供的电路，接线图和技术数据相符。","按设备的电气原理图进行通电模拟操作，结果应符合设计要求。"};
+        String[] leftheader = {"对机械操作元件、联锁、锁扣等部件的有效性进行检查"
+                ,"检查导线和电缆的布置是否正确"
+                ,"检查电器安装是否正确\n" +
+                "由操作人员观察的指示仪表应安装在成套设备基础面上方0.2m～2.2m之间。\n" +
+                "操作器件，如手柄、按钮或类似器件，应安装在易于操作的高度上，\n" +
+                "其中心线一般应在成套设备基础面上0.2m～2m之间。\n" +
+                "不经常操作的器件，可以装在高度达2.2m处。"
+                ,"端子，不包括保护导体端子，应位于成套设备的基础面上方至少0.2m，\n" +
+                "并且端子的位置应使电缆易于与其连接"
+                ,"相导体截面积测量值：≥360mm2"
+                ,"中性导体端子截面积：≥160mm2"
+                ,"保护导体端子截面积：≥150mm2"
+                ,"中性导体端子的数量：≥3"
+                ,"保护导体端子的数量：≥3 "
+                ,"中性导体端子标志：蓝色，黑色或“N”"
+                ,"保护导体端子标志：黄绿双色"
+                ,"检查接线图和技术数据是否相符"
+                ,"通电操作试验，按设备的电气原理图要求进行模拟动作试验，试验结果应符合设计要求"
+        };
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mGridLayout.setColumnCount(ColumnNum);
@@ -97,38 +112,34 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
                 }
-                editText.setPadding(20,10,20,10);
-                if(i == 1){
-                    editText.setMinWidth(450);
-                } else {
-                    editText.setMinWidth(150);
-                }
+                editText.setPadding(20,20,20,20);
+
                 GridLayout.Spec rowSpec;
                 GridLayout.Spec columnSpec;
 
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                //表示起始位置为i，占据1列
-                columnSpec=GridLayout.spec(i, 1, GridLayout.FILL);
-                GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                if(m == 8){
-                    params.height = 120;
+                if(i  == ColumnNum -1){
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1,0.25f);
                 } else {
-                    params.height = 60;
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
+                GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
                 mGridLayout.addView(editText,params);
             }
-
-
         }
 
     }
 
     private void initGridLayout1(){
-        String[] header = {"检测要求","检测结果"};
-        String[] leftheader = {"外观无明显□锈痕、□破裂。","机械完整性没有损坏。","门工作没有异常","铰链工作没有异常","锁工作没有异常","紧固件工作没有异常"};
+        String[] header = {"项目","检测项目","技术要求值(mm)","检测结果"};
+        String[] leftHeader = {"电气间隙","爬电距离"};
+        String[] leftHeader1 = {"相与相之间","不同电压的电路导体之间","带电部件与裸露导电部件之间","相与相之间","不同电压的电路导体之间","带电部件与裸露导电部件之间"};
+        String[] leftHeader2 = {"≥8","/","≥8","≥10","/","≥10"};
         int ColumnNum = header.length;
-        int RowNum = leftheader.length+1;
+        int RowNum = leftHeader1.length+1;
         mGridLayout1.setColumnCount(ColumnNum);
         mGridLayout1.setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
@@ -138,20 +149,36 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
-                } else if(i == 0){
-                    editText.setText(leftheader[m-1]);
+                } else if(i == 1){
+                    editText.setText(leftHeader1[m-1]);
+                } else if(i == 2){
+                    editText.setText(leftHeader2[m-1]);
                 }
-                editText.setPadding(20,10,20,10);
-                editText.setMinWidth(100);
+                editText.setPadding(20,20,20,20);
 
                 GridLayout.Spec rowSpec;
                 GridLayout.Spec columnSpec;
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                //表示起始位置为i，占据1列
-                columnSpec=GridLayout.spec(i, 1, GridLayout.FILL);
+                if(i == 0 && m !=0){
+                    if(m%3 == 1){
+                        editText.setText(leftHeader[(m-1)%3]);
+                        //表示起始位置为m，占据1行
+                        rowSpec=GridLayout.spec(m, 3, GridLayout.FILL);
+                    } else {
+                        continue;
+                    }
+                }
+                if(i  == ColumnNum -3){
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1, 1.75f);
+                } else {
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1,0.25f);
+                }
+
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                params.height = 60;
+
                 mGridLayout1.addView(editText,params);
             }
         }
@@ -160,7 +187,8 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
 
     private void initGridLayout2(){
         String[] header = {"检测要求","检测结果"};
-        String[] leftheader = {"外观无正常视力可见的裂痕。","外壳材料没有变为□粘性或□油脂性。"};
+        String[] leftheader = {"试验时先手持一块在水中浸泡过的布，摩擦标志15s，\n" +
+                "再用在石油溶剂油中浸泡过的布摩擦标志15s。试验后，标志仍容易辨认"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mGridLayout2.setColumnCount(ColumnNum);
@@ -175,18 +203,21 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
                 }
-                editText.setPadding(20,10,20,10);
+                editText.setPadding(20,20,20,20);
 
-                editText.setMinWidth(150);
                 GridLayout.Spec rowSpec;
                 GridLayout.Spec columnSpec;
 
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                //表示起始位置为i，占据1列
-                columnSpec=GridLayout.spec(i, 1, GridLayout.FILL);
+                if(i  == ColumnNum -1){
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1,0.25f);
+                } else {
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1, 1.75f);
+                }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                params.height = 60;
                 mGridLayout2.addView(editText,params);
             }
 
@@ -196,8 +227,8 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
     }
 
     private void initGridLayout3(){
-        String[] header = {"检测要求","检测结果"};
-        String[] leftheader = {"样品没有□燃烧或□灼热。","样品的火焰或灼热移开灼热丝之后30s内熄灭。","使用规定的包装绢纸铺底层时，绢纸不应起燃。"};
+        String[] header = {"检测项目","检测结果"};
+        String[] leftheader = {"在1.1-1.2倍的额定电压下，过电压保护设施应在60s内将电容器支路与电源断开"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mGridLayout3.setColumnCount(ColumnNum);
@@ -212,18 +243,21 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
                 }
-                editText.setPadding(20,10,20,10);
+                editText.setPadding(20,20,20,20);
 
-                editText.setMinWidth(150);
                 GridLayout.Spec rowSpec;
                 GridLayout.Spec columnSpec;
 
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                //表示起始位置为i，占据1列
-                columnSpec=GridLayout.spec(i, 1, GridLayout.FILL);
+                if(i  == ColumnNum -1){
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1,0.25f);
+                } else {
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1, 1.75f);
+                }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                params.height = 60;
                 mGridLayout3.addView(editText,params);
             }
 
@@ -232,8 +266,12 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
 
     }
     private void initGridLayout4(){
-        String[] header = {"检测要求","检测结果"};
-        String[] leftheader = {"外观无正常视力可见的裂痕或损坏。","由金属材料制成完全用合成材料包覆的外壳，合成材料的粘附物依据ISO2409应至少保留类别"};
+        String[] header = {"检测项目","检测要求","检测结果"};
+        String[] leftheader = {"柜体材质","柜体板材厚度","柜体尺寸：高×宽×深"};
+        String[] leftheader1 = {"柜体应采用覆铝锌钢板、镀锌板弯折后栓接而成，或采用\n优质防锈处理的冷轧钢板制成，" +
+                "或采用304不锈钢制成，\n或采用SMC材料制成",
+                "不超过（2.0±0.29） mm",
+                "柜体尺寸：提供实测值 mm"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mGridLayout4.setColumnCount(ColumnNum);
@@ -247,20 +285,24 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                     editText.setText(header[i]);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
+                } else if(i == 1){
+                    editText.setText(leftheader1[m-1]);
                 }
                 editText.setPadding(20,10,20,10);
 
-                editText.setMinWidth(150);
                 GridLayout.Spec rowSpec;
                 GridLayout.Spec columnSpec;
 
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                //表示起始位置为i，占据1列
-                columnSpec=GridLayout.spec(i, 1, GridLayout.FILL);
-
+                if(i  == ColumnNum -1){
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1,0.25f);
+                } else {
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1, 1.75f);
+                }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                params.height = 60;
                 mGridLayout4.addView(editText,params);
             }
 
@@ -269,8 +311,9 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
 
     }
     private void initGridLayout5(){
-        String[] header = {"检测要求","检测结果"};
-        String[] leftheader = {"外观无正常视力可见的□裂痕或□永久变形。","设备性能未受到损害。"};
+        String[] header = {"检测项目及检测要求","观察结果"};
+        String[] leftheader = {"循环操作200次，元器件的工作状态未受损伤，\n且所要求的操作力与试验前一样",
+                "循环操作200次，联锁机构的工作状态未受损伤，\n且所要求的操作力与试验前一样"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mGridLayout5.setColumnCount(ColumnNum);
@@ -285,18 +328,21 @@ public class JPYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
                 }
-                editText.setPadding(20,10,20,10);
+                editText.setPadding(20,20,20,20);
 
-                editText.setMinWidth(150);
                 GridLayout.Spec rowSpec;
                 GridLayout.Spec columnSpec;
 
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                //表示起始位置为i，占据1列
-                columnSpec=GridLayout.spec(i, 1, GridLayout.FILL);
+                if(i  == ColumnNum -1){
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1,0.25f);
+                } else {
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1, 1.75f);
+                }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                params.height = 60;
                 mGridLayout5.addView(editText,params);
             }
         }

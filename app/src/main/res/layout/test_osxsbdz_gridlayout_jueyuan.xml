@@ -215,7 +215,7 @@
                 android:textSize="20sp"/>
             <GridLayout
                 android:id="@+id/grid_layout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
@@ -232,7 +232,7 @@
                 android:textSize="20sp"/>
             <GridLayout
                 android:id="@+id/grid_layout1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
@@ -249,7 +249,7 @@
                 android:textSize="20sp"/>
             <GridLayout
                 android:id="@+id/grid_layout2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
@@ -266,7 +266,7 @@
                 android:textSize="20sp"/>
             <GridLayout
                 android:id="@+id/grid_layout3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
@@ -283,7 +283,7 @@
                 android:textSize="20sp"/>
             <GridLayout
                 android:id="@+id/grid_layout4"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
@@ -300,7 +300,7 @@
                 android:textSize="20sp"/>
             <GridLayout
                 android:id="@+id/grid_layout5"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
