@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.ui.dispatch.bean.TestArea;
 import com.surface.resourcecenter.ui.home.adapter.bean.HomeItem;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class GongQuAdapter extends RecyclerView.Adapter<GongQuAdapter.ViewHolder> {
 
-    private List<String> mItemList;
+    private List<TestArea> mItemList;
     private RecyclerView mRootRecycler;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -34,7 +35,10 @@ public class GongQuAdapter extends RecyclerView.Adapter<GongQuAdapter.ViewHolder
 
     }
 
-    public GongQuAdapter(List<String> fruitList) {
+    public GongQuAdapter() {
+    }
+
+    public void setData(List<TestArea> fruitList) {
         mItemList = fruitList;
     }
 
@@ -77,13 +81,13 @@ public class GongQuAdapter extends RecyclerView.Adapter<GongQuAdapter.ViewHolder
                 }
             }
         });
-        String fruit = mItemList.get(position);
-        holder.itemName.setText(fruit);
+        TestArea fruit = mItemList.get(position);
+        holder.itemName.setText(fruit.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mItemList.size();
+        return mItemList == null ?0:mItemList.size();
     }
     public interface onSwipeListener {
         void onDel(int pos);

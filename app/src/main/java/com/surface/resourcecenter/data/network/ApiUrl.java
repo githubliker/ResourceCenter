@@ -15,4 +15,5 @@ public class ApiUrl {
     public static String URL_SYSTEM_ROLES = URL+"/ptwz/sys-role/list";
     public static String URL_TEST_AREAS = URL+"/ptwz/test-area/list";
     public static String URL_INSTRUMENTS= URL+"/ptwz/instrument/list";
+    public static String URL_TEST_AREAS_ITEMS= URL+"/ptwz/area-project/list";
 }

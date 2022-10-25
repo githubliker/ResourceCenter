@@ -10,13 +10,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.ui.dispatch.bean.InstrumentBean;
 import com.surface.resourcecenter.ui.home.adapter.HomePageTaskAdapter;
 
 import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder> {
 
-    private List<String> mItemList;
+    private List<InstrumentBean> mItemList;
     private RecyclerView mRootRecycler;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -29,10 +30,12 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
 
     }
 
-    public DeviceAdapter(List<String> fruitList) {
-        mItemList = fruitList;
+    public DeviceAdapter() {
     }
 
+    public void setData(List<InstrumentBean> fruitList) {
+        mItemList = fruitList;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rc_fragment_device_detail_item, parent, false);
@@ -53,13 +56,13 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String fruit = mItemList.get(position);
-        holder.itemName.setText(fruit);
+        InstrumentBean fruit = mItemList.get(position);
+        holder.itemName.setText(fruit.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mItemList.size();
+        return mItemList == null ?0:mItemList.size();
     }
     public interface onSwipeListener {
         void onDel(int pos);

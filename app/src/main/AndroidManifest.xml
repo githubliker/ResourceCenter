@@ -28,7 +28,11 @@
             android:configChanges="orientation|screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.home.HomeActivity"
             android:configChanges="orientation|screenSize">
@@ -50,11 +54,7 @@
             android:configChanges="orientation|screenSize"></activity>
         <activity android:name=".ui.shiyan.DoTaskActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.shiyan.NewTaskActivity"
             android:screenOrientation="portrait">

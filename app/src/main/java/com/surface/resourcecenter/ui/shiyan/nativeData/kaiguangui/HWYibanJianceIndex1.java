@@ -62,7 +62,7 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
 
         mGridTitle.setText("接线形式、相序、空气净距检查");
         mGridTitle1.setText("柜体材质、厚度及尺寸检测");
-        mGridTitle2.setText("3.\t电气联锁试验");
+        mGridTitle2.setText("电气联锁试验");
         mGridTitle3.setText("机械操作");
         mGridTitle4.setText("防护等级检验");
         mGridTitle5.setText("密封试验（适用于气体绝缘环网柜）");

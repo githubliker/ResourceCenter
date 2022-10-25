@@ -35,10 +35,12 @@ public class GongQuPersonAdapter extends RecyclerView.Adapter<GongQuPersonAdapte
 
     }
 
-    public GongQuPersonAdapter(List<SystemRole> fruitList) {
-        mItemList = fruitList;
+    public GongQuPersonAdapter() {
     }
 
+    public void setData(List<SystemRole> fruitList) {
+        mItemList = fruitList;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rc_fragment_manager_usr_item, parent, false);
@@ -70,7 +72,7 @@ public class GongQuPersonAdapter extends RecyclerView.Adapter<GongQuPersonAdapte
 
     @Override
     public int getItemCount() {
-        return mItemList.size();
+        return mItemList == null ?0:mItemList.size();
     }
 
     private onRecycleViewItemClickListener listener;

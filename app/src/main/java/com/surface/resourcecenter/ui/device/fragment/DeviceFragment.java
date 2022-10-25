@@ -1,6 +1,7 @@
 package com.surface.resourcecenter.ui.device.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -10,20 +11,36 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.network.ApiUrl;
+import com.surface.resourcecenter.data.network.HttpListener;
+import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.device.GongQuDetailActivity;
 import com.surface.resourcecenter.ui.device.adapter.DeviceAdapter;
+import com.surface.resourcecenter.ui.dispatch.bean.DispatchBean;
+import com.surface.resourcecenter.ui.dispatch.bean.InstrumentBean;
+import com.yanzhenjie.nohttp.rest.CacheMode;
+import com.yanzhenjie.nohttp.rest.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class DeviceFragment extends BaseFragment implements View.OnClickListener {
     private RecyclerView mRecyclerView;
-    private List<String> itemList = new ArrayList<>();
+    private List<InstrumentBean> mInstrumentList = new ArrayList<>();
+    DeviceAdapter adapter;
+    private int current = 0,size = 20;
     public static DeviceFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -52,11 +69,33 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                 .show();
     }
 
-    void initHomeData(){
-        String[] gongQu = getResources().getStringArray(R.array.device_detail);
-        for(int i = 0;i< gongQu.length;i++){
-            itemList.add(gongQu[i]);
-        }
+    private void getInstruments(){
+        HashMap params = new HashMap();
+        NetworkService service = new NetworkService();
+        service.setGetRequestForData(0, params, ApiUrl.URL_INSTRUMENTS, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
+            @Override
+            public void onSucceed(int what, Response<String> response) {
+                Log.e("TAG",""+response.get().toString());
+                try {
+                    JSONObject json = new JSONObject(response.get());
+                    String datas = json.getString("data");
+                    Gson gson = new Gson();
+                    Type userListType = new TypeToken<List<InstrumentBean>>(){}.getType();
+                    mInstrumentList.clear();
+                    mInstrumentList = gson.fromJson(datas, userListType);
+                    adapter.setData(mInstrumentList);
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailed(int what, Response<String> response) {
+
+            }
+        });
     }
     @Override
     public void onResume() {
@@ -72,12 +111,12 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void init(View view) {
         mRecyclerView = view.findViewById(R.id.recyclerView);
-        initHomeData();
+        getInstruments();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 //        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         mRecyclerView.setLayoutManager(layoutManager);
-        DeviceAdapter adapter = new DeviceAdapter(itemList);
+        adapter = new DeviceAdapter();
         mRecyclerView.setAdapter(adapter);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);

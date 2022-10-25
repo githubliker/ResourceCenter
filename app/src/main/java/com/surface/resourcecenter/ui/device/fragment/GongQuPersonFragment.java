@@ -10,24 +10,36 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.listener.onRecycleViewItemClickListener;
+import com.surface.resourcecenter.data.network.ApiUrl;
+import com.surface.resourcecenter.data.network.HttpListener;
+import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.device.adapter.GongQuAdapter;
 import com.surface.resourcecenter.ui.device.adapter.GongQuPersonAdapter;
 import com.surface.resourcecenter.ui.device.adapter.bean.person;
 import com.surface.resourcecenter.ui.dispatch.bean.SystemRole;
+import com.yanzhenjie.nohttp.rest.CacheMode;
+import com.yanzhenjie.nohttp.rest.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GongQuPersonFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
     private String TAG = "GongQuPersonFragment";
     private RecyclerView mRecyclerView;
     GongQuPersonAdapter adapter;
-    private List<SystemRole> itemList = new ArrayList<>();
+    private List<SystemRole> mRoleList = new ArrayList<>();
 
     public static GongQuPersonFragment newInstance() {
 
@@ -45,10 +57,10 @@ public class GongQuPersonFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void init(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        initGroupUsrList();
+        getSystemRoles();
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),6);
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new GongQuPersonAdapter(itemList);
+        adapter = new GongQuPersonAdapter();
         mRecyclerView.setAdapter(adapter);
         adapter.setOnClickListener(mItemClickListener);
     }
@@ -56,11 +68,39 @@ public class GongQuPersonFragment extends BaseFragment implements View.OnClickLi
     onRecycleViewItemClickListener mItemClickListener = new onRecycleViewItemClickListener() {
         @Override
         public void onClick(View v,int position) {
-            boolean status = itemList.get(position).isSelect();
-            itemList.get(position).setSelect(!status);
+            boolean status = mRoleList.get(position).isSelect();
+            mRoleList.get(position).setSelect(!status);
             adapter.notifyDataSetChanged();
         }
     };
+    private void getSystemRoles(){
+        HashMap params = new HashMap();
+        NetworkService service = new NetworkService();
+        service.setGetRequestForData(0, params, ApiUrl.URL_SYSTEM_ROLES, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
+            @Override
+            public void onSucceed(int what, Response<String> response) {
+                Log.e("TAG",""+response.get().toString());
+                try {
+                    JSONObject json = new JSONObject(response.get());
+                    String datas = json.getString("data");
+                    Gson gson = new Gson();
+                    Type userListType = new TypeToken<List<SystemRole>>(){}.getType();
+                    mRoleList.clear();
+                    mRoleList = gson.fromJson(datas, userListType);
+                    adapter.setData(mRoleList);
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailed(int what, Response<String> response) {
+
+            }
+        });
+    }
     void initGroupUsrList() {
         String[] gongQu = getResources().getStringArray(R.array.gongqu_person);
         for(int i = 0;i< gongQu.length;i++){
@@ -70,12 +110,12 @@ public class GongQuPersonFragment extends BaseFragment implements View.OnClickLi
                 p.setSelect(true);
             } else
                 p.setSelect(false);
-            itemList.add(p);
+            mRoleList.add(p);
         }
         SystemRole p1 = new SystemRole();
         p1.setName("<添加>");
         p1.setSelect(false);
-        itemList.add(p1);
+        mRoleList.add(p1);
     }
 
     /**

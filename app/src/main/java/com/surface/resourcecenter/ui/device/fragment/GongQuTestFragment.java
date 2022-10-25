@@ -9,26 +9,42 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnCancelListener;
 import com.lxj.xpopup.interfaces.OnConfirmListener;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.network.ApiUrl;
+import com.surface.resourcecenter.data.network.HttpListener;
+import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.device.adapter.GongQuTestAdapter;
 import com.surface.resourcecenter.ui.dispatch.DispatchTaskActivity;
+import com.surface.resourcecenter.ui.dispatch.bean.SystemRole;
 import com.surface.resourcecenter.ui.home.adapter.HomePageToDoTaskAdapter;
 import com.surface.resourcecenter.ui.home.adapter.bean.TaskItem;
+import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
 import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
+import com.yanzhenjie.nohttp.rest.CacheMode;
+import com.yanzhenjie.nohttp.rest.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class GongQuTestFragment extends BaseFragment implements View.OnClickListener {
     private RecyclerView mRecyclerView;
     private TextView mHeader;
-    private List<String> itemList = new ArrayList<>();
+    private List<TestItemsBean> itemList = new ArrayList<>();
+    GongQuTestAdapter adapter;
+
     private boolean isSwitch = false;
 
     public static GongQuTestFragment newInstance() {
@@ -71,13 +87,34 @@ public class GongQuTestFragment extends BaseFragment implements View.OnClickList
                 })
                 .show();
     }
-    void initHomeData(){
 
-        String[] gongQu = getResources().getStringArray(R.array.device_test1);
-        for(int i = 0;i< gongQu.length;i++){
-            itemList.add(gongQu[i]);
-        }
-        itemList.add("<添加>");
+    private void getTestAreaItems(){
+        HashMap params = new HashMap();
+        NetworkService service = new NetworkService();
+        service.setGetRequestForData(0, params, ApiUrl.URL_TEST_AREAS_ITEMS, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
+            @Override
+            public void onSucceed(int what, Response<String> response) {
+                Log.e("TAG",""+response.get().toString());
+                try {
+                    JSONObject json = new JSONObject(response.get());
+                    String datas = json.getString("data");
+                    Gson gson = new Gson();
+                    Type userListType = new TypeToken<List<TestItemsBean>>(){}.getType();
+                    itemList.clear();
+                    itemList = gson.fromJson(datas, userListType);
+                    adapter.setData(itemList);
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailed(int what, Response<String> response) {
+
+            }
+        });
     }
     @Override
     public void onResume() {
@@ -94,12 +131,11 @@ public class GongQuTestFragment extends BaseFragment implements View.OnClickList
     public void init(View view) {
         mHeader = view.findViewById(R.id.group_header);
         mRecyclerView = view.findViewById(R.id.recyclerView);
-        initHomeData();
-
+        getTestAreaItems();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 //        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
         mRecyclerView.setLayoutManager(layoutManager);
-        GongQuTestAdapter adapter = new GongQuTestAdapter(itemList);
+        adapter = new GongQuTestAdapter();
         mRecyclerView.setAdapter(adapter);
         adapter.setOnClickListener(mItemClickListener);
         mHeader.setText("试验项目");

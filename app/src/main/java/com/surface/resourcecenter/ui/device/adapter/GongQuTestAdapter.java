@@ -11,12 +11,13 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
 
 import java.util.List;
 
 public class GongQuTestAdapter extends RecyclerView.Adapter<GongQuTestAdapter.ViewHolder> {
 
-    private List<String> mItemList;
+    private List<TestItemsBean> mItemList;
     private RecyclerView mRootRecycler;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -33,10 +34,12 @@ public class GongQuTestAdapter extends RecyclerView.Adapter<GongQuTestAdapter.Vi
 
     }
 
-    public GongQuTestAdapter(List<String> fruitList) {
-        mItemList = fruitList;
+    public GongQuTestAdapter() {
     }
 
+    public void setData(List<TestItemsBean> fruitList) {
+        mItemList = fruitList;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rc_fragment_device_gongqu_test_item, parent, false);
@@ -48,8 +51,8 @@ public class GongQuTestAdapter extends RecyclerView.Adapter<GongQuTestAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        String fruit = mItemList.get(position);
-        holder.itemName.setText(fruit);
+        TestItemsBean fruit = mItemList.get(position);
+        holder.itemName.setText(fruit.getName());
 
         (holder.itemDevice).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +85,7 @@ public class GongQuTestAdapter extends RecyclerView.Adapter<GongQuTestAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return mItemList.size();
+        return mItemList == null?0 :mItemList.size();
     }
     public interface onSwipeListener {
         void onDel(int pos);
