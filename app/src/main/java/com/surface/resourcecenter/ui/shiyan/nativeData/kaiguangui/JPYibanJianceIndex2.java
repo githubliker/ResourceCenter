@@ -1,15 +1,21 @@
 package com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.ui.BaseFragment;
+import com.surface.resourcecenter.ui.shiyan.nativeData.GridLayoutBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,57 +27,54 @@ import com.surface.resourcecenter.ui.BaseFragment;
 
 public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickListener {
 
-
-    private TextView deviceName,deviceTypeId,deviceId,remark,mPicTitle;
-    private TextView mGridTitle,mGridTitle1,mGridTitle2,mGridTitle3,mGridTitle4,mGridTitle5;
-    GridLayout mGridLayout, mGridLayout1, mGridLayout2, mGridLayout3, mGridLayout4, mGridLayout5;
+    private List<GridLayoutBean> mViewList = new ArrayList<>();
+    private LinearLayout mFatherLayout;
+    private String[] gridHeader = {"提升试验","机械碰撞试验","成套设备的防护等级验证"};
     public JPYibanJianceIndex2(){
 
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.test_osxsbdz_gridlayout_jueyuan;
+        return R.layout.test_gridlayout_normal;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void init(View view) {
-        mGridLayout = view.findViewById(R.id.grid_layout);
-        mGridLayout1 = view.findViewById(R.id.grid_layout1);
-        mGridLayout2 = view.findViewById(R.id.grid_layout2);
-        mGridLayout3 = view.findViewById(R.id.grid_layout3);
-        mGridLayout4 = view.findViewById(R.id.grid_layout4);
-        mGridLayout5= view.findViewById(R.id.grid_layout5);
-        mGridTitle = view.findViewById(R.id.grid_title);
-        mGridTitle1 = view.findViewById(R.id.grid_title1);
-        mGridTitle2 = view.findViewById(R.id.grid_title2);
-        mGridTitle3 = view.findViewById(R.id.grid_title3);
-        mGridTitle4 = view.findViewById(R.id.grid_title4);
-        mGridTitle5 = view.findViewById(R.id.grid_title5);
-        deviceName = view.findViewById(R.id.shebei_name);
-        deviceTypeId = view.findViewById(R.id.shebei_xinghao);
-        deviceId = view.findViewById(R.id.shebei_bianhao);
-        remark = view.findViewById(R.id.remark);
-        mPicTitle = view.findViewById(R.id.pic_title);
-        view.findViewById(R.id.huanjing_layout).setVisibility(View.GONE);
-        deviceName.setText("");
-        deviceTypeId.setText("");
-        deviceId.setText("/");
-        remark.setText("");
+        mFatherLayout = view.findViewById(R.id.grid_father);
 
-        mGridTitle.setText("提升试验");
-        mGridTitle1.setText("机械碰撞试验");
-        mGridTitle2.setText("成套设备的防护等级验证");
-        mGridTitle3.setText("");
-        mGridTitle4.setText("");
-        mGridTitle5.setText("");
-
-
+        initView();
         initGridLayout();
         initGridLayout1();
         initGridLayout2();
+    }
 
+    private void initView(){
+        mViewList.clear();
+        for(int i = 0;i< gridHeader.length;i++){
+            GridLayout gridLayout = new GridLayout(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(20,20,10,20);
+            gridLayout.setPadding(0,0,0,20);
+            gridLayout.setLayoutParams(params);
+
+            TextView textView = new TextView(getContext());
+            LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params1.setMargins(20,0,0,0);
+            textView.setTextColor(Color.parseColor("#111000"));
+            textView.setTextSize(20);
+            textView.setLayoutParams(params1);
+            textView.setText(gridHeader[gridHeader.length - 1 - i]);
+
+            GridLayoutBean bean = new GridLayoutBean();
+            bean.setGridLayout(gridLayout);
+            bean.setTextView(textView);
+            mViewList.add(0,bean);
+            mFatherLayout.addView(gridLayout,0);
+            mFatherLayout.addView(textView,0);
+
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -82,8 +85,8 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
         String[] leftheader2 = {"第一次","第二次","第三次"};
         int ColumnNum = header.length;
         int RowNum = leftheader2.length*2+3;
-        mGridLayout.setColumnCount(ColumnNum);
-        mGridLayout.setRowCount(RowNum);
+        mViewList.get(0).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(0).getGridLayout().setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 TextView editText = new TextView(getContext());
@@ -118,7 +121,7 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mGridLayout.addView(editText,params);
+                mViewList.get(0).getGridLayout().addView(editText,params);
             }
 
 
@@ -133,8 +136,8 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
                 "试验后：壳体IP代码和介电强度不变：可移式覆板可以移开和装上，门可以打开和关闭"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mGridLayout1.setColumnCount(ColumnNum);
-        mGridLayout1.setRowCount(RowNum);
+        mViewList.get(1).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(1).getGridLayout().setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 TextView editText = new TextView(getContext());
@@ -160,7 +163,7 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mGridLayout1.addView(editText,params);
+                mViewList.get(1).getGridLayout().addView(editText,params);
             }
         }
 
@@ -171,8 +174,8 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
         String[] leftheader = {"用直径为 1.0 mm的试验棒，试验用力为（1.0±0.1）N进行试验，试具不得进入壳内。","防止溅水，向外壳各方面溅水应无有害影响。"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mGridLayout2.setColumnCount(ColumnNum);
-        mGridLayout2.setRowCount(RowNum);
+        mViewList.get(2).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(2).getGridLayout().setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 TextView editText = new TextView(getContext());
@@ -198,54 +201,13 @@ public class JPYibanJianceIndex2 extends BaseFragment implements View.OnClickLis
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mGridLayout2.addView(editText,params);
+                mViewList.get(2).getGridLayout().addView(editText,params);
             }
 
 
         }
 
     }
-
-    private void initGridLayout3(){
-        String[] header = {"检测要求","检测结果"};
-        String[] leftheader = {"元器件的工作状态未受损伤，且所要求的操作力与试验前一样。","联锁机构的工作状态未受损伤，且所要求的操作力与试验前一样。","规定的防护等级状态未受损伤，且所要求的操作力与试验前一样。"};
-        int ColumnNum = header.length;
-        int RowNum = leftheader.length+1;
-        mGridLayout3.setColumnCount(ColumnNum);
-        mGridLayout3.setRowCount(RowNum);
-        for(int m = 0 ;m<RowNum;m++){
-            for(int i = 0;i<ColumnNum;i++){
-                TextView editText = new TextView(getContext());
-                editText.setBackgroundResource(R.drawable.chart_item_shape);
-                editText.setGravity(Gravity.CENTER);
-                if(m == 0){
-                    editText.setText(header[i]);
-                } else if(i == 0){
-                    editText.setText(leftheader[m-1]);
-                }
-                editText.setPadding(20,20,20,20);
-
-                GridLayout.Spec rowSpec;
-                GridLayout.Spec columnSpec;
-
-                //表示起始位置为m，占据1行
-                rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                if(i  == ColumnNum -1){
-                    //表示起始位置为i，占据1列
-                    columnSpec=GridLayout.spec(i, 1,0.25f);
-                } else {
-                    //表示起始位置为i，占据1列
-                    columnSpec=GridLayout.spec(i, 1, 1.75f);
-                }
-                GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mGridLayout3.addView(editText,params);
-            }
-
-
-        }
-
-    }
-
 
     @Override
     public void onClick(View v) {

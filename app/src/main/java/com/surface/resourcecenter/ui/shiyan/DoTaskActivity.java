@@ -67,6 +67,8 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.LeidianChongjiInd
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.LiansuoShiyanIndex11;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.NaishoudianliushiyanIndex8;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.WaiguanIndex1;
+import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.DiYaYibanJianceIndex1;
+import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoYaYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaGongpinNaiyaIndex2;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaGuiTiJianCeIndex8;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaHuiluDianzuIndex3;
@@ -292,7 +294,7 @@ public class DoTaskActivity extends BaseActivity {
     private void initHuanwangGuiFragment(){
         pageInfos.clear();
         int i = 0;
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new HWYibanJianceIndex1()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoYaYibanJianceIndex1()));
         pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaGongpinNaiyaIndex2()));
         pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaHuiluDianzuIndex3()));
         pageInfos.add(new PageInfo(huanwangguitest[i++],new HuanwangGuiTiJianCeIndex10()));

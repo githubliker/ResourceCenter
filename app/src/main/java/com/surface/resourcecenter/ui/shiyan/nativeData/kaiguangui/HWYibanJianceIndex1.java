@@ -1,15 +1,21 @@
 package com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.ui.BaseFragment;
+import com.surface.resourcecenter.ui.shiyan.nativeData.GridLayoutBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,59 +27,57 @@ import com.surface.resourcecenter.ui.BaseFragment;
 
 public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickListener {
 
-
-    private TextView deviceName,deviceTypeId,deviceId,remark,mPicTitle;
-    private TextView mGridTitle,mGridTitle1,mGridTitle2,mGridTitle3,mGridTitle4,mGridTitle5;
-    GridLayout mGridLayout, mGridLayout1, mGridLayout2, mGridLayout3, mGridLayout4, mGridLayout5;
+    private List<GridLayoutBean> mViewList = new ArrayList<>();
+    private LinearLayout mFatherLayout;
+    private String[] gridHeader = {"接线形式、相序、空气净距检查","柜体材质、厚度及尺寸检测","电气联锁试验","机械操作","防护等级检验","密封试验（适用于气体绝缘环网柜）"};
     public HWYibanJianceIndex1(){
 
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.test_osxsbdz_gridlayout_jueyuan;
+        return R.layout.test_gridlayout_normal;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void init(View view) {
-        mGridLayout = view.findViewById(R.id.grid_layout);
-        mGridLayout1 = view.findViewById(R.id.grid_layout1);
-        mGridLayout2 = view.findViewById(R.id.grid_layout2);
-        mGridLayout3 = view.findViewById(R.id.grid_layout3);
-        mGridLayout4 = view.findViewById(R.id.grid_layout4);
-        mGridLayout5= view.findViewById(R.id.grid_layout5);
-        mGridTitle = view.findViewById(R.id.grid_title);
-        mGridTitle1 = view.findViewById(R.id.grid_title1);
-        mGridTitle2 = view.findViewById(R.id.grid_title2);
-        mGridTitle3 = view.findViewById(R.id.grid_title3);
-        mGridTitle4 = view.findViewById(R.id.grid_title4);
-        mGridTitle5 = view.findViewById(R.id.grid_title5);
-        deviceName = view.findViewById(R.id.shebei_name);
-        deviceTypeId = view.findViewById(R.id.shebei_xinghao);
-        deviceId = view.findViewById(R.id.shebei_bianhao);
-        remark = view.findViewById(R.id.remark);
-        mPicTitle = view.findViewById(R.id.pic_title);
-        view.findViewById(R.id.huanjing_layout).setVisibility(View.GONE);
-        deviceName.setText("");
-        deviceTypeId.setText("");
-        deviceId.setText("/");
-        remark.setText("");
+        mFatherLayout = view.findViewById(R.id.grid_father);
 
-        mGridTitle.setText("接线形式、相序、空气净距检查");
-        mGridTitle1.setText("柜体材质、厚度及尺寸检测");
-        mGridTitle2.setText("电气联锁试验");
-        mGridTitle3.setText("机械操作");
-        mGridTitle4.setText("防护等级检验");
-        mGridTitle5.setText("密封试验（适用于气体绝缘环网柜）");
-
+        initView();
         initGridLayout();
         initGridLayout1();
         initGridLayout2();
         initGridLayout3();
         initGridLayout4();
         initGridLayout5();
+    }
 
+    private void initView(){
+        mViewList.clear();
+        for(int i = 0;i< gridHeader.length;i++){
+            GridLayout gridLayout = new GridLayout(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(20,20,10,20);
+            gridLayout.setPadding(0,0,0,20);
+            gridLayout.setLayoutParams(params);
+
+            TextView textView = new TextView(getContext());
+            LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params1.setMargins(20,0,0,0);
+            textView.setTextColor(Color.parseColor("#111000"));
+            textView.setTextSize(20);
+            textView.setLayoutParams(params1);
+            textView.setText(gridHeader[gridHeader.length - 1 - i]);
+
+            GridLayoutBean bean = new GridLayoutBean();
+            bean.setGridLayout(gridLayout);
+            bean.setTextView(textView);
+            mViewList.add(0,bean);
+            mFatherLayout.addView(gridLayout,0);
+            mFatherLayout.addView(textView,0);
+
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -89,8 +93,8 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                 "相间和相对地≥125mm，带电体至门≥155mm;"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mGridLayout.setColumnCount(ColumnNum);
-        mGridLayout.setRowCount(RowNum);
+        mViewList.get(0).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(0).getGridLayout().setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 TextView editText = new TextView(getContext());
@@ -118,7 +122,7 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mGridLayout.addView(editText,params);
+                mViewList.get(0).getGridLayout().addView(editText,params);
             }
         }
 
@@ -130,8 +134,8 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
         String[] leftHeader1 = {"柜体应采用敷铝锌钢板、镀锌板弯折后栓接而成，\n或采用优质防锈处理的冷轧钢板制成，\n或采用不锈钢制成"," ","提供实测值"};
         int ColumnNum = header.length;
         int RowNum = leftHeader1.length+1;
-        mGridLayout1.setColumnCount(ColumnNum);
-        mGridLayout1.setRowCount(RowNum);
+        mViewList.get(1).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(1).getGridLayout().setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 TextView editText = new TextView(getContext());
@@ -160,7 +164,7 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
 
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
 
-                mGridLayout1.addView(editText,params);
+                mViewList.get(1).getGridLayout().addView(editText,params);
             }
         }
 
@@ -173,8 +177,8 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
         ,"接地开关处于合闸位置，负荷开关不能合闸","负荷开关合闸，柜门不允许打开","模拟熔断器动作后未更换熔断器前，负荷开关不允许合闸，\n也不允许保持在合闸位置"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mGridLayout2.setColumnCount(ColumnNum);
-        mGridLayout2.setRowCount(RowNum);
+        mViewList.get(2).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(2).getGridLayout().setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 TextView editText = new TextView(getContext());
@@ -200,7 +204,7 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mGridLayout2.addView(editText,params);
+                mViewList.get(2).getGridLayout().addView(editText,params);
             }
 
 
@@ -216,8 +220,8 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                 "额定操作电压“分-0.3-合分”，操作5次应均可靠动作","储能电机85%和110%操作电压，操作5次储能应均可靠动作"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mGridLayout3.setColumnCount(ColumnNum);
-        mGridLayout3.setRowCount(RowNum);
+        mViewList.get(3).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(3).getGridLayout().setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 TextView editText = new TextView(getContext());
@@ -243,7 +247,7 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mGridLayout3.addView(editText,params);
+                mViewList.get(3).getGridLayout().addView(editText,params);
             }
 
 
@@ -256,8 +260,8 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
         String[] leftheader1 = {"柜体外壳防护等级\n达到IP4X及以上，\n隔室之间\n达到IP2X及以上。"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mGridLayout4.setColumnCount(ColumnNum);
-        mGridLayout4.setRowCount(RowNum);
+        mViewList.get(4).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(4).getGridLayout().setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 TextView editText = new TextView(getContext());
@@ -293,7 +297,7 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mGridLayout4.addView(editText,params);
+                mViewList.get(4).getGridLayout().addView(editText,params);
             }
 
 
@@ -306,8 +310,8 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                 "试验前压力","试验后压力","密封罩的体积"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mGridLayout5.setColumnCount(ColumnNum);
-        mGridLayout5.setRowCount(RowNum);
+        mViewList.get(5).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(5).getGridLayout().setRowCount(RowNum);
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 TextView editText = new TextView(getContext());
@@ -333,7 +337,7 @@ public class HWYibanJianceIndex1 extends BaseFragment implements View.OnClickLis
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mGridLayout5.addView(editText,params);
+                mViewList.get(5).getGridLayout().addView(editText,params);
             }
         }
 
