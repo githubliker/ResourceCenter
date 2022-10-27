@@ -16,9 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.usrManager.bean.ChannelItem;
 
@@ -82,10 +85,23 @@ public class UsrManagerFragment extends BaseFragment implements View.OnClickList
         quyuGridView.setOnItemClickListener(this);
         mSwitch.setOnClickListener(this);
 
+        initTitle(view);
         initGroupUsrList();
         initCompanyUsrList();
     }
 
+    private void initTitle(View view) {
+        StatusBarUtil.setPaddingSmart(getContext(),view.findViewById(R.id.toolbar));
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+        toolbar.setTitle("用户管理");
+
+    }
     void initGroupUsrList(){
         grouplist.clear();
         for(int i =0;i<20;i++){

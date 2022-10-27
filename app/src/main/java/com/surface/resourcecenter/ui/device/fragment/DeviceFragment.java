@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.network.ApiUrl;
 import com.surface.resourcecenter.data.network.HttpListener;
 import com.surface.resourcecenter.data.network.NetworkService;
+import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.device.GongQuDetailActivity;
 import com.surface.resourcecenter.ui.device.adapter.DeviceAdapter;
@@ -118,30 +121,21 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         mRecyclerView.setLayoutManager(layoutManager);
         adapter = new DeviceAdapter();
         mRecyclerView.setAdapter(adapter);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        layoutParams.leftMargin = 20;
-        layoutParams.rightMargin = 20;
-        layoutParams.topMargin = 80;
 
-        mRecyclerView.setLayoutParams(layoutParams);
         adapter.setOnClickListener(mItemClickListener);
         initTitle(view);
     }
 
     private void initTitle(View view) {
-        ImageView leftButton = view.findViewById(R.id.leftButton);
-        leftButton.setVisibility(View.VISIBLE);
-        leftButton.setImageResource(R.mipmap.common_back);
-        TextView title = view.findViewById(R.id.title);
-
-        title.setText("");
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        StatusBarUtil.setPaddingSmart(getContext(),view.findViewById(R.id.toolbar));
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
+        toolbar.setTitle("仪器管理");
 
     }
     @Override

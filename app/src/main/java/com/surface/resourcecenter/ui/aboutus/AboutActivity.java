@@ -7,8 +7,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.utils.ApplicationUtils;
+import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseActivity;
 
 
@@ -26,17 +29,15 @@ public class AboutActivity extends BaseActivity {
     }
 
     private void initTitle() {
-        ImageView leftButton = findViewById(R.id.leftButton);
-        leftButton.setVisibility(View.VISIBLE);
-        leftButton.setImageResource(R.mipmap.common_back);
-        TextView title = findViewById(R.id.title);
-        title.setText("关于我们");
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        StatusBarUtil.setPaddingSmart(this,findViewById(R.id.toolbar));
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        toolbar.setTitle("关于我们");
 
     }
 

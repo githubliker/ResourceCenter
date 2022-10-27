@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.statusbar.StatusBarCompat;
 import com.surface.resourcecenter.ui.statusbar.StatusbarUtils;
 import com.surface.resourcecenter.ui.swipeback.SwipeBackActivity;
@@ -42,9 +43,11 @@ public class BaseActivity extends SwipeBackActivity {
     super.setContentView(layoutResID);
     //默认是关闭页面右滑退出动效果
     getSwipeBackLayout().setEnabled(false);
-    setStatusBarIcon();
-    initStatusBar(this);
-    hideStatusBar();
+//    setStatusBarIcon();
+//    initStatusBar(this);
+//    hideStatusBar();
+    //状态栏透明和间距处理
+    StatusBarUtil.immersive(this, 0xff000000, 0.1f);
   }
 
   protected void setStatusBarIcon() {

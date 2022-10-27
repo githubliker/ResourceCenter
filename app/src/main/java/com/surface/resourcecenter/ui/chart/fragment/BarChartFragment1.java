@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -119,18 +120,14 @@ public class BarChartFragment1 extends BaseFragment implements View.OnClickListe
     }
 
     private void initTitle(View view) {
-        ImageView leftButton = view.findViewById(R.id.leftButton);
-        leftButton.setVisibility(View.VISIBLE);
-        leftButton.setImageResource(R.mipmap.common_back);
-        TextView title = view.findViewById(R.id.title);
-
-        title.setText("");
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
+        toolbar.setTitle("");
 
     }
 

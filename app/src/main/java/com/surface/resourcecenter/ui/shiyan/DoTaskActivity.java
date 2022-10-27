@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -16,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.Consts;
+import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.home.adapter.bean.PageInfo;
 import com.surface.resourcecenter.ui.shiyan.nativeData.biandianzhan.DianyabiTestIndex3;
@@ -51,6 +53,7 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.byq.YjWenshengIndex10;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuBupinighenglvIndex3;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuXishoubiIndex2;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZukangFuzaiSunhaoIndex6;
+import com.surface.resourcecenter.ui.shiyan.nativeData.dianlan.FenZhiXiangYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.DlqGongpinNaiyaIndex5;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.DlqWenshengIndex4;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.DuanziJingfuzaiIndex13;
@@ -143,21 +146,15 @@ public class DoTaskActivity extends BaseActivity {
 
 
     private void initTitle() {
-        ImageView leftButton = findViewById(R.id.leftButton);
-        leftButton.setVisibility(View.VISIBLE);
-        leftButton.setImageResource(R.mipmap.common_back);
-        TextView title = findViewById(R.id.title);
-        if(TESTNAME.equals(Consts.YJSBYQ)){
-            title.setText("油浸式变压器试验");
-        } else {
-            title.setText("试验信息");
-        }
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        StatusBarUtil.setPaddingSmart(this,findViewById(R.id.toolbar));
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        toolbar.setTitle("试验信息");
 
     }
 
@@ -294,7 +291,7 @@ public class DoTaskActivity extends BaseActivity {
     private void initHuanwangGuiFragment(){
         pageInfos.clear();
         int i = 0;
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoYaYibanJianceIndex1()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new FenZhiXiangYibanJianceIndex1()));
         pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaGongpinNaiyaIndex2()));
         pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaHuiluDianzuIndex3()));
         pageInfos.add(new PageInfo(huanwangguitest[i++],new HuanwangGuiTiJianCeIndex10()));

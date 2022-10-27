@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -32,6 +33,7 @@ import com.surface.resourcecenter.data.listener.onItemCheckChangeListener;
 import com.surface.resourcecenter.data.network.ApiUrl;
 import com.surface.resourcecenter.data.network.HttpListener;
 import com.surface.resourcecenter.data.network.NetworkService;
+import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.dispatch.adapter.StandardAdapter;
@@ -209,17 +211,15 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         });
     }
     private void initTitle() {
-        ImageView leftButton = findViewById(R.id.leftButton);
-        leftButton.setVisibility(View.VISIBLE);
-        leftButton.setImageResource(R.mipmap.common_back);
-        TextView title = findViewById(R.id.title);
-        title.setText("调度信息");
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        StatusBarUtil.setPaddingSmart(this,findViewById(R.id.toolbar));
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        toolbar.setTitle("调度信息");
 
     }
 

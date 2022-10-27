@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,11 +33,13 @@ import com.luck.picture.lib.decoration.GridSpacingItemDecoration;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.luck.picture.lib.tools.ScreenUtils;
+import com.scwang.smart.refresh.layout.util.SmartUtil;
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.Consts;
 import com.surface.resourcecenter.data.network.ApiUrl;
 import com.surface.resourcecenter.data.network.HttpListener;
 import com.surface.resourcecenter.data.network.NetworkService;
+import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.dispatch.adapter.StandardAdapter;
 import com.surface.resourcecenter.ui.sample.adapter.FullyGridLayoutManager;
@@ -176,17 +179,15 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
         mDataUpload.setOnClickListener(this);
     }
     private void initTitle() {
-        ImageView leftButton = findViewById(R.id.leftButton);
-        leftButton.setVisibility(View.VISIBLE);
-        leftButton.setImageResource(R.mipmap.common_back);
-        TextView title = findViewById(R.id.title);
-        title.setText("收样信息");
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        StatusBarUtil.setPaddingSmart(this,findViewById(R.id.toolbar));
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        toolbar.setTitle("收样信息");
 
     }
 

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -119,22 +120,14 @@ public class NewTaskActivity extends BaseActivity {
 
 
     private void initTitle() {
-        ImageView leftButton = findViewById(R.id.leftButton);
-        leftButton.setVisibility(View.VISIBLE);
-        leftButton.setImageResource(R.mipmap.common_back);
-        TextView title = findViewById(R.id.title);
-        if(TESTNAME.equals(Consts.YJSBYQ)){
-            title.setText("油浸式变压器试验");
-        } else {
-            title.setText("试验信息");
-        }
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
+        toolbar.setTitle("试验信息");
     }
 
     private void initJPGuiFragment(){

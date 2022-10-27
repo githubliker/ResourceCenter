@@ -8,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.chart.fragment.BarChartFragment;
@@ -55,19 +58,15 @@ public class ChartManagerActivity extends BaseActivity {
     }
 
     private void initTitle() {
-        ImageView leftButton = findViewById(R.id.leftButton);
-        leftButton.setVisibility(View.VISIBLE);
-        leftButton.setImageResource(R.mipmap.common_back);
-        TextView title = findViewById(R.id.title);
-
-        title.setText("数据分析");
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        StatusBarUtil.setPaddingSmart(this,findViewById(R.id.toolbar));
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
+        toolbar.setTitle("数据分析");
     }
     @Override
     public void onBackPressed() {
