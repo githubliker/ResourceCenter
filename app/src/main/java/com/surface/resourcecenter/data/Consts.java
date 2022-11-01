@@ -1,5 +1,7 @@
 package com.surface.resourcecenter.data;
 
+import java.net.PortUnreachableException;
+
 public class Consts {
     public static String YJSBYQ = "YJSBYQ";
     public static String GSBYQ = "GSBYQ";
@@ -26,4 +28,10 @@ public class Consts {
     public static String YOUJINBYQ = "油浸式变压器";
     public static String MEISHIBYQ = "美式箱变";
     public static String OUSHIBYQ = "欧式箱变";
+
+    public static String USRNAME = "USRNAME";
+    public static String LOGINPASSWORD = "LOGINPASSWORD";
+    public static String LOGINNAME = "LOGINNAME";
+    public static String LOGINROLES = "LOGINNAME";
+
 }

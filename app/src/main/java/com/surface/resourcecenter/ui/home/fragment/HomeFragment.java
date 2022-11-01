@@ -17,6 +17,8 @@ import com.surface.resourcecenter.ui.home.adapter.HomePageTaskAdapter;
 import com.surface.resourcecenter.ui.home.adapter.bean.DataBean;
 import com.surface.resourcecenter.ui.home.adapter.bean.HomeItem;
 import com.surface.resourcecenter.ui.dispatch.DispatchTaskListActivity;
+import com.surface.resourcecenter.ui.report.ReportDetailActivity;
+import com.surface.resourcecenter.ui.report.ReportListActivity;
 import com.surface.resourcecenter.ui.sample.SampleRecvActivity;
 import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
 import com.surface.resourcecenter.ui.usrManager.UsrManagerActivity;
@@ -42,10 +44,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 SampleRecvActivity.launch(getContext());
             } else if(tag.equals("样品管理")){
                 DispatchTaskListActivity.launch(getContext());
-            } else if(tag.equals("试验管理")){
+            } else if(tag.equals("试验进度")){
                 DoTaskActivity.launch(getContext());
             } else if(tag.equals("报告管理")){
-
+                ReportDetailActivity.launch(getContext());
             } else if(tag.equals("数据分析")){
                 ChartManagerActivity.launch(getContext());
             } else if(tag.equals("仪器管理")){
@@ -62,7 +64,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     void initHomeData(){
         itemList.add(new HomeItem("收样",R.mipmap.icon_shouyang));
         itemList.add(new HomeItem("样品管理",R.mipmap.icon_sample_manager));
-        itemList.add(new HomeItem("试验管理",R.mipmap.icon_test_manager));
+        itemList.add(new HomeItem("试验进度",R.mipmap.icon_test_manager));
         itemList.add(new HomeItem("报告管理",R.mipmap.icon_report_manager));
         itemList.add(new HomeItem("数据分析",R.mipmap.icon_data_manager));
         itemList.add(new HomeItem("仪器管理",R.mipmap.icon_money_manager));

@@ -54,4 +54,7 @@ dependencies {
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
     implementation  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
     implementation  'com.scwang.smart:refresh-header-radar:2.0.0-alpha-1'       //雷达刷新头
+    implementation'com.journeyapps:zxing-android-embedded:3.0.2@aar'
+    implementation'com.google.zxing:core:3.2.0'
+    implementation files('libs\\tbs_sdk_thirdapp_v4.3.0.67_43967_sharewithdownloadwithfile_withoutGame_obfs_20200923_120452.jar')
 }

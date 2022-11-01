@@ -43,6 +43,7 @@
             android:textColorHint="#888888"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:text="hcAdmin"
             android:layout_toRightOf="@+id/login_num_logo"/>
     </RelativeLayout>
 
@@ -78,6 +79,7 @@
             android:layout_toLeftOf="@+id/login_is_look"
             android:background="@null"
             android:hint="请输入密码"
+            android:text="hcdq@123"
             android:textColorHint="#888888"
             android:inputType="textPassword"
             android:maxLength="16"

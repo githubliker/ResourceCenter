@@ -16,7 +16,6 @@
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:visibility="gone"
-            android:layout_marginBottom="80dp"
             android:layout_height="450dp" />
 
 

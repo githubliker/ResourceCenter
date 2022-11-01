@@ -32,7 +32,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:background="@color/text_selected" />
 
             <LinearLayout
@@ -391,7 +391,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:background="@color/text_selected" />
             <LinearLayout
                 android:id="@+id/extra_params"
@@ -410,7 +410,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:background="@color/text_selected" />
 
             <LinearLayout
@@ -672,7 +672,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:background="@color/text_selected" />
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -691,7 +691,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:background="@color/text_selected" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"

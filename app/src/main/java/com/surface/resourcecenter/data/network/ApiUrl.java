@@ -16,4 +16,6 @@ public class ApiUrl {
     public static String URL_TEST_AREAS = URL+"/ptwz/test-area/list";
     public static String URL_INSTRUMENTS= URL+"/ptwz/instrument/list";
     public static String URL_TEST_AREAS_ITEMS= URL+"/ptwz/area-project/list";
+
+    public static String URL_REPORT_LIST = URL+"/ptwz/report/page";
 }

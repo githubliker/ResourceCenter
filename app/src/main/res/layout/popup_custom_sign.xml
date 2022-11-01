@@ -23,6 +23,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/login_commit_shape"
             android:text="清除" />
 
 
@@ -33,6 +34,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/login_commit_shape"
             android:text="保存" />
         <Button
             android:id="@+id/sign_close"
@@ -41,6 +43,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/login_commit_shape"
             android:text="关闭" />
 
     </LinearLayout>

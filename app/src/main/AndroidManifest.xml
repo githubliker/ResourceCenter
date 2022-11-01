@@ -35,7 +35,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.home.HomeActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
 
         </activity>
         <activity android:name=".ui.BaseActivity"
@@ -55,6 +56,11 @@
         <activity android:name=".ui.shiyan.DoTaskActivity"
             android:screenOrientation="portrait">
 
+        </activity>
+        <activity android:name=".ui.report.ReportListActivity"
+            android:configChanges="orientation|screenSize"></activity>
+        <activity android:name=".ui.report.ReportDetailActivity"
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity android:name=".ui.shiyan.NewTaskActivity"
             android:screenOrientation="portrait">

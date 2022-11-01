@@ -4,9 +4,15 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.surface.resourcecenter.data.Consts;
 import com.surface.resourcecenter.data.network.ApiUrl;
 import com.surface.resourcecenter.data.network.HttpListener;
 import com.surface.resourcecenter.data.network.NetworkService;
+import com.surface.resourcecenter.data.sp.SpManager;
+import com.surface.resourcecenter.ui.dispatch.bean.DispatchBean;
+import com.surface.resourcecenter.ui.login.bean.UserInfo;
 import com.yanzhenjie.nohttp.rest.CacheMode;
 import com.yanzhenjie.nohttp.rest.Response;
 
@@ -77,15 +83,34 @@ public class LoginPresenterImpl implements LoginPresenter {
 //        map.put("name", phone);
 //        map.put("password",password);
         try {
-            json.put("name", "hcAdmin");
-            json.put("password","hcdq@123");
+            json.put("name", phone);
+            json.put("password",password);
         }catch (JSONException e){}
         NetworkService service = new NetworkService();
         service.setRequestForJson(0, json.toString(), ApiUrl.URL_LOGIN, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
             @Override
             public void onSucceed(int what, Response<String> response) {
                 Log.e("TAG",""+response.get().toString());
-                loginView.loginSuccessForUI();
+                try {
+                    JSONObject json = null;
+                    json = new JSONObject(response.get());
+                    String datas = json.getString("data");
+                    String msg = json.getString("msg");
+                    if(!TextUtils.isEmpty(msg) && msg.equals("操作成功")){
+                        Gson gson = new Gson();
+                        Type userListType = new TypeToken<UserInfo>(){}.getType();
+                        UserInfo info = gson.fromJson(datas, userListType);
+                        SpManager.getInstance().set(Consts.USRNAME, info.getRealName());
+                        SpManager.getInstance().set(Consts.LOGINROLES,info.getRoles());
+                        loginView.loginSuccessForUI();
+                    } else {
+                        loginView.loginDataError(msg);
+                    }
+                }catch (Exception e){
+
+                }
+
+
             }
 
             @Override

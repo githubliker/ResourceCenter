@@ -13,9 +13,14 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.impl.LoadingPopupView;
+import com.lxj.xpopup.interfaces.OnConfirmListener;
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.Consts;
 import com.surface.resourcecenter.data.sp.SpManager;
 import com.surface.resourcecenter.ui.home.HomeActivity;
+import com.surface.resourcecenter.ui.view.CustomSignPopup;
 
 
 /**
@@ -33,6 +38,7 @@ public class LoginFragment extends Fragment implements LoginView {
     private EditText phone;
     private EditText password;
     private LoginPresenterImpl presenter;
+    LoadingPopupView loadingPopup;
 
     public static Fragment newInstance() {
         Bundle args = new Bundle();
@@ -51,14 +57,14 @@ public class LoginFragment extends Fragment implements LoginView {
         password = view.findViewById(R.id.login_password);
         initView();
         initListener();
-        readSave();
+//        readSave();
         return view;
     }
 
     private void readSave() {
 
-        String number = SpManager.getInstance().get("login_phoneNum");
-        String login_password = SpManager.getInstance().get("login_password");
+        String number = SpManager.getInstance().get(Consts.LOGINNAME);
+        String login_password = SpManager.getInstance().get(Consts.LOGINPASSWORD);
         phone.setText(number);
         if (!TextUtils.isEmpty(number)){
             phone.setSelection(number.length());
@@ -91,6 +97,10 @@ public class LoginFragment extends Fragment implements LoginView {
                 String number = phone.getText().toString();
                 String login_password = password.getText().toString();
                 presenter.loginCommit(number,login_password);
+                loadingPopup = (LoadingPopupView) new XPopup.Builder(getContext())
+                        .dismissOnBackPressed(false)
+                        .asLoading("正在登录中...")
+                        .show();
             }
         });
 
@@ -107,8 +117,18 @@ public class LoginFragment extends Fragment implements LoginView {
      */
     @Override
     public void loginDataError(String message) {
+        loadingPopup.dismiss();
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         commit.setEnabled(true);
+        new XPopup.Builder(getContext())
+                .asConfirm("登录失败", message,
+                        "取消", "确定",
+                        new OnConfirmListener() {
+                            @Override
+                            public void onConfirm() {
+
+                            }
+                        }, null, false).show();
     }
 
     /**
@@ -118,14 +138,14 @@ public class LoginFragment extends Fragment implements LoginView {
     public void loginSuccessForUI() {
         commit.setEnabled(true);
         if(getActivity() != null) {
-            Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
+            loadingPopup.dismiss();
             getActivity().finish();
 //            Router.launchMainActivity(getActivity());
             HomeActivity.launch(getContext());
             String number = phone.getText().toString();
             String login_password = password.getText().toString();
-            SpManager.getInstance().set("login_phoneNum", number);
-            SpManager.getInstance().set("login_password", login_password);
+            SpManager.getInstance().set(Consts.LOGINNAME, number);
+            SpManager.getInstance().set(Consts.LOGINPASSWORD, login_password);
         }
 
     }

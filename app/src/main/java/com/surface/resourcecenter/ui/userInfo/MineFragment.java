@@ -13,7 +13,10 @@ import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.CenterPopupView;
 import com.lxj.xpopup.enums.PopupAnimation;
 import com.lxj.xpopup.interfaces.OnConfirmListener;
+import com.lxj.xpopup.interfaces.OnInputConfirmListener;
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.Consts;
+import com.surface.resourcecenter.data.sp.SpManager;
 import com.surface.resourcecenter.data.utils.FileCacheUtils;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.aboutus.AboutActivity;
@@ -79,6 +82,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         aboutLayout.setOnClickListener(this);
         cacheClear.setOnClickListener(this);
         fixSign.setOnClickListener(this);
+        view.findViewById(R.id.fixusrname).setOnClickListener(this);
+        view.findViewById(R.id.fixpassword).setOnClickListener(this);
 
         try {
             String cacheSizeStr = FileCacheUtils.getTotalCacheSize(getActivity());
@@ -87,6 +92,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             e.printStackTrace();
             cacheSize.setText("");
         }
+        logintxt.setText(SpManager.getInstance().get(Consts.USRNAME));
     }
 
     public void initData() {
@@ -96,8 +102,39 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.fixsign) {
+        if(i == R.id.fixusrname){
+            new XPopup.Builder(getContext())
+                    .hasStatusBarShadow(false)
+                    //.dismissOnBackPressed(false)
+                    .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
+                    .autoOpenSoftInput(true)
+//                        .autoFocusEditText(false) //是否让弹窗内的EditText自动获取焦点，默认是true
+                    //.moveUpToKeyboard(false)   //是否移动到软键盘上面，默认为true
+                    .asInputConfirm("提示", null, SpManager.getInstance().get(Consts.USRNAME), "请输入您的用户名",
+                            new OnInputConfirmListener() {
+                                @Override
+                                public void onConfirm(String text) {
 
+                                }
+                            })
+                    .show();
+        } else if(i == R.id.fixpassword){
+            new XPopup.Builder(getContext())
+                    .hasStatusBarShadow(false)
+                    //.dismissOnBackPressed(false)
+                    .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
+                    .autoOpenSoftInput(true)
+//                        .autoFocusEditText(false) //是否让弹窗内的EditText自动获取焦点，默认是true
+                    //.moveUpToKeyboard(false)   //是否移动到软键盘上面，默认为true
+                    .asInputConfirm("提示", null, null, "请输入您的密码",
+                            new OnInputConfirmListener() {
+                                @Override
+                                public void onConfirm(String text) {
+
+                                }
+                            })
+                    .show();
+        } else if (i == R.id.fixsign) {
             CustomSignPopup customPopup = new CustomSignPopup(getContext());
             new XPopup.Builder(getContext())
                     .autoOpenSoftInput(false)

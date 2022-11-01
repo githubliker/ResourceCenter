@@ -7,14 +7,10 @@
     android:background="@color/usercenterbg"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/titlecolor" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="300dp"
         android:background="#f4f4f4">
 
         <LinearLayout
@@ -25,19 +21,18 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_width="60dip"
-                android:layout_height="60dip"
+                android:layout_width="90dip"
+                android:layout_height="90dip"
                 android:layout_gravity="center_horizontal">
 
                 <com.surface.resourcecenter.ui.view.RoundImageView
                     android:id="@+id/headpic1"
-                    android:layout_width="60dip"
-                    android:layout_height="60dip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/app_icon"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:scaleType="center"
+                    android:src="@drawable/icon_default_pic"
+                    android:textColor="@color/white"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -53,8 +48,8 @@
                     android:layout_height="25dp"
                     android:gravity="center"
                     android:text="请登录"
-                    android:textColor="#3d3d3d"
-                    android:textSize="14sp" />
+                    android:textSize="18sp"
+                    android:textColor="#3d3d3d" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
@@ -62,13 +57,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:background="#ffffff"
         android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/fixusrname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
@@ -81,14 +78,15 @@
                 android:src="@mipmap/icon_name" />
 
             <TextView
+                android:id="@+id/fix_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/usrname"
                 android:text="修改姓名"
-                android:textColor="#3d3d3d"
-                android:textSize="14sp" />
+                android:textSize="18sp"
+                android:textColor="#3d3d3d"/>
 
             <ImageView
                 android:layout_width="7dp"
@@ -107,7 +105,7 @@
         <RelativeLayout
             android:id="@+id/fixpassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
@@ -126,8 +124,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/password"
                 android:text="修改密码"
-                android:textColor="#3d3d3d"
-                android:textSize="14sp" />
+                android:textSize="18sp"
+                android:textColor="#3d3d3d" />
 
             <ImageView
                 android:layout_width="7dp"
@@ -146,7 +144,7 @@
         <RelativeLayout
             android:id="@+id/fixsign"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
@@ -165,8 +163,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/sign"
                 android:text="录入签名"
-                android:textColor="#3d3d3d"
-                android:textSize="14sp" />
+                android:textSize="18sp"
+                android:textColor="#3d3d3d" />
 
             <ImageView
                 android:layout_width="7dp"
@@ -185,7 +183,7 @@
         <RelativeLayout
             android:id="@+id/cacheClear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
@@ -204,8 +202,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/mine_logo1"
                 android:text="清空缓存"
-                android:textColor="#3d3d3d"
-                android:textSize="14sp" />
+                android:textSize="18sp"
+                android:textColor="#3d3d3d"/>
 
             <TextView
                 android:id="@+id/cacheSize"
@@ -229,7 +227,7 @@
         <RelativeLayout
             android:id="@+id/aboutLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
@@ -248,8 +246,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/mine_logo3"
                 android:text="关于我们"
-                android:textColor="#3d3d3d"
-                android:textSize="14sp" />
+                android:textSize="18sp"
+                android:textColor="#3d3d3d" />
 
             <ImageView
                 android:layout_width="7dp"
@@ -264,11 +262,11 @@
     <TextView
         android:id="@+id/loginOut"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="?attr/actionBarSize"
         android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:gravity="center"
         android:text="退出登录"
         android:textColor="#999999"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 </LinearLayout>
