@@ -3,12 +3,16 @@ package com.surface.resourcecenter.ui.userInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.CenterPopupView;
 import com.lxj.xpopup.enums.PopupAnimation;
@@ -16,12 +20,26 @@ import com.lxj.xpopup.interfaces.OnConfirmListener;
 import com.lxj.xpopup.interfaces.OnInputConfirmListener;
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.Consts;
+import com.surface.resourcecenter.data.network.ApiUrl;
+import com.surface.resourcecenter.data.network.HttpListener;
+import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.data.sp.SpManager;
 import com.surface.resourcecenter.data.utils.FileCacheUtils;
+import com.surface.resourcecenter.data.utils.ToastUtils;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.aboutus.AboutActivity;
+import com.surface.resourcecenter.ui.dispatch.bean.DispatchBean;
 import com.surface.resourcecenter.ui.login.LoginActivity;
 import com.surface.resourcecenter.ui.view.CustomSignPopup;
+import com.yanzhenjie.nohttp.rest.CacheMode;
+import com.yanzhenjie.nohttp.rest.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -114,7 +132,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                             new OnInputConfirmListener() {
                                 @Override
                                 public void onConfirm(String text) {
-
+                                    if(TextUtils.isEmpty(text)){
+                                        ToastUtils.ShowCenterToast(getContext(),"请输入您的用户名");
+                                    } else {
+                                        fixUserInfo(text,null);
+                                    }
                                 }
                             })
                     .show();
@@ -130,7 +152,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                             new OnInputConfirmListener() {
                                 @Override
                                 public void onConfirm(String text) {
-
+                                    if(TextUtils.isEmpty(text)){
+                                        ToastUtils.ShowCenterToast(getContext(),"请输入您的密码");
+                                    } else {
+                                        fixUserInfo(null,text);
+                                    }
                                 }
                             })
                     .show();
@@ -187,6 +213,31 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             popupView.show();
 
         }
+    }
+
+    private void fixUserInfo(String name,String password){
+        HashMap params = new HashMap();
+        params.put("id",SpManager.getInstance().get(Consts.USRID));
+        if(!TextUtils.isEmpty(name)){
+            params.put("realName",name);
+        }
+        if(!TextUtils.isEmpty(password)){
+            params.put("password",password);
+        }
+
+        NetworkService service = new NetworkService();
+        service.setRequestForJson(0, params.toString(), ApiUrl.URL_USRINFO_UPDATE, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
+            @Override
+            public void onSucceed(int what, Response<String> response) {
+                Log.e("TAG",""+response.get().toString());
+
+            }
+
+            @Override
+            public void onFailed(int what, Response<String> response) {
+
+            }
+        });
     }
 
 }

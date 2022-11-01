@@ -18,10 +18,9 @@ import com.surface.resourcecenter.data.network.ApiUrl;
 import com.surface.resourcecenter.data.network.HttpListener;
 import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.ui.BaseFragment;
-import com.surface.resourcecenter.ui.dispatch.DispatchTaskActivity;
-import com.surface.resourcecenter.ui.dispatch.bean.DispatchBean;
-import com.surface.resourcecenter.ui.home.adapter.HomePageToDoTaskAdapter;
-import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
+import com.surface.resourcecenter.ui.report.ReportDetailActivity;
+import com.surface.resourcecenter.ui.report.adapter.ReportListAdapter;
+import com.surface.resourcecenter.ui.report.bean.ReportBean;
 import com.yanzhenjie.nohttp.rest.CacheMode;
 import com.yanzhenjie.nohttp.rest.Response;
 
@@ -34,31 +33,19 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class ReportDetailFragment extends BaseFragment implements View.OnClickListener {
+public class ReportListFragment extends BaseFragment implements View.OnClickListener {
     private RecyclerView mRecyclerView;
     RefreshLayout refreshLayout;
-    private ArrayList<DispatchBean> dispatchList = new ArrayList<>();
-    HomePageToDoTaskAdapter adapter;
+    private ArrayList<ReportBean> reportList = new ArrayList<>();
+    ReportListAdapter adapter;
     private int current = 1;
     private int size = 5;
 
     onRecycleViewItemClickListener mItemClickListener = new onRecycleViewItemClickListener() {
         @Override
         public void onClick(View view, int position) {
-            switch (dispatchList.get(position).getState()){
-                case 0:
-                    DispatchTaskActivity.launch(getContext(),dispatchList.get(position));
-                    break;
-                case 1:
-                    DoTaskActivity.launch(getContext());
-                    break;
-                case 2:
-
-                    break;
-                default:
-                    DispatchTaskActivity.launch(getContext(),dispatchList.get(position));
-                    break;
-            }
+            String path = reportList.get(position).getPath();
+            ReportDetailActivity.launch(getContext(), reportList.get(position));
         }
     };
 
@@ -73,16 +60,16 @@ public class ReportDetailFragment extends BaseFragment implements View.OnClickLi
             public void onSucceed(int what, Response<String> response) {
                 Log.e("TAG",""+response.get().toString());
                 try {
-                    dispatchList.clear();
+                    reportList.clear();
                     JSONObject json = null;
                     json = new JSONObject(response.get());
                     String datas = json.getString("data");
                     JSONObject j = new JSONObject(datas);
                     String records = j.getString("records");
                     Gson gson = new Gson();
-                    Type userListType = new TypeToken<List<DispatchBean>>(){}.getType();
-                    dispatchList = gson.fromJson(records, userListType);
-                    adapter.setAdapterData(dispatchList);
+                    Type userListType = new TypeToken<List<ReportBean>>(){}.getType();
+                    reportList = gson.fromJson(records, userListType);
+                    adapter.setAdapterData(reportList);
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -113,7 +100,7 @@ public class ReportDetailFragment extends BaseFragment implements View.OnClickLi
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 //        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new HomePageToDoTaskAdapter(dispatchList);
+        adapter = new ReportListAdapter(reportList);
         mRecyclerView.setAdapter(adapter);
         adapter.setOnClickListener(mItemClickListener);
         initHomeData();

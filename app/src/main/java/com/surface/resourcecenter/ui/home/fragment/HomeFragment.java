@@ -47,7 +47,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             } else if(tag.equals("试验进度")){
                 DoTaskActivity.launch(getContext());
             } else if(tag.equals("报告管理")){
-                ReportDetailActivity.launch(getContext());
+                ReportListActivity.launch(getContext());
             } else if(tag.equals("数据分析")){
                 ChartManagerActivity.launch(getContext());
             } else if(tag.equals("仪器管理")){

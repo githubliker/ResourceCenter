@@ -30,6 +30,7 @@ public class Consts {
     public static String OUSHIBYQ = "欧式箱变";
 
     public static String USRNAME = "USRNAME";
+    public static String USRID = "USRID";
     public static String LOGINPASSWORD = "LOGINPASSWORD";
     public static String LOGINNAME = "LOGINNAME";
     public static String LOGINROLES = "LOGINNAME";

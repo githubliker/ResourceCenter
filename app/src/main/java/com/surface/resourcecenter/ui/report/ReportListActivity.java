@@ -11,8 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseActivity;
-import com.surface.resourcecenter.ui.dispatch.fragment.TodoTaskFragment;
-import com.surface.resourcecenter.ui.report.fragment.ReportDetailFragment;
+import com.surface.resourcecenter.ui.report.fragment.ReportListFragment;
 
 
 /**
@@ -34,7 +33,7 @@ public class ReportListActivity extends BaseActivity {
 
         setContentView(R.layout.rc_activity_sample_list_layout);
         getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                new ReportDetailFragment()).commitAllowingStateLoss();
+                new ReportListFragment()).commitAllowingStateLoss();
         initTitle();
     }
 

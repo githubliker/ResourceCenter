@@ -100,6 +100,7 @@ public class LoginPresenterImpl implements LoginPresenter {
                         Gson gson = new Gson();
                         Type userListType = new TypeToken<UserInfo>(){}.getType();
                         UserInfo info = gson.fromJson(datas, userListType);
+                        SpManager.getInstance().set(Consts.USRID, info.getId());
                         SpManager.getInstance().set(Consts.USRNAME, info.getRealName());
                         SpManager.getInstance().set(Consts.LOGINROLES,info.getRoles());
                         loginView.loginSuccessForUI();

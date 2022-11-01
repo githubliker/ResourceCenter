@@ -31,6 +31,8 @@ import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.data.utils.X5WebView;
 import com.surface.resourcecenter.ui.BaseActivity;
+import com.surface.resourcecenter.ui.dispatch.bean.DispatchBean;
+import com.surface.resourcecenter.ui.report.bean.ReportBean;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient.CustomViewCallback;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.CookieSyncManager;
@@ -58,46 +60,18 @@ public class ReportDetailActivity extends BaseActivity {
 	public String mHomeUrl = "http://172.27.63.1:9530/202208011405/%E4%BD%8E%E5%8E%8B%E5%BC%80%E5%85%B3%E6%9F%9C%E6%A0%B7%E5%93%81001.docx";
 	private static final String TAG = "SdkDemo";
 	private boolean mNeedTestPage = false;
-
-
 	private ProgressBar mPageLoadingProgressBar = null;
-
-	private ValueCallback<Uri> uploadFile;
-
-	private URL mIntentUrl;
+	private ReportBean reportBean;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
+		reportBean = (ReportBean) getIntent().getSerializableExtra("data");
 
-		Intent intent = getIntent();
-		if (intent != null) {
-			try {
-				mIntentUrl = new URL(intent.getData().toString());
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (NullPointerException e) {
-
-			} catch (Exception e) {
-			}
-		}
+		mHomeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+reportBean.getPath();
 		mHomeUrl = "https://view.officeapps.live.com/op/view.aspx?src="+mHomeUrl;
-		//
-		try {
-			if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 11) {
-				getWindow()
-						.setFlags(
-								android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-								android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
-			}
-		} catch (Exception e) {
-		}
 
-		/*
-		 * getWindow().addFlags(
-		 * android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		 */
 		setContentView(R.layout.rc_activity_report_detail);
 		mViewParent = (ViewGroup) findViewById(R.id.webView1);
 
@@ -204,11 +178,7 @@ public class ReportDetailActivity extends BaseActivity {
 		// webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
 		// webSetting.setPreFectch(true);
 		long time = System.currentTimeMillis();
-		if (mIntentUrl == null) {
-			mWebView.loadUrl(mHomeUrl);
-		} else {
-			mWebView.loadUrl(mIntentUrl.toString());
-		}
+		mWebView.loadUrl(mHomeUrl);
 		TbsLog.d("time-cost", "cost time: "
 				+ (System.currentTimeMillis() - time));
 		CookieSyncManager.createInstance(this);
@@ -285,8 +255,12 @@ public class ReportDetailActivity extends BaseActivity {
 		}
 	};
 
-	public static void launch(Context context){
+	public static void launch(Context context, ReportBean bean){
 		Intent intent = new Intent(context, ReportDetailActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("data",bean);
+		intent.putExtras(bundle);
 		context.startActivity(intent);
 	}
 
