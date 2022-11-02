@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -16,7 +14,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.surface.resourcecenter.R;
-import com.surface.resourcecenter.data.Consts;
 import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.home.adapter.bean.PageInfo;
@@ -54,6 +51,14 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuBupinighe
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuXishoubiIndex2;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZukangFuzaiSunhaoIndex6;
 import com.surface.resourcecenter.ui.shiyan.nativeData.dianlan.FenZhiXiangYibanJianceIndex1;
+import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiYaYibanJianceIndex1;
+import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaLeidianChongji;
+import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaWensheng;
+import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.Diyadianjifanghu;
+import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPWensheng_Dianrong;
+import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPWensheng_Peidian;
+import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPdianjifanghu;
+import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPgongpinnaiya;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.DlqGongpinNaiyaIndex5;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.DlqWenshengIndex4;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.DuanziJingfuzaiIndex13;
@@ -70,8 +75,6 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.LeidianChongjiInd
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.LiansuoShiyanIndex11;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.NaishoudianliushiyanIndex8;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.WaiguanIndex1;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.DiYaYibanJianceIndex1;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoYaYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaGongpinNaiyaIndex2;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaGuiTiJianCeIndex8;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaHuiluDianzuIndex3;
@@ -81,15 +84,13 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaJueyuanSh
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaLeidianChongjiIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaLiansuoShiyanIndex7;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaWenshengIndex4;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HWYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangGuiTiJianCeIndex10;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangJixieCaozuoIndex12;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangJuFangIndex13;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangWenshengIndex11;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.JPFanghuDengjiIndex4;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.JPYibanJianceIndex1;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.JPYibanJianceIndex2;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.JPYibanJianceIndex3;
+import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPYibanJianceIndex1;
+import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPYibanJianceIndex2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,8 +128,10 @@ public class DoTaskActivity extends BaseActivity {
             "机械特性试验","联锁试验","柜体检测","局部放电测量"};
     private String[]  huanwangguitest = {"雷电冲击试验","工频耐压试验","主回路电阻测量","柜体检测","温升试验","绝缘试验",
             "机械特性试验","联锁试验","局部放电测量"};
-    private String[]  jpguitest = {"一般检查1","一般检查2","一般检查3","成套设备的防护等级","电气间隙与爬电距离","电击防护和保护电路完整性","介电性能","温升验证（配电回路）","温升验证（电容补偿回路）"
-            ,"短时耐受强度","放电试验","涌流试验","动态响应时间检测","抑制谐波或滤波功能"};
+
+
+    private String[]  jpguitest = {"一般检查1","一般检查2","电击防护和保护电路完整性","工频耐压试验","配电回路温升试验","补偿电路温升试验"};
+    private String[]  dyguitest = {"一般检查1","电击防护和保护电路完整性","工频耐压试验","温升试验"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +144,7 @@ public class DoTaskActivity extends BaseActivity {
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         initTitle();
-        initHuanwangGuiFragment();
+        initDiyaGuiFragment();
     }
 
 
@@ -308,13 +311,20 @@ public class DoTaskActivity extends BaseActivity {
         int i = 0;
         pageInfos.add(new PageInfo(jpguitest[i++],new JPYibanJianceIndex1()));
         pageInfos.add(new PageInfo(jpguitest[i++],new JPYibanJianceIndex2()));
-//        pageInfos.add(new PageInfo(jpguitest[i++],new JPYibanJianceIndex3()));
-//        pageInfos.add(new PageInfo(jpguitest[i++],new JPFanghuDengjiIndex4()));
-//        pageInfos.add(new PageInfo(jpguitest[i++],new HuanwangWenshengIndex11()));
-//        pageInfos.add(new PageInfo(jpguitest[i++],new GaoyaJueyuanShiyanIndex5()));
-//        pageInfos.add(new PageInfo(jpguitest[i++],new HuanwangJixieCaozuoIndex12()));
-//        pageInfos.add(new PageInfo(jpguitest[i++],new GaoyaLiansuoShiyanIndex7()));
-//        pageInfos.add(new PageInfo(jpguitest[i++],new HuanwangJuFangIndex13()));
+        pageInfos.add(new PageInfo(jpguitest[i++],new JPdianjifanghu()));
+        pageInfos.add(new PageInfo(jpguitest[i++],new JPgongpinnaiya()));
+        pageInfos.add(new PageInfo(jpguitest[i++],new JPWensheng_Peidian()));
+        pageInfos.add(new PageInfo(jpguitest[i++],new JPWensheng_Dianrong()));
+        pagerAdapter.notifyDataSetChanged();
+    }
+
+    private void initDiyaGuiFragment(){
+        pageInfos.clear();
+        int i = 0;
+        pageInfos.add(new PageInfo(dyguitest[i++],new DiYaYibanJianceIndex1()));
+        pageInfos.add(new PageInfo(dyguitest[i++],new Diyadianjifanghu()));
+        pageInfos.add(new PageInfo(dyguitest[i++],new DiyaLeidianChongji()));
+        pageInfos.add(new PageInfo(dyguitest[i++],new DiyaWensheng()));
         pagerAdapter.notifyDataSetChanged();
     }
     class MainAdapter extends FragmentPagerAdapter {

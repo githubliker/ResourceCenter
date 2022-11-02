@@ -116,7 +116,7 @@ public class LoginPresenterImpl implements LoginPresenter {
 
             @Override
             public void onFailed(int what, Response<String> response) {
-
+                loginView.loginDataError("网络连接异常");
             }
         });
     }
