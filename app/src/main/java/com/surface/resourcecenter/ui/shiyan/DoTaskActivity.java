@@ -50,15 +50,15 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.byq.YjWenshengIndex10;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuBupinighenglvIndex3;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuXishoubiIndex2;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZukangFuzaiSunhaoIndex6;
+import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiYaYibanJianceIndex1;
+import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaLeidianChongji;
+import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaWensheng;
+import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.Diyadianjifanghu;
 import com.surface.resourcecenter.ui.shiyan.nativeData.fenzhixiang.FenZhiDianjiFanghu;
 import com.surface.resourcecenter.ui.shiyan.nativeData.fenzhixiang.FenZhiLeidianChongji;
 import com.surface.resourcecenter.ui.shiyan.nativeData.fenzhixiang.FenZhiWensheng;
 import com.surface.resourcecenter.ui.shiyan.nativeData.fenzhixiang.FenZhiXiangYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.fenzhixiang.FenZhigongpinnaiya;
-import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiYaYibanJianceIndex1;
-import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaLeidianChongji;
-import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaWensheng;
-import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.Diyadianjifanghu;
 import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoYaYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaGongpinNaiya;
 import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaHuiludianzu;
@@ -81,26 +81,10 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HWYibanJiance
 import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HuanwangHuiludianzu;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPWensheng_Dianrong;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPWensheng_Peidian;
-import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPdianjifanghu;
-import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPgongpinnaiya;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.DlqGongpinNaiyaIndex5;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.DlqWenshengIndex4;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.DuanziJingfuzaiIndex13;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.FanghuDengjiIndex9;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.GaodiWenShiyanIndex12;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.HuiludianzuIndex2;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.JinshuDuCengIndex14;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.JixieCaozuoiIndex10;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.JixieShiyanIndex3;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.JixieWendingxingShiyanIndex11;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.JueyuanshiyanIndex7;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.KaiguanXingnengIndex9;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.LeidianChongjiIndex6;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.LiansuoShiyanIndex11;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.NaishoudianliushiyanIndex8;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguan.WaiguanIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPYibanJianceIndex2;
+import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPdianjifanghu;
+import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPgongpinnaiya;
 import com.surface.resourcecenter.ui.shiyan.nativeData.zhushang.ZhushagnYibanJiance;
 import com.surface.resourcecenter.ui.shiyan.nativeData.zhushang.ZhushangGongpinNaiya;
 import com.surface.resourcecenter.ui.shiyan.nativeData.zhushang.ZhushangHuiludianzu;
@@ -243,19 +227,6 @@ public class DoTaskActivity extends BaseActivity {
         pageInfos.add(new PageInfo(osxsbdztest[i++],new FanghuDengjiIndexIK17()));
         pageInfos.add(new PageInfo(osxsbdztest[i++],new OsxsShengjishiyanIndex18()));
         pageInfos.add(new PageInfo(osxsbdztest[i++],new OsxsNeiBuDianHushiyanIndex19()));
-        pagerAdapter.notifyDataSetChanged();
-    }
-
-    private void initDuanLuqiFragment(){
-        pageInfos.clear();
-        int i = 0;
-        pageInfos.add(new PageInfo(duanluqitest[i++],new WaiguanIndex1()));
-        pageInfos.add(new PageInfo(duanluqitest[i++],new HuiludianzuIndex2()));
-        pageInfos.add(new PageInfo(duanluqitest[i++],new JixieShiyanIndex3()));
-        pageInfos.add(new PageInfo(duanluqitest[i++],new DlqWenshengIndex4()));
-        pageInfos.add(new PageInfo(duanluqitest[i++],new DlqGongpinNaiyaIndex5()));
-        pageInfos.add(new PageInfo(duanluqitest[i++],new LeidianChongjiIndex6()));
-        pageInfos.add(new PageInfo(duanluqitest[i++],new JueyuanshiyanIndex7()));
         pagerAdapter.notifyDataSetChanged();
     }
 
