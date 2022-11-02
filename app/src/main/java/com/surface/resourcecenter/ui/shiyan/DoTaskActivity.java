@@ -62,6 +62,14 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaJixieTexing
 import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaJueyuan;
 import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaLeidianChongji;
 import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaWensheng;
+import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HWGongpinNaiya;
+import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HWJixieTexing;
+import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HWJuFang;
+import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HWJueyuan;
+import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HWLeidianChongji;
+import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HWWensheng;
+import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HWYibanJianceIndex1;
+import com.surface.resourcecenter.ui.shiyan.nativeData.huanwanggui.HuanwangHuiludianzu;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPWensheng_Dianrong;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPWensheng_Peidian;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPdianjifanghu;
@@ -130,8 +138,8 @@ public class DoTaskActivity extends BaseActivity {
             "雷电冲击试验","绝缘试验"};
 
 
-    private String[]  huanwangguitest = {"雷电冲击试验","工频耐压试验","主回路电阻测量","柜体检测","温升试验","绝缘试验",
-            "机械特性试验","联锁试验","局部放电测量"};
+    private String[]  huanwangguitest = {"一般检查","主回路电阻测量","机械特性试验","工频耐压试验","辅助和控制回路的绝缘试验","温升试验","雷电冲击电压试验",
+            "局部放电试验"};
 
 
     private String[]  jpguitest = {"一般检查1","一般检查2","电击防护和保护电路完整性","工频耐压试验","配电回路温升试验","补偿电路温升试验"};
@@ -149,7 +157,7 @@ public class DoTaskActivity extends BaseActivity {
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         initTitle();
-        initGaoyaKaiguanguiFragment();
+        initHuanwangGuiFragment();
     }
 
 
@@ -297,15 +305,14 @@ public class DoTaskActivity extends BaseActivity {
     private void initHuanwangGuiFragment(){
         pageInfos.clear();
         int i = 0;
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new FenZhiXiangYibanJianceIndex1()));
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaGongpinNaiyaIndex2()));
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaHuiluDianzuIndex3()));
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new HuanwangGuiTiJianCeIndex10()));
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new HuanwangWenshengIndex11()));
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaJueyuanShiyanIndex5()));
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new HuanwangJixieCaozuoIndex12()));
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new GaoyaLiansuoShiyanIndex7()));
-        pageInfos.add(new PageInfo(huanwangguitest[i++],new HuanwangJuFangIndex13()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new HWYibanJianceIndex1()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new HuanwangHuiludianzu()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new HWJixieTexing()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new HWGongpinNaiya()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new HWJueyuan()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new HWWensheng()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new HWLeidianChongji()));
+        pageInfos.add(new PageInfo(huanwangguitest[i++],new HWJuFang()));
         pagerAdapter.notifyDataSetChanged();
     }
 
