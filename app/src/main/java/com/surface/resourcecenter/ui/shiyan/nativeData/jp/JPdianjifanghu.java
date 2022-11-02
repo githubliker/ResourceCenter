@@ -90,14 +90,15 @@ public class JPdianjifanghu extends BaseFragment implements View.OnClickListener
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
                 editText.setBackgroundResource(R.drawable.chart_item_shape);
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
-                    editText.setTextSize(14);editText.setKeyListener(null);
+                    editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
-                    editText.setTextSize(14);editText.setKeyListener(null);
+                    editText.setKeyListener(null);
                 }
                 editText.setPadding(20,20,20,20);
 
@@ -138,14 +139,15 @@ public class JPdianjifanghu extends BaseFragment implements View.OnClickListener
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
                 editText.setBackgroundResource(R.drawable.chart_item_shape);
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
-                    editText.setTextSize(14);editText.setKeyListener(null);
+                    editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
-                    editText.setTextSize(14);editText.setKeyListener(null);
+                    editText.setKeyListener(null);
                 }
                 editText.setPadding(20,20,20,20);
 

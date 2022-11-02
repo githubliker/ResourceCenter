@@ -1,4 +1,4 @@
-package com.surface.resourcecenter.ui.shiyan.nativeData.diyagui;
+package com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -26,12 +26,12 @@ import java.util.List;
  * @date 2018/6/21
  */
 
-public class DiyaLeidianChongji extends BaseFragment implements View.OnClickListener {
+public class GaoyaJueyuan extends BaseFragment implements View.OnClickListener {
 
     private List<GridLayoutBean> mViewList = new ArrayList<>();
     private LinearLayout mFatherLayout;
-    private String[] gridHeader = {"正极性","负极性"};
-    public DiyaLeidianChongji(){
+    private String[] gridHeader = {"辅助和控制回路的绝缘试验"};
+    public GaoyaJueyuan(){
 
     }
 
@@ -47,7 +47,6 @@ public class DiyaLeidianChongji extends BaseFragment implements View.OnClickList
 
         initView();
         initGridLayout();
-        initGridLayout1();
     }
 
     private void initView(){
@@ -78,9 +77,10 @@ public class DiyaLeidianChongji extends BaseFragment implements View.OnClickList
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     private void initGridLayout(){
-        String[] header = {"测试部位","施加电压(峰值)(kV)","加压次数","击穿次数"};
-        String[] leftheader = {"A、B、C、N - PE","A-B、C、N 、PE","B - A、C、N 、PE","C-A、B、N 、PE","A-B、C、N 、PE","N -A、B、C、PE"};
+        String[] header = {"测量部位","应施电压（kV）","实施电压（kV）","时间（s）","测测量或观察结果"};
+        String[] leftheader = {"辅助回路，控制回路 \n对 \n开关装置底架","不同回路的各导电部分之间\n对\n连接在一起并和底架相连的其他部"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mViewList.get(0).getGridLayout().setColumnCount(ColumnNum);
@@ -96,6 +96,12 @@ public class DiyaLeidianChongji extends BaseFragment implements View.OnClickList
                     editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
+                    editText.setKeyListener(null);
+                } else if(i == 1){
+                    editText.setText("2");
+                    editText.setKeyListener(null);
+                } else if(i == 3){
+                    editText.setText("60");
                     editText.setKeyListener(null);
                 }
                 editText.setPadding(20,20,20,20);
@@ -115,54 +121,10 @@ public class DiyaLeidianChongji extends BaseFragment implements View.OnClickList
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
                 mViewList.get(0).getGridLayout().addView(editText,params);
             }
-
-
         }
 
     }
 
-    private void initGridLayout1(){
-        String[] header = {"测试部位","施加电压(峰值)(kV)","加压次数","击穿次数"};
-        String[] leftheader = {"A、B、C、N - PE","A-B、C、N 、PE","B - A、C、N 、PE","C-A、B、N 、PE","A-B、C、N 、PE","N -A、B、C、PE"};
-        int ColumnNum = header.length;
-        int RowNum = leftheader.length+1;
-        mViewList.get(1).getGridLayout().setColumnCount(ColumnNum);
-        mViewList.get(1).getGridLayout().setRowCount(RowNum);
-        for(int m = 0 ;m<RowNum;m++){
-            for(int i = 0;i<ColumnNum;i++){
-                EditText editText = new EditText(getContext());
-                editText.setTextSize(14);
-                editText.setBackgroundResource(R.drawable.chart_item_shape);
-                editText.setGravity(Gravity.CENTER);
-                if(m == 0){
-                    editText.setText(header[i]);
-                    editText.setKeyListener(null);
-                } else if(i == 0){
-                    editText.setText(leftheader[m-1]);
-                    editText.setKeyListener(null);
-                }
-                editText.setPadding(20,20,20,20);
-
-                GridLayout.Spec rowSpec;
-                GridLayout.Spec columnSpec;
-
-                //表示起始位置为m，占据1行
-                rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                if(i  == ColumnNum -1){
-                    //表示起始位置为i，占据1列
-                    columnSpec=GridLayout.spec(i, 1,0.25f);
-                } else {
-                    //表示起始位置为i，占据1列
-                    columnSpec=GridLayout.spec(i, 1, 1.75f);
-                }
-                GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mViewList.get(1).getGridLayout().addView(editText,params);
-            }
-
-
-        }
-
-    }
     @Override
     public void onClick(View v) {
 //        Router.launchRender3DActivity(getContext(),new Bundle());

@@ -1,4 +1,4 @@
-package com.surface.resourcecenter.ui.shiyan.nativeData.diyagui;
+package com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -26,12 +26,12 @@ import java.util.List;
  * @date 2018/6/21
  */
 
-public class DiyaLeidianChongji extends BaseFragment implements View.OnClickListener {
+public class GaoyaGongpinNaiya extends BaseFragment implements View.OnClickListener {
 
     private List<GridLayoutBean> mViewList = new ArrayList<>();
     private LinearLayout mFatherLayout;
-    private String[] gridHeader = {"正极性","负极性"};
-    public DiyaLeidianChongji(){
+    private String[] gridHeader = {"合闸","分闸"};
+    public GaoyaGongpinNaiya(){
 
     }
 
@@ -79,8 +79,10 @@ public class DiyaLeidianChongji extends BaseFragment implements View.OnClickList
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initGridLayout(){
-        String[] header = {"测试部位","施加电压(峰值)(kV)","加压次数","击穿次数"};
-        String[] leftheader = {"A、B、C、N - PE","A-B、C、N 、PE","B - A、C、N 、PE","C-A、B、N 、PE","A-B、C、N 、PE","N -A、B、C、PE"};
+        String[] header = {"测试部位","施加电压(峰值)(kV)","修正后施加电压（kV）","加压时间(s)","测量或观察结果"};
+        String[] leftheader = {"Aa-BbCcF","Bb-AaCcF","Cc-AaBbF"};
+        String[] leftheader1 = {"42","42","42"};
+        String[] leftheader2 = {"60","60","60"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mViewList.get(0).getGridLayout().setColumnCount(ColumnNum);
@@ -96,6 +98,15 @@ public class DiyaLeidianChongji extends BaseFragment implements View.OnClickList
                     editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
+                    editText.setKeyListener(null);
+                } else if(i == 1){
+                    editText.setText(leftheader1[m-1]);
+                    editText.setKeyListener(null);
+                } else if(i == 3){
+                    editText.setText(leftheader2[m-1]);
+                    editText.setKeyListener(null);
+                } else if(i == 4){
+                    editText.setText("无击穿闪络");
                     editText.setKeyListener(null);
                 }
                 editText.setPadding(20,20,20,20);
@@ -122,8 +133,10 @@ public class DiyaLeidianChongji extends BaseFragment implements View.OnClickList
     }
 
     private void initGridLayout1(){
-        String[] header = {"测试部位","施加电压(峰值)(kV)","加压次数","击穿次数"};
-        String[] leftheader = {"A、B、C、N - PE","A-B、C、N 、PE","B - A、C、N 、PE","C-A、B、N 、PE","A-B、C、N 、PE","N -A、B、C、PE"};
+        String[] header = {"测试部位","施加电压(峰值)(kV)","修正后施加电压（kV）","加压时间(s)","测量或观察结果"};
+        String[] leftheader = {"A-a","B-b","C-c","a-A","b-B","c-C"};
+        String[] leftheader1 = {"48","48","48","48","48","48"};
+        String[] leftheader2 = {"60","60","60","60","60","60"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mViewList.get(1).getGridLayout().setColumnCount(ColumnNum);
@@ -139,6 +152,15 @@ public class DiyaLeidianChongji extends BaseFragment implements View.OnClickList
                     editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
+                    editText.setKeyListener(null);
+                } else if(i == 1){
+                    editText.setText(leftheader1[m-1]);
+                    editText.setKeyListener(null);
+                } else if(i == 3){
+                    editText.setText(leftheader2[m-1]);
+                    editText.setKeyListener(null);
+                } else if(i == 4){
+                    editText.setText("无击穿闪络");
                     editText.setKeyListener(null);
                 }
                 editText.setPadding(20,20,20,20);
@@ -163,6 +185,7 @@ public class DiyaLeidianChongji extends BaseFragment implements View.OnClickList
         }
 
     }
+
     @Override
     public void onClick(View v) {
 //        Router.launchRender3DActivity(getContext(),new Bundle());

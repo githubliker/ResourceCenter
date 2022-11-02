@@ -55,6 +55,13 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiYaYibanJianceIn
 import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaLeidianChongji;
 import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaWensheng;
 import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.Diyadianjifanghu;
+import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoYaYibanJianceIndex1;
+import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaGongpinNaiya;
+import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaHuiludianzu;
+import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaJixieTexing;
+import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaJueyuan;
+import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaLeidianChongji;
+import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaWensheng;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPWensheng_Dianrong;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPWensheng_Peidian;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPdianjifanghu;
@@ -81,14 +88,12 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaHuiluDian
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaJixieCaozuoIndex6;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaJuFangIndex9;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaJueyuanShiyanIndex5;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaLeidianChongjiIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaLiansuoShiyanIndex7;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.GaoyaWenshengIndex4;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangGuiTiJianCeIndex10;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangJixieCaozuoIndex12;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangJuFangIndex13;
 import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.HuanwangWenshengIndex11;
-import com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui.JPFanghuDengjiIndex4;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.jp.JPYibanJianceIndex2;
 
@@ -124,14 +129,14 @@ public class DoTaskActivity extends BaseActivity {
     private String[]  zhushangkaiguantest = {"结构、外观检查","机械试验","温升试验","主回路电阻测量","工频耐压试验",
             "雷电冲击试验","绝缘试验"};
 
-    private String[]  gaoyakaiguanguitest = {"雷电冲击试验","工频耐压试验","主回路电阻测量","温升试验","绝缘试验",
-            "机械特性试验","联锁试验","柜体检测","局部放电测量"};
+
     private String[]  huanwangguitest = {"雷电冲击试验","工频耐压试验","主回路电阻测量","柜体检测","温升试验","绝缘试验",
             "机械特性试验","联锁试验","局部放电测量"};
 
 
     private String[]  jpguitest = {"一般检查1","一般检查2","电击防护和保护电路完整性","工频耐压试验","配电回路温升试验","补偿电路温升试验"};
     private String[]  dyguitest = {"一般检查1","电击防护和保护电路完整性","工频耐压试验","温升试验"};
+    private String[]  gaoyakaiguanguitest = {"一般检查","主回路电阻测量","机械特性试验","工频耐压试验","绝缘试验","雷电冲击试验","温升试验"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +149,7 @@ public class DoTaskActivity extends BaseActivity {
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         initTitle();
-        initDiyaGuiFragment();
+        initGaoyaKaiguanguiFragment();
     }
 
 
@@ -279,15 +284,13 @@ public class DoTaskActivity extends BaseActivity {
     private void initGaoyaKaiguanguiFragment(){
         pageInfos.clear();
         int i = 0;
-        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaLeidianChongjiIndex1()));
-        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaGongpinNaiyaIndex2()));
-        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaHuiluDianzuIndex3()));
-        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaWenshengIndex4()));
-        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaJueyuanShiyanIndex5()));
-        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaJixieCaozuoIndex6()));
-        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaLiansuoShiyanIndex7()));
-        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaGuiTiJianCeIndex8()));
-        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaJuFangIndex9()));
+        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoYaYibanJianceIndex1()));
+        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaHuiludianzu()));
+        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaJixieTexing()));
+        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaGongpinNaiya()));
+        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaJueyuan()));
+        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaLeidianChongji()));
+        pageInfos.add(new PageInfo(gaoyakaiguanguitest[i++],new GaoyaWensheng()));
         pagerAdapter.notifyDataSetChanged();
     }
 

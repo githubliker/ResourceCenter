@@ -1,4 +1,4 @@
-package com.surface.resourcecenter.ui.shiyan.nativeData.kaiguangui;
+package com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui;
 
 import android.graphics.Color;
 import android.os.Build;
