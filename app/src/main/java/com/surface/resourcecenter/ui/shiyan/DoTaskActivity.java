@@ -38,15 +38,19 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.biandianzhan.Yibanjiancha
 import com.surface.resourcecenter.ui.shiyan.nativeData.biandianzhan.ZhiliudianzuBupinighenglvIndex2;
 import com.surface.resourcecenter.ui.shiyan.nativeData.biandianzhan.ZhiliudianzuIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.biandianzhan.ZukangFuzaiSunhaoIndex5;
+import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqKongFuZaiSunHao;
+import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqLeidianChongji;
+import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqNaiyaShiyan;
+import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqRaozuDianzu;
+import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqWenshengGS;
+import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqYaliShengji;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.DianyabiTestIndex4;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.GanyingNaiyaIndex8;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.GsWenshengIndex10;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.JubuFangdianIndex9;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.JueyuanyeIndex9;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.KongzaiSunhaoIndex5;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.LeidianChongjiIndex11;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.WaishiNaiyaIndex7;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.YjWenshengIndex10;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuBupinighenglvIndex3;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuXishoubiIndex2;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZukangFuzaiSunhaoIndex6;
@@ -110,20 +114,15 @@ public class DoTaskActivity extends BaseActivity {
 
     private String[]  yjbyqtest = {"直流绝缘电阻、吸收比测量","直流电阻不平衡率测量","电压比测量和联结组标号检定","空载损耗和空载电流测量","短路阻抗和负载损耗测量",
             "外施耐压试验","感应耐压试验","绝缘液试验","温升试验","雷电冲击试验"};
-    private String[]  gsbyqtest = {"直流绝缘电阻测量","直流电阻不平衡率测量","电压比测量和联结组标号检定","空载损耗和空载电流测量","短路阻抗和负载损耗测量",
-            "外施耐压试验","感应耐压试验","局部放电测量","温升试验","雷电冲击试验"};
-
     private String[]  msxsbdztest = {"直流绝缘电阻测量","直流电阻不平衡率测量","电压比测量和联结组标号检定","空载损耗和空载电流测量","短路阻抗和负载损耗测量",
             "外施耐压试验","感应耐压试验","绝缘液试验","一般检查","机械操作试验","温升试验","雷电冲击试验"};
     private String[]  osxsbdztest = {"绝缘试验","绝缘试验","设计和外观检查","接线正确性检查","接地连续性试验",
             "功能试验","温升试验","耐受电流能力试验","防护等级检验IP","防护等级检验IK","声级试验","内部电弧试验"};
 
-    private String[]  duanluqitest = {"结构、外观检查","主回路电阻测量","机械试验","温升试验","工频耐压试验",
-            "雷电冲击试验","绝缘试验"};
 
-
+    private String[]  gsbyqtest = {"绕组电阻测量，介损测量","空负载损耗测量","外施耐压感应耐压","温升试验","雷电冲击试验",
+            "压力及声级测定"};
     private String[]  gelikaiguantest = {"一般检查","工频耐压试验","主回路电阻测量","温升试验","辅助和控制回路的绝缘试验"};
-
     private String[]  zhushangkaiguantest = {"一般检查","机械特性试验","温升试验","主回路电阻测量","工频耐压试验",
             "雷电冲击试验","辅助和控制回路的绝缘试验"};
     private String[]  dianlanfenzhixiangtest = {"一般检查","电击防护和保护电路完整性","工频耐压试验","冲击耐受电压试验 ","温升试验"};
@@ -144,7 +143,7 @@ public class DoTaskActivity extends BaseActivity {
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         initTitle();
-        initGelikaiguanFragment();
+        initYjByqFragment();
     }
 
 
@@ -165,16 +164,12 @@ public class DoTaskActivity extends BaseActivity {
     private void initYjByqFragment(){
         pageInfos.clear();
         int i = 0;
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new ZhiliudianzuXishoubiIndex2()));
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new ZhiliudianzuBupinighenglvIndex3()));
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new DianyabiTestIndex4()));
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new KongzaiSunhaoIndex5()));
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new ZukangFuzaiSunhaoIndex6()));
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new WaishiNaiyaIndex7()));
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new GanyingNaiyaIndex8()));
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new JueyuanyeIndex9()));
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new YjWenshengIndex10()));
-        pageInfos.add(new PageInfo(yjbyqtest[i++],new LeidianChongjiIndex11()));
+        pageInfos.add(new PageInfo(gsbyqtest[i++],new ByqRaozuDianzu()));
+        pageInfos.add(new PageInfo(gsbyqtest[i++],new ByqKongFuZaiSunHao()));
+        pageInfos.add(new PageInfo(gsbyqtest[i++],new ByqNaiyaShiyan()));
+        pageInfos.add(new PageInfo(gsbyqtest[i++],new ByqWenshengGS()));
+        pageInfos.add(new PageInfo(gsbyqtest[i++],new ByqLeidianChongji()));
+        pageInfos.add(new PageInfo(gsbyqtest[i++],new ByqYaliShengji()));
         pagerAdapter.notifyDataSetChanged();
     }
 

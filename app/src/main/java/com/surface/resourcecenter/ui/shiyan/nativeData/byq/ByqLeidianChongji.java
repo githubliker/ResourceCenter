@@ -1,4 +1,4 @@
-package com.surface.resourcecenter.ui.shiyan.nativeData.gelikaiguan;
+package com.surface.resourcecenter.ui.shiyan.nativeData.byq;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -26,12 +26,12 @@ import java.util.List;
  * @date 2018/6/21
  */
 
-public class GeliHuiludianzu extends BaseFragment implements View.OnClickListener {
+public class ByqLeidianChongji extends BaseFragment implements View.OnClickListener {
 
     private List<GridLayoutBean> mViewList = new ArrayList<>();
     private LinearLayout mFatherLayout;
-    private String[] gridHeader = {"主回路电阻测量"};
-    public GeliHuiludianzu(){
+    private String[] gridHeader = {"全波试验","截波试验"};
+    public ByqLeidianChongji(){
 
     }
 
@@ -47,6 +47,7 @@ public class GeliHuiludianzu extends BaseFragment implements View.OnClickListene
 
         initView();
         initGridLayout();
+        initGridLayout1();
     }
 
     private void initView(){
@@ -79,9 +80,8 @@ public class GeliHuiludianzu extends BaseFragment implements View.OnClickListene
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
     private void initGridLayout(){
-        String[] header = {"测量部位","试验电流（A）","技术要求值（μΩ）","测量或观察结果（μΩ）"};
-        String[] leftheader = {"Aa","Bb","Cc","Dd","Ee","Ff"};
-        String[] leftheader1 = {"≤150"};
+        String[] header = {"施压端","全波试验电压（kV）","全波试验电压（kV）","全波试验电压（kV）","全波规定值（kV）"};
+        String[] leftheader = {"A","B","C"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
         mViewList.get(0).getGridLayout().setColumnCount(ColumnNum);
@@ -106,10 +106,9 @@ public class GeliHuiludianzu extends BaseFragment implements View.OnClickListene
 
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                if(i == 2 && m != 0){
+                if(i == 4 && m != 0){
                     if(m == 1){
-                        rowSpec=GridLayout.spec(m, 6, GridLayout.FILL);
-                        editText.setText(leftheader1[0]);
+                        rowSpec=GridLayout.spec(m, 3, GridLayout.FILL);
                     } else {
                         continue;
                     }
@@ -123,6 +122,54 @@ public class GeliHuiludianzu extends BaseFragment implements View.OnClickListene
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
                 mViewList.get(0).getGridLayout().addView(editText,params);
+            }
+        }
+
+    }
+
+    private void initGridLayout1(){
+        String[] header = {"施压端","截波试验电压（kV）","截波试验电压（kV）","截波试验电压（kV）","截波规定值（kV）"};
+        String[] leftheader = {"A","B","C"};
+        int ColumnNum = header.length;
+        int RowNum = leftheader.length+1;
+        mViewList.get(1).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(1).getGridLayout().setRowCount(RowNum);
+        for(int m = 0 ;m<RowNum;m++){
+            for(int i = 0;i<ColumnNum;i++){
+                EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
+                editText.setBackgroundResource(R.drawable.chart_item_shape);
+                editText.setGravity(Gravity.CENTER);
+                if(m == 0){
+                    editText.setText(header[i]);
+                    editText.setKeyListener(null);
+                } else if(i == 0){
+                    editText.setText(leftheader[m-1]);
+                    editText.setKeyListener(null);
+                }
+                editText.setPadding(20,20,20,20);
+
+                GridLayout.Spec rowSpec;
+                GridLayout.Spec columnSpec;
+
+                //表示起始位置为m，占据1行
+                rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
+                if(i == 4 && m != 0){
+                    if(m == 1){
+                        rowSpec=GridLayout.spec(m, 3, GridLayout.FILL);
+                    } else {
+                        continue;
+                    }
+                }
+                if(i  == ColumnNum -1){
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1,0.25f);
+                } else {
+                    //表示起始位置为i，占据1列
+                    columnSpec=GridLayout.spec(i, 1, 1.75f);
+                }
+                GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
+                mViewList.get(1).getGridLayout().addView(editText,params);
             }
         }
 

@@ -64,24 +64,6 @@
             android:textColor="#111"
             android:textSize="22sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:background="@drawable/login_commit_shape"
-            android:paddingLeft="30dp"
-            android:paddingTop="10dp"
-            android:paddingRight="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="试验记录预览"
-            android:textColor="#111"
-            android:textSize="22sp"
-            android:textStyle="bold" />
     </LinearLayout>
 
 
