@@ -44,16 +44,6 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqNaiyaShiyan;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqRaozuDianzu;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqWenshengGS;
 import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ByqYaliShengji;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.DianyabiTestIndex4;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.GanyingNaiyaIndex8;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.GsWenshengIndex10;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.JubuFangdianIndex9;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.KongzaiSunhaoIndex5;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.LeidianChongjiIndex11;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.WaishiNaiyaIndex7;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuBupinighenglvIndex3;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZhiliudianzuXishoubiIndex2;
-import com.surface.resourcecenter.ui.shiyan.nativeData.byq.ZukangFuzaiSunhaoIndex6;
 import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiYaYibanJianceIndex1;
 import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaLeidianChongji;
 import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaWensheng;
@@ -173,22 +163,6 @@ public class DoTaskActivity extends BaseActivity {
         pagerAdapter.notifyDataSetChanged();
     }
 
-    private void initGsByqFragment(){
-        pageInfos.clear();
-        int i = 0;
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new ZhiliudianzuXishoubiIndex2()));
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new ZhiliudianzuBupinighenglvIndex3()));
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new DianyabiTestIndex4()));
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new KongzaiSunhaoIndex5()));
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new ZukangFuzaiSunhaoIndex6()));
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new WaishiNaiyaIndex7()));
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new GanyingNaiyaIndex8()));
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new JubuFangdianIndex9()));
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new GsWenshengIndex10()));
-        pageInfos.add(new PageInfo(gsbyqtest[i++],new LeidianChongjiIndex11()));
-        pagerAdapter.notifyDataSetChanged();
-    }
-
     private void initMsXsBdzFragment(){
         pageInfos.clear();
         int i = 0;
@@ -203,7 +177,6 @@ public class DoTaskActivity extends BaseActivity {
         pageInfos.add(new PageInfo(msxsbdztest[i++],new YibanjianchaIndex9()));
         pageInfos.add(new PageInfo(msxsbdztest[i++],new JixieCaozuoIndex10()));
         pageInfos.add(new PageInfo(msxsbdztest[i++],new MsxsWenshengIndex11()));
-        pageInfos.add(new PageInfo(msxsbdztest[i++],new LeidianChongjiIndex11()));
         pagerAdapter.notifyDataSetChanged();
     }
 
