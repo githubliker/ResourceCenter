@@ -79,6 +79,7 @@
             android:textSize="20sp"
             android:text="校核人:"/>
         <Spinner
+            android:id="@+id/checker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/jiaozhunren"
@@ -92,6 +93,7 @@
             android:textSize="20sp"
             android:text="审批人:"/>
         <Spinner
+            android:id="@+id/ratifier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/shenheren"

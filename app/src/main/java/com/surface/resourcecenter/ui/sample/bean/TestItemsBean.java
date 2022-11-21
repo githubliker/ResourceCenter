@@ -1,5 +1,11 @@
 package com.surface.resourcecenter.ui.sample.bean;
 
+import com.surface.resourcecenter.ui.dispatch.bean.InstrumentBean;
+import com.surface.resourcecenter.ui.dispatch.bean.SystemRole;
+import com.surface.resourcecenter.ui.dispatch.bean.TestArea;
+
+import java.util.ArrayList;
+
 public class TestItemsBean {
 
     /**
@@ -14,31 +20,31 @@ public class TestItemsBean {
     private String type;
     private String sign;
     private boolean isChecked;
-    private String area;
-    private String person;
-    private String instrument;
+    private ArrayList<TestArea> area;
+    private ArrayList<SystemRole> person;
+    private ArrayList<InstrumentBean> instrument;
 
-    public String getArea() {
+    public ArrayList<TestArea> getArea() {
         return area;
     }
 
-    public void setArea(String area) {
+    public void setArea(ArrayList<TestArea> area) {
         this.area = area;
     }
 
-    public String getPerson() {
+    public ArrayList<SystemRole> getPerson() {
         return person;
     }
 
-    public void setPerson(String person) {
+    public void setPerson(ArrayList<SystemRole> person) {
         this.person = person;
     }
 
-    public String getInstrument() {
+    public ArrayList<InstrumentBean> getInstrument() {
         return instrument;
     }
 
-    public void setInstrument(String instrument) {
+    public void setInstrument(ArrayList<InstrumentBean> instrument) {
         this.instrument = instrument;
     }
 

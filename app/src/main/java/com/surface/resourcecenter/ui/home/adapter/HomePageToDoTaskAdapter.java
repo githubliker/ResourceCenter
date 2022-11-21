@@ -1,6 +1,7 @@
 package com.surface.resourcecenter.ui.home.adapter;
 
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,13 +44,11 @@ public class HomePageToDoTaskAdapter extends RecyclerView.Adapter<HomePageToDoTa
 
     }
 
-    public HomePageToDoTaskAdapter(List<DispatchBean> fruitList) {
-        mItemList = fruitList;
+    public HomePageToDoTaskAdapter() {
     }
 
     public void setAdapterData(List<DispatchBean> fruitList){
-        mItemList.clear();
-        mItemList.addAll(fruitList);
+        mItemList = fruitList;
     }
     @Override
 
@@ -73,17 +72,31 @@ public class HomePageToDoTaskAdapter extends RecyclerView.Adapter<HomePageToDoTa
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         DispatchBean fruit = mItemList.get(position);
-        holder.itemName.setText(fruit.getSampleName()+"1");
-        holder.itemStartTime.setText("任务开始时间:"+fruit.getStartTime());
-        holder.itemUpdataTime.setText("上次更新时间:"+fruit.getEndTime());
+        holder.itemName.setText(fruit.getSampleName());
+        holder.itemStartTime.setText("送检时间:"+fruit.getStartTime());
+//        holder.itemUpdataTime.setText("上次更新时间:"+fruit.getEndTime());
         holder.itemCurrentPersion.setText(fruit.getHandlerName());
         holder.itemStartPersion.setText(fruit.getInitiatorName());
-        holder.itemStatus.setText(fruit.getState()+"");
+        //0-待处理，1-调度下发，2-项目试验，3-报告编制，4-审核，5-批准
+        if(fruit.getState() == 0){
+            holder.itemStatus.setText("待处理");
+        } else if(fruit.getState() == 1){
+            holder.itemStatus.setText("调度下发");
+        } else if(fruit.getState() == 2){
+            holder.itemStatus.setText("项目试验");
+        } else if(fruit.getState() == 3){
+            holder.itemStatus.setText("报告编制");
+        } else if(fruit.getState() == 4){
+            holder.itemStatus.setText("审核");
+        } else if(fruit.getState() == 5){
+            holder.itemStatus.setText("批准");
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return mItemList.size();
+        return mItemList==null ? 0:mItemList.size();
     }
 
     private onRecycleViewItemClickListener listener;

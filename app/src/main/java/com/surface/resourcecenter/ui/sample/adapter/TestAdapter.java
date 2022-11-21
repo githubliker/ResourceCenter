@@ -91,6 +91,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.MyViewHolder> 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 checkStatus.put(position, isChecked);
+                list.get(position).setChecked(isChecked);
                 //check状态一旦改变，保存的check值也要发生相应的变化
                 if(onCheckChangeListener != null){
                     onCheckChangeListener.onItemClick(holder.checkBox,position,isChecked);

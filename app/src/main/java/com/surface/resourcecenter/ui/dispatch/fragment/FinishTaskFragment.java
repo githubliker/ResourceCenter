@@ -102,7 +102,7 @@ public class FinishTaskFragment extends BaseFragment implements View.OnClickList
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 //        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),5);
         mRecyclerView.setLayoutManager(layoutManager);
-        HomePageToDoTaskAdapter adapter = new HomePageToDoTaskAdapter(dispatchList);
+        HomePageToDoTaskAdapter adapter = new HomePageToDoTaskAdapter();
         mRecyclerView.setAdapter(adapter);
         adapter.setOnClickListener(mItemClickListener);
     }

@@ -40,7 +40,7 @@ public class TodoTaskFragment extends BaseFragment implements View.OnClickListen
     private ArrayList<DispatchBean> dispatchList = new ArrayList<>();
     HomePageToDoTaskAdapter adapter;
     private int current = 1;
-    private int size = 5;
+    private int size = 10;
 
     onRecycleViewItemClickListener mItemClickListener = new onRecycleViewItemClickListener() {
         @Override
@@ -63,17 +63,22 @@ public class TodoTaskFragment extends BaseFragment implements View.OnClickListen
     };
 
 
-    void initHomeData(){
+    void initHomeData(boolean clearFront){
         HashMap params = new HashMap();
         params.put("current",current+"");
         params.put("size",size+"");
+        params.put("state","0");
         NetworkService service = new NetworkService();
         service.setGetRequestForData(0, params, ApiUrl.URL_DISPATCH_LIST, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
             @Override
             public void onSucceed(int what, Response<String> response) {
                 Log.e("TAG",""+response.get().toString());
                 try {
-                    dispatchList.clear();
+                    refreshLayout.finishLoadMore();
+                    refreshLayout.finishRefresh();
+                    if(clearFront){
+                        dispatchList.clear();
+                    }
                     JSONObject json = null;
                     json = new JSONObject(response.get());
                     String datas = json.getString("data");
@@ -81,7 +86,8 @@ public class TodoTaskFragment extends BaseFragment implements View.OnClickListen
                     String records = j.getString("records");
                     Gson gson = new Gson();
                     Type userListType = new TypeToken<List<DispatchBean>>(){}.getType();
-                    dispatchList = gson.fromJson(records, userListType);
+                    ArrayList<DispatchBean> result = gson.fromJson(records, userListType);
+                    dispatchList.addAll(result);
                     adapter.setAdapterData(dispatchList);
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -113,10 +119,10 @@ public class TodoTaskFragment extends BaseFragment implements View.OnClickListen
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 //        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new HomePageToDoTaskAdapter(dispatchList);
+        adapter = new HomePageToDoTaskAdapter();
         mRecyclerView.setAdapter(adapter);
         adapter.setOnClickListener(mItemClickListener);
-        initHomeData();
+        initHomeData(true);
         refreshLayout.setOnMultiListener(new SimpleMultiListener(){
             @Override
             public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
@@ -125,12 +131,14 @@ public class TodoTaskFragment extends BaseFragment implements View.OnClickListen
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishRefresh(3000);
+                current = 1;
+                initHomeData(true);
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishLoadMore(2000);
+                current++;
+                initHomeData(false);
             }
         });
     }

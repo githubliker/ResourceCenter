@@ -33,13 +33,13 @@ import com.luck.picture.lib.decoration.GridSpacingItemDecoration;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.luck.picture.lib.tools.ScreenUtils;
-import com.scwang.smart.refresh.layout.util.SmartUtil;
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.data.Consts;
 import com.surface.resourcecenter.data.network.ApiUrl;
 import com.surface.resourcecenter.data.network.HttpListener;
 import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.data.utils.StatusBarUtil;
+import com.surface.resourcecenter.data.utils.ToastUtils;
 import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.dispatch.adapter.StandardAdapter;
 import com.surface.resourcecenter.ui.sample.adapter.FullyGridLayoutManager;
@@ -74,9 +74,9 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
     private Spinner mSampleType;
     private String[] mSampleTypeData;
     private TextView mSampleDate,mDataUpload;
-    private EditText mSampleName,mSampleXinghao,mSampleId,mSampleImei,mSampleChouyang,mSampleNumber,mSampleZhongliang,mSampleRemark;
+    private EditText mSampleName,mSampleXinghao,mSampleId,mSampleImei,mSampleNumber,mSampleZhongliang,mSampleRemark;
     private EditText mSampleClient,mSampleEmail,mSampleSongjian,mSampleProjectName,mSampleAddress,mSamplePhone,mSampleJianzheng,mSampleLeixing;
-    private Spinner mSampleYouxianji,mSampleStatus;
+    private Spinner mSampleYouxianji,mSampleStatus,mSampleChoujian;
     private int mUploadMaxNumber = 0,uploadIndex = 0;
 
     private List<TestItemsBean> mStandardList = new ArrayList<>();
@@ -160,7 +160,7 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
         mSampleXinghao = findViewById(R.id.sample_xinghao);
         mSampleId = findViewById(R.id.sample_id);
         mSampleImei = findViewById(R.id.sample_imei);
-        mSampleChouyang = findViewById(R.id.sample_choujian_type);
+        mSampleChoujian = findViewById(R.id.sample_choujian_type);
         mSampleNumber = findViewById(R.id.sample_number);
         mSampleZhongliang = findViewById(R.id.device_zhongliang);
         mSampleRemark = findViewById(R.id.device_remark);
@@ -317,7 +317,7 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onDateSet(DatePicker datePicker, int year,
                                           int monthOfYear, int dayOfMonth) {
-                        mSampleDate.setText(year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日");
+                        mSampleDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " 12:00:00");
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH));
@@ -325,6 +325,7 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
 
                 break;
             case R.id.tv_confirm:
+                checkAllDataReady();
                 mUploadMaxNumber = mImageAdapter.getData().size();
                 uploadIndex = 0;
                 for(int i = 0; i< mUploadMaxNumber; i++){
@@ -379,13 +380,13 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
         try {
             json.put("additional", "");//额外参数
             json.put("addr",mSampleAddress.getText().toString());//委托方地址
-            json.put("checkType", "");//抽检类型
+            json.put("checkType", mSampleChoujian.getSelectedItemPosition());//抽检类型
             json.put("code",mSampleId.getText().toString());//样品编号
             json.put("count", mSampleNumber.getText().toString());//样品数量
             json.put("createTime",mSampleDate.getText().toString());//收样时间
             json.put("detectType", mSampleLeixing.getText().toString());//检测类别
             json.put("entrustName",mSampleClient.getText().toString());//委托单位
-            json.put("experiments", "");//样品预检项
+            json.put("experiments", getCheckedTestItems());//样品预检项
             json.put("id","");//
             json.put("img", imgs);//样品图片
             json.put("name",mSampleName.getText().toString());//样品名称
@@ -396,7 +397,7 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
             json.put("qrCode", "");//二维码编号
             json.put("remark",mSampleRemark.getText().toString());//备注
             json.put("sampleId", mSampleImei.getText().toString());//实物ID
-            json.put("sampleType",mSampleType.getSelectedItem());//
+            json.put("sampleType",mTypeList.get(mSampleType.getSelectedItemPosition()).getId());//
             json.put("spqmc", "");//试品区名称
             json.put("state",mSampleStatus.getSelectedItemPosition());//样品状态1-完好  2-缺失  3-破损
             json.put("submitter", mSampleSongjian.getText().toString());//送检人
@@ -408,6 +409,12 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSucceed(int what, Response<String> response) {
                 Log.e("TAG",""+response.get().toString());
+                try {
+                    JSONObject json = null;
+                    json = new JSONObject(response.get());
+                    String msg = json.getString("msg");
+                    ToastUtils.ShowCenterToast(SampleRecvActivity.this,msg);
+                }catch (Exception e){}
             }
 
             @Override
@@ -415,6 +422,46 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
 
             }
         });
+    }
+
+    private void checkAllDataReady(){
+        if(TextUtils.isEmpty(mSampleName.getText().toString())){
+            ToastUtils.ShowCenterToast(SampleRecvActivity.this,"请输入设备名称");
+            return;
+        }
+        if(TextUtils.isEmpty(mSampleXinghao.getText().toString())){
+            ToastUtils.ShowCenterToast(SampleRecvActivity.this,"请输入设备型号");
+            return;
+        }
+        if(TextUtils.isEmpty(mSampleId.getText().toString())){
+            ToastUtils.ShowCenterToast(SampleRecvActivity.this,"请输入样品编号");
+            return;
+        }
+        if(TextUtils.isEmpty(mSamplePhone.getText().toString())){
+            ToastUtils.ShowCenterToast(SampleRecvActivity.this,"请输入委托方联系方式");
+            return;
+        }
+        if(TextUtils.isEmpty(mSampleDate.getText().toString())){
+            ToastUtils.ShowCenterToast(SampleRecvActivity.this,"请输入到样时间");
+            return;
+        }
+        if(TextUtils.isEmpty(mSampleClient.getText().toString())){
+            ToastUtils.ShowCenterToast(SampleRecvActivity.this,"请输入委托单位名称");
+            return;
+        }
+        if( mImageAdapter.getData().size() <= 0){
+            ToastUtils.ShowCenterToast(SampleRecvActivity.this,"请上传相关试品图片");
+            return;
+        }
+    }
+    private String getCheckedTestItems(){
+        String result = "";
+        for(int i = 0;i< mStandardList.size();i++){
+            if(mStandardList.get(i).isChecked()){
+                result += mStandardList.get(i).getId()+",";
+            }
+        }
+        return result;
     }
 
     private void getSampleLeixing(){

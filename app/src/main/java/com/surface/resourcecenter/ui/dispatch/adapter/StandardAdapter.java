@@ -83,22 +83,22 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         TestItemsBean bean = list.get(position);
-        if(!TextUtils.isEmpty(bean.getArea())){
-            holder.mArea.setText(bean.getArea());
+        if(bean.getArea() != null && bean.getArea().size() > 0){
+            holder.mArea.setText(bean.getArea().get(0).getName()+"...");
             holder.mArea.setTextColor(mContext.getResources().getColor(R.color.app_main_color));
         } else {
             holder.mArea.setText("试验工区");
             holder.mArea.setTextColor(mContext.getResources().getColor(R.color.text_noselected));
         }
-        if(!TextUtils.isEmpty(bean.getPerson())){
-            holder.mPerson.setText(bean.getPerson());
+        if(bean.getPerson() != null && bean.getPerson().size() >0){
+            holder.mPerson.setText(bean.getPerson().get(0).getName());
             holder.mPerson.setTextColor(mContext.getResources().getColor(R.color.app_main_color));
         } else {
             holder.mPerson.setText("试验人员");
             holder.mPerson.setTextColor(mContext.getResources().getColor(R.color.text_noselected));
         }
-        if(!TextUtils.isEmpty(bean.getInstrument())){
-            holder.mInstrument.setText(bean.getInstrument());
+        if(bean.getInstrument() != null && bean.getInstrument().size() >0){
+            holder.mInstrument.setText(bean.getInstrument().get(0).getName());
             holder.mInstrument.setTextColor(mContext.getResources().getColor(R.color.app_main_color));
         } else {
             holder.mInstrument.setText("试验设备");

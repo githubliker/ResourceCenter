@@ -28,14 +28,14 @@
     </string-array>
 
     <string-array name="sample_status">
-        <item >正常</item>
-        <item >检修</item>
+        <item >完好</item>
+        <item >缺失</item>
+        <item >破损</item>
     </string-array>
 
     <string-array name="sample_youxianji">
-        <item >普通</item>
-        <item >重要</item>
-        <item >紧急</item>
+        <item >正常</item>
+        <item >加急</item>
     </string-array>
 
     <string-array name="device_gongqu">

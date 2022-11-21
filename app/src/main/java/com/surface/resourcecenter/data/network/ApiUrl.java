@@ -20,4 +20,5 @@ public class ApiUrl {
     public static String URL_REPORT_LIST = URL+"/ptwz/report/page";
     public static String URL_USRINFO_UPDATE = URL+"/ptwz/sys-user/save";
     public static String URL_USRINFO_SIGN_UPDATE = URL+"/ptwz/sys-user/signUpload";
+
 }

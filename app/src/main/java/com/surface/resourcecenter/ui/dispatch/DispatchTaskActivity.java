@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -34,6 +35,7 @@ import com.surface.resourcecenter.data.network.ApiUrl;
 import com.surface.resourcecenter.data.network.HttpListener;
 import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.data.utils.StatusBarUtil;
+import com.surface.resourcecenter.data.utils.ToastUtils;
 import com.surface.resourcecenter.ui.BaseActivity;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.dispatch.adapter.StandardAdapter;
@@ -43,6 +45,7 @@ import com.surface.resourcecenter.ui.dispatch.bean.SystemRole;
 import com.surface.resourcecenter.ui.dispatch.bean.TestArea;
 import com.surface.resourcecenter.ui.dispatch.fragment.TestStandardFragment;
 import com.surface.resourcecenter.ui.home.adapter.bean.PageInfo;
+import com.surface.resourcecenter.ui.sample.SampleRecvActivity;
 import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
 import com.surface.resourcecenter.ui.view.CustomDispatchPopup;
 import com.surface.resourcecenter.ui.view.CustomSignPopup;
@@ -54,9 +57,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 
 public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, onItemCheckChangeListener, View.OnClickListener {
@@ -66,6 +72,7 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
     private List<InstrumentBean> mInstrumentList = new ArrayList<>();
     private List<SystemRole> mRoleList = new ArrayList<>();
     private List<TestArea> mAreaList = new ArrayList<>();
+    private Spinner ratifier,checker;
     private RadioGroup mStandardGrop;
     StandardAdapter adapter;
     private TextView mSave;
@@ -80,6 +87,8 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         initTitle();
 
         mSave = findViewById(R.id.save);
+        checker = findViewById(R.id.checker);
+        ratifier = findViewById(R.id.ratifier);
         mStandardGrop = findViewById(R.id.radioGroup_gender);
         mRecyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -240,13 +249,22 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         if(view instanceof CheckBox){
             mStandardList.get(position).setChecked(isChecked);
             if(!isChecked){
-                mStandardList.get(position).setArea("");
-                mStandardList.get(position).setPerson("");
-                mStandardList.get(position).setInstrument("");
+                mStandardList.get(position).setArea(null);
+                mStandardList.get(position).setPerson(null);
+                mStandardList.get(position).setInstrument(null);
                 adapter.notifyDataSetChanged();
             }
         } else if(view instanceof LinearLayout){
             Log.e(TAG,"点击弹出弹窗分配任务");
+            if(mInstrumentList.size() == 0){
+                getInstruments();
+            }
+            if(mAreaList.size() == 0){
+                getTestAreas();
+            }
+            if(mRoleList.size() == 0){
+                getSystemRoles();
+            }
             CustomDispatchPopup customPopup = new CustomDispatchPopup(DispatchTaskActivity.this);
             new XPopup.Builder(DispatchTaskActivity.this)
                     .autoOpenSoftInput(false)
@@ -261,28 +279,27 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         @Override
         public void onDismiss(int index) {
             Log.d(TAG,"popup dismiss");
-            String area = "",per="",instru ="";
+            ArrayList<TestArea> areas = new ArrayList<>() ;
+            ArrayList<InstrumentBean> instrus = new ArrayList<>() ;
+            ArrayList<SystemRole> pers = new ArrayList<>() ;
             for(int i =0;i<mAreaList.size();i++){
                 if(mAreaList.get(i).isSelect()){
-                    area =mAreaList.get(i).getName();
-                    break;
+                    areas.add(mAreaList.get(i));
                 }
             }
             for(int i =0;i<mRoleList.size();i++){
                 if(mRoleList.get(i).isSelect()){
-                    per = mRoleList.get(i).getName();
-                    break;
+                    pers.add(mRoleList.get(i));
                 }
             }
             for(int i =0;i<mInstrumentList.size();i++){
                 if(mInstrumentList.get(i).isSelect()){
-                    instru = mInstrumentList.get(i).getName();
-                    break;
+                    instrus.add(mInstrumentList.get(i));
                 }
             }
-            mStandardList.get(index).setArea(area);
-            mStandardList.get(index).setPerson(per);
-            mStandardList.get(index).setInstrument(instru);
+            mStandardList.get(index).setArea(areas);
+            mStandardList.get(index).setPerson(pers);
+            mStandardList.get(index).setInstrument(instrus);
             adapter.notifyDataSetChanged();
         }
     };
@@ -299,26 +316,96 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.save:
-                String param = generDispatchData();
-                Log.e(TAG,"待上传参数"+param);
+                dispatchTask();
                 break;
         }
     }
 
+    private void dispatchTask(){
+        SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String myDate = format.format(new Date());
+        JSONObject params = new JSONObject();
+        try {
+            params.put("dispatch_time",myDate);
+            params.put("id",dispatchBean.getId());
+            params.put("ratifier",ratifier.getSelectedItem().toString());
+            params.put("checker",checker.getSelectedItem().toString());
+            params.put("state",1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        NetworkService service = new NetworkService();
+        service.setRequestForJson(0, params.toString(), ApiUrl.URL_SAMPLE_DISPATCH, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
+            @Override
+            public void onSucceed(int what, Response<String> response) {
+                Log.e("TAG",""+response.get().toString());
+                try {
+                    JSONObject json = null;
+                    json = new JSONObject(response.get());
+                    String msg = json.getString("msg");
+                    if("操作成功".equals(msg)){
+                        dispatchTestItemsTask();
+                    }
+                }catch (Exception e){}
+            }
+
+            @Override
+            public void onFailed(int what, Response<String> response) {
+
+            }
+        });
+    }
+
+    private void dispatchTestItemsTask(){
+        NetworkService service = new NetworkService();
+        service.setRequestForJson(0, generDispatchData(), ApiUrl.URL_TEST_DISPATCH, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
+            @Override
+            public void onSucceed(int what, Response<String> response) {
+                Log.e("TAG",""+response.get().toString());
+                try {
+                    JSONObject json = null;
+                    json = new JSONObject(response.get());
+                    String msg = json.getString("msg");
+                    ToastUtils.ShowCenterToast(DispatchTaskActivity.this,msg);
+                }catch (Exception e){}
+            }
+
+            @Override
+            public void onFailed(int what, Response<String> response) {
+
+            }
+        });
+    }
     private String generDispatchData(){
         JSONArray jsonArray = new JSONArray();
         try {
             for(int i = 0;i<mStandardList.size();i++){
                 if(mStandardList.get(i).isChecked()){
                     JSONObject json = new JSONObject();
-                    json.put("dispatch_id","");
-                    json.put("experiment_id","");
-                    json.put("area_id","");
-                    json.put("operater_id","");
-                    json.put("instrument_id","");
-                    json.put("state","");
-                    json.put("start_time","");
-                    json.put("end_time","");
+                    json.put("dispatchId",dispatchBean.getId());
+                    json.put("experimentId",mStandardList.get(i).getId());
+                    String areas = "";
+                    for(int m = 0;m <mStandardList.get(i).getArea().size();m++){
+//                        areas +=mStandardList.get(i).getArea().get(m).getId() +",";
+                        areas +=mStandardList.get(i).getArea().get(m).getId();
+                        break;
+                    }
+                    json.put("areaId",areas);
+                    String insts = "";
+                    for(int m = 0;m <mStandardList.get(i).getArea().size();m++){
+//                        insts +=mStandardList.get(i).getInstrument().get(m).getId() +",";
+                        insts +=mStandardList.get(i).getInstrument().get(m).getId();
+                        break;
+                    }
+                    json.put("instrumentId",insts);
+                    String operas = "";
+                    for(int m = 0;m <mStandardList.get(i).getArea().size();m++){
+//                        operas +=mStandardList.get(i).getPerson().get(m).getId() +",";
+                        operas +=mStandardList.get(i).getPerson().get(m).getId();
+                        break;
+                    }
+                    json.put("operater",operas);
+//                    json.put("state",1);
                     jsonArray.put(json);
                 }
             }
