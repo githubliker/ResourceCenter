@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.lxj.statelayout.StateLayout;
+import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
+import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
 
 
 /**
@@ -60,5 +62,18 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutId();
     public abstract void init(View view);
+
+    protected TestItemsBean getTestItems(String id){
+        DoTaskActivity activity = (DoTaskActivity) getActivity();
+        for(int i =0;i< activity.mStandardList.size();i++){
+            if(activity.mStandardList.get(i).getId().equals(id)){
+                return activity.mStandardList.get(i);
+            }
+        }
+        return new TestItemsBean();
+    }
+    protected void saveShiyanData(String params){
+
+    }
 
 }

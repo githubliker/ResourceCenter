@@ -21,6 +21,7 @@ import com.surface.resourcecenter.ui.report.ReportDetailActivity;
 import com.surface.resourcecenter.ui.report.ReportListActivity;
 import com.surface.resourcecenter.ui.sample.SampleRecvActivity;
 import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
+import com.surface.resourcecenter.ui.shiyan.DoTaskListActivity;
 import com.surface.resourcecenter.ui.usrManager.UsrManagerActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.adapter.BannerAdapter;
@@ -45,7 +46,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             } else if(tag.equals("样品管理")){
                 DispatchTaskListActivity.launch(getContext());
             } else if(tag.equals("试验进度")){
-                DoTaskActivity.launch(getContext());
+                DoTaskListActivity.launch(getContext());
             } else if(tag.equals("报告管理")){
                 ReportListActivity.launch(getContext());
             } else if(tag.equals("数据分析")){

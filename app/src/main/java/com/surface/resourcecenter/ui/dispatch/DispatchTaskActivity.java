@@ -103,7 +103,11 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         mStandardGrop.setOnCheckedChangeListener(this);
         mSave.setOnClickListener(this);
 
-        getTestItems(dispatchBean.getSampleType());
+        if(true){
+            getSelectTestItems(dispatchBean.getSampleType());
+        } else {
+            getTestItems(dispatchBean.getSampleType());
+        }
         getSystemRoles();
         getTestAreas();
         getInstruments();
@@ -139,6 +143,35 @@ public class DispatchTaskActivity extends BaseActivity implements RadioGroup.OnC
         });
     }
 
+    private void getSelectTestItems(String sampleTypeId){
+        HashMap params = new HashMap();
+        params.put("type",sampleTypeId);
+        NetworkService service = new NetworkService();
+        service.setGetRequestForData(0, params, ApiUrl.URL_TEST_ITEMS, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
+            @Override
+            public void onSucceed(int what, Response<String> response) {
+                Log.e("TAG",""+response.get().toString());
+                try {
+                    JSONObject json = new JSONObject(response.get());
+                    String datas = json.getString("data");
+                    Gson gson = new Gson();
+                    Type userListType = new TypeToken<List<TestItemsBean>>(){}.getType();
+                    mStandardList.clear();
+                    mStandardList = gson.fromJson(datas, userListType);
+                    adapter.initData(mStandardList);
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailed(int what, Response<String> response) {
+
+            }
+        });
+    }
     private void getSystemRoles(){
         HashMap params = new HashMap();
         NetworkService service = new NetworkService();

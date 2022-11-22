@@ -55,6 +55,9 @@
             android:configChanges="orientation|screenSize"></activity>
         <activity android:name=".ui.shiyan.DoTaskActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.shiyan.DoTaskListActivity"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".ui.report.ReportListActivity"

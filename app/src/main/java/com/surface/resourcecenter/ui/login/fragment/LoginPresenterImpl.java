@@ -96,6 +96,7 @@ public class LoginPresenterImpl implements LoginPresenter {
                     json = new JSONObject(response.get());
                     String datas = json.getString("data");
                     String msg = json.getString("msg");
+                    Consts.TOKEN =  json.getString("token");
                     if(!TextUtils.isEmpty(msg) && msg.equals("操作成功")){
                         Gson gson = new Gson();
                         Type userListType = new TypeToken<UserInfo>(){}.getType();

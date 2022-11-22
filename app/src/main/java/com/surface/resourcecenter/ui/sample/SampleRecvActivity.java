@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,7 +40,6 @@ import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.data.utils.ToastUtils;
 import com.surface.resourcecenter.ui.BaseActivity;
-import com.surface.resourcecenter.ui.dispatch.adapter.StandardAdapter;
 import com.surface.resourcecenter.ui.sample.adapter.FullyGridLayoutManager;
 import com.surface.resourcecenter.ui.sample.adapter.GridImageAdapter;
 import com.surface.resourcecenter.ui.sample.adapter.TestAdapter;
@@ -61,7 +59,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class SampleRecvActivity extends BaseActivity implements View.OnClickListener {
@@ -191,46 +188,13 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
 
     }
 
-    private void initTestItemsList(String testName){
-        if("".equals(testName)) return;
-        String[] items ;
-        if(testName.equals(Consts.GAOYAKGG)){
-            items = getResources().getStringArray(R.array.kgg_gaoya_test_items);
-        } else if(testName.equals(Consts.DIYAKGG)){
-            items = getResources().getStringArray(R.array.kgg_diya_test_items);
-        }else if(testName.equals(Consts.JPKGG)){
-            items = getResources().getStringArray(R.array.kgg_jp_test_items);
-        }else if(testName.equals(Consts.GELIKGG)){
-            items = getResources().getStringArray(R.array.kgg_geli_test_items);
-        }else if(testName.equals(Consts.ZHUSHANGKGG)){
-            items = getResources().getStringArray(R.array.kgg_zhushang_test_items);
-        }else if(testName.equals(Consts.DIANLIDIANLAN)){
-            items = getResources().getStringArray(R.array.dianlidianlan_test_items);
-        }else if(testName.equals(Consts.DIANLANBAOHUGUAN)){
-            items = getResources().getStringArray(R.array.dianlan_baohuguan_test_items);
-        }else if(testName.equals(Consts.DIANLANFENZHIXIANG)){
-            items = getResources().getStringArray(R.array.dianlanfenzhixiang_test_items);
-        }else if(testName.equals(Consts.DIANNENGJILIANGXIANG)){
-            items = getResources().getStringArray(R.array.diannengjiliangxiang_test_items);
-        }else if(testName.equals(Consts.GANSHIBYQ)||testName.equals(Consts.YOUJINBYQ)){
-            items = getResources().getStringArray(R.array.byq_test_items);
-        }else if(testName.equals(Consts.OUSHIBYQ)){
-            items = getResources().getStringArray(R.array.os_byq_test_items);
-        }else if(testName.equals(Consts.MEISHIBYQ)){
-            items = getResources().getStringArray(R.array.ms_byq_test_items);
-        } else {
-            items = getResources().getStringArray(R.array.kgg_gaoya_test_items);
-        }
-
-    }
-
     private void initExtraParamsLayout(String testName){
         String[] items ;
         if(testName.equals(Consts.GAOYAKGG)){
             items = getResources().getStringArray(R.array.kgg_main_params);
         } else if(testName.equals(Consts.DIYAKGG)){
             items = getResources().getStringArray(R.array.kgg_main_params);
-        }else if(testName.equals(Consts.JPKGG)){
+        }else if(testName.equals(Consts.HWKGG)){
             items = getResources().getStringArray(R.array.jp_main_params);
         }else if(testName.equals(Consts.GELIKGG)){
             items = getResources().getStringArray(R.array.kgg_main_params_1);
@@ -240,7 +204,7 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
             items = new String[]{};
         }else if(testName.equals(Consts.DIANLANBAOHUGUAN)){
             items = getResources().getStringArray(R.array.dl_bhg_main_params);
-        }else if(testName.equals(Consts.DIANLANFENZHIXIANG)){
+        }else if(testName.equals(Consts.GAOYADIANLANFENZHIXIANG)){
             items = getResources().getStringArray(R.array.dl_fzhx_main_params);
         }else if(testName.equals(Consts.DIANNENGJILIANGXIANG)){
             items = getResources().getStringArray(R.array.dn_jlx_main_params);
@@ -266,7 +230,7 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
         rightlayout.setOrientation(LinearLayout.VERTICAL);
         rightlayout.setLayoutParams(params);
         rightlayout.setGravity(Gravity.CENTER_VERTICAL);
-        for(int i = 0;i<items.length;i++){
+        for(int i = 0;i<items.length-1;i++){
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -530,8 +494,7 @@ public class SampleRecvActivity extends BaseActivity implements View.OnClickList
     private AdapterView.OnItemSelectedListener spinnerItemSelectListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            String sampleType = mSampleTypeData[position];
-            initExtraParamsLayout(sampleType);
+            initExtraParamsLayout(mTypeList.get(position).getId());
             getTestItems(mTypeList.get(position).getId());
         }
 

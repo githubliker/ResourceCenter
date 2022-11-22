@@ -1,4 +1,4 @@
-package com.surface.resourcecenter.ui.dispatch.fragment;
+package com.surface.resourcecenter.ui.shiyan;
 
 import android.util.Log;
 import android.view.View;
@@ -21,7 +21,6 @@ import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.dispatch.DispatchTaskActivity;
 import com.surface.resourcecenter.ui.dispatch.bean.DispatchBean;
 import com.surface.resourcecenter.ui.home.adapter.HomePageToDoTaskAdapter;
-import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
 import com.yanzhenjie.nohttp.rest.CacheMode;
 import com.yanzhenjie.nohttp.rest.Response;
 
@@ -34,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class TodoTaskFragment extends BaseFragment implements View.OnClickListener {
+public class MyTaskFragment extends BaseFragment implements View.OnClickListener {
     private RecyclerView mRecyclerView;
     RefreshLayout refreshLayout;
     private ArrayList<DispatchBean> dispatchList = new ArrayList<>();
@@ -67,7 +66,7 @@ public class TodoTaskFragment extends BaseFragment implements View.OnClickListen
         HashMap params = new HashMap();
         params.put("current",current+"");
         params.put("size",size+"");
-        params.put("state","0");
+        params.put("state","1");
         NetworkService service = new NetworkService();
         service.setGetRequestForData(0, params, ApiUrl.URL_DISPATCH_LIST, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
             @Override

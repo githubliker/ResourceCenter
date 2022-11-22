@@ -2,8 +2,12 @@ package com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,7 +16,12 @@ import androidx.annotation.RequiresApi;
 
 import com.surface.resourcecenter.R;
 import com.surface.resourcecenter.ui.BaseFragment;
+import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
+import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
 import com.surface.resourcecenter.ui.shiyan.nativeData.GridLayoutBean;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +36,7 @@ import java.util.List;
 
 public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClickListener {
 
+    private String TAG = "GaoYaYibanJianceIndex1";
     private List<GridLayoutBean> mViewList = new ArrayList<>();
     private LinearLayout mFatherLayout;
     private String[] gridHeader = {"接线形式、相序、空气净距检查","电气联锁试验","柜体尺寸、厚度、材质检测","机械操作","隔离开关触头镀银层厚度检测","防护等级检验","密封试验（适用于气体绝缘环网柜）"};
@@ -59,8 +69,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
         for(int i = 0;i< gridHeader.length;i++){
             GridLayout gridLayout = new GridLayout(getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(20,20,10,20);
-            gridLayout.setPadding(0,0,0,20);
+            params.setMargins(10,20,10,0);
             gridLayout.setLayoutParams(params);
 
             TextView textView = new TextView(getContext());
@@ -71,10 +80,37 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
             textView.setLayoutParams(params1);
             textView.setText(gridHeader[gridHeader.length - 1 - i]);
 
+
+            LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params2.setMargins(10,0,0,0);
+            params2.weight = 1;
+            CheckBox checkBox = new CheckBox(getContext());
+            checkBox.setText("合格");
+            checkBox.setChecked(true);
+            checkBox.setLayoutParams(params2);
+            Button save = new Button(getContext());
+            save.setText("保存");
+            save.setId(10000 + gridHeader.length - 1- i);
+            save.setOnClickListener(this);
+            Button update = new Button(getContext());
+            update.setText("刷新");
+            update.setId(10010 + gridHeader.length - 1- i);
+            update.setOnClickListener(this);
+            LinearLayout layout = new LinearLayout(getContext());
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.addView(checkBox);
+            layout.addView(update);
+            layout.addView(save);
+            layout.setPadding(0,0,0,20);
+
             GridLayoutBean bean = new GridLayoutBean();
             bean.setGridLayout(gridLayout);
             bean.setTextView(textView);
+            bean.setSave(save);
+            bean.setUpdate(update);
+            bean.setResult(checkBox);
             mViewList.add(0,bean);
+            mFatherLayout.addView(layout,0);
             mFatherLayout.addView(gridLayout,0);
             mFatherLayout.addView(textView,0);
 
@@ -83,30 +119,41 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initGridLayout(){
+        int index = 0;
         String[] header = {"项目","检测要求","测量或观察结果"};
-        String[] leftheader = {"接线形式","相序","安全净距"};
+        String[] leftheader = {"接线形式","相序","安全净距","安全净距","安全净距"};
         String[] leftheader1 = {"水平出线、垂直出线或品形出线","面对柜体前面板：\n" +
                 "①左中右对应相序为ABC\n" +
                 "②上中下对应相序为ABC\n" +
                 "③远中近对应相序为ABC\n" +
                 "④其他",
-                "12kV：检查以空气为绝缘介质的开关柜，母线室、电缆室内的相间\n和相对地最小空气间隙：\n" +
-                "相间和相对地≥125mm，带电体至门≥155mm;"};
+                "12kV：检查以空气为绝缘介质的开关柜，母线室、电缆室内的相间\n和相对地最小空气间隙",
+                "12kV：检查以空气为绝缘介质的开关柜，母线室、电缆室内\n" +
+                        "相间和相对地≥125mm;",
+                "12kV：检查以空气为绝缘介质的开关柜，母线室、电缆室内\n" +
+                "带电体至门≥155mm;"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mViewList.get(0).getGridLayout().setColumnCount(ColumnNum);
-        mViewList.get(0).getGridLayout().setRowCount(RowNum);
+        mViewList.get(index).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(index).getGridLayout().setRowCount(RowNum);
+        ArrayList<EditText> datas = new ArrayList<>();
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
-                TextView editText = new TextView(getContext());
+                EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
                 editText.setBackgroundResource(R.drawable.chart_item_shape);
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
+                    editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
+                    editText.setKeyListener(null);
                 } else if(i == 1){
                     editText.setText(leftheader1[m-1]);
+                    editText.setKeyListener(null);
+                } else {
+                    datas.add(editText);
                 }
                 editText.setPadding(20,20,20,20);
 
@@ -123,13 +170,14 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mViewList.get(0).getGridLayout().addView(editText,params);
+                mViewList.get(index).getGridLayout().addView(editText,params);
             }
         }
-
+        mViewList.get(index).setShiYanData(datas);
     }
 
     private void initGridLayout1(){
+        int index = 1;
         String[] header = {"检测要求","观察结果"};
         String[] leftHeader = {"断路器处于合闸位置时，断路器小车无法推进或拉出。"
                 ,"断路器小车未到工作或试验位置时，\n断路器无法进行合闸操作。"
@@ -149,17 +197,23 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                 ,"模拟熔断器动作后未更换熔断器前，负荷开关不允许合闸，\n也不允许保持在合闸位置"};
         int ColumnNum = header.length;
         int RowNum = leftHeader.length+1;
-        mViewList.get(1).getGridLayout().setColumnCount(ColumnNum);
-        mViewList.get(1).getGridLayout().setRowCount(RowNum);
+        mViewList.get(index).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(index).getGridLayout().setRowCount(RowNum);
+        ArrayList<EditText> datas = new ArrayList<>();
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
-                TextView editText = new TextView(getContext());
+                EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
                 editText.setBackgroundResource(R.drawable.chart_item_shape);
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
+                    editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftHeader[m-1]);
+                    editText.setKeyListener(null);
+                } else {
+                    datas.add(editText);
                 }
                 editText.setPadding(20,20,20,20);
 
@@ -177,31 +231,39 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
 
-                mViewList.get(1).getGridLayout().addView(editText,params);
+                mViewList.get(index).getGridLayout().addView(editText,params);
             }
         }
-
+        mViewList.get(index).setShiYanData(datas);
     }
 
     private void initGridLayout2(){
+        int index = 2;
         String[] header = {"检测项目","检测要求","测量或观察结果"};
         String[] leftheader = {"柜体尺寸（高×宽×深）","厚度","柜体材质"};
         String[] leftheader1 = {"提供实测值","覆铝锌板≥1.84","柜体应采用敷铝锌钢板、\n镀锌板弯折后栓接而成，\n或采用优质防锈处理的冷轧钢板制成，\n或采用不锈钢制成"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mViewList.get(2).getGridLayout().setColumnCount(ColumnNum);
-        mViewList.get(2).getGridLayout().setRowCount(RowNum);
+        mViewList.get(index).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(index).getGridLayout().setRowCount(RowNum);
+        ArrayList<EditText> datas = new ArrayList<>();
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
-                TextView editText = new TextView(getContext());
+                EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
                 editText.setBackgroundResource(R.drawable.chart_item_shape);
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
+                    editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
+                    editText.setKeyListener(null);
                 }else if(i == 1){
                     editText.setText(leftheader1[m-1]);
+                    editText.setKeyListener(null);
+                } else {
+                    datas.add(editText);
                 }
                 editText.setPadding(20,20,20,20);
 
@@ -218,14 +280,13 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mViewList.get(2).getGridLayout().addView(editText,params);
+                mViewList.get(index).getGridLayout().addView(editText,params);
             }
-
-
         }
-
+        mViewList.get(index).setShiYanData(datas);
     }
     private void initGridLayout3(){
+        int index = 3;
         String[] header = {"检验要求","测量或观察结果"};
         String[] leftheader = {"合闸电压低于额定30%，操作5次可靠不动作"
                 ,"合闸电压85%~110%范围内操作5次可靠动作"
@@ -239,15 +300,21 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
         int RowNum = leftheader.length+1;
         mViewList.get(3).getGridLayout().setColumnCount(ColumnNum);
         mViewList.get(3).getGridLayout().setRowCount(RowNum);
+        ArrayList<EditText> datas = new ArrayList<>();
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
-                TextView editText = new TextView(getContext());
+                EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
                 editText.setBackgroundResource(R.drawable.chart_item_shape);
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
+                    editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
+                    editText.setKeyListener(null);
+                } else {
+                    datas.add(editText);
                 }
                 editText.setPadding(20,10,20,10);
 
@@ -264,30 +331,37 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mViewList.get(3).getGridLayout().addView(editText,params);
+                mViewList.get(index).getGridLayout().addView(editText,params);
             }
 
 
         }
-
+        mViewList.get(index).setShiYanData(datas);
     }
     private void initGridLayout4(){
+        int index = 4;
         String[] header = {"测量部位","检测要求（um）","测量或观察结果（um）"};
         String[] leftheader = {"A上触头","A下触头","B上触头","B下触头","C上触头","C下触头"};
         String[] leftheader1 = {"≥8"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mViewList.get(4).getGridLayout().setColumnCount(ColumnNum);
-        mViewList.get(4).getGridLayout().setRowCount(RowNum);
+        mViewList.get(index).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(index).getGridLayout().setRowCount(RowNum);
+        ArrayList<EditText> datas = new ArrayList<>();
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
-                TextView editText = new TextView(getContext());
+                EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
                 editText.setBackgroundResource(R.drawable.chart_item_shape);
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
+                    editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
+                    editText.setKeyListener(null);
+                } else {
+                    datas.add(editText);
                 }
                 editText.setPadding(20,20,20,20);
 
@@ -297,9 +371,11 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
                 if(i == 1 && m != 0){
+                    datas.remove(editText);
                     if(m == 1){
                         rowSpec=GridLayout.spec(m, 6, GridLayout.FILL);
                         editText.setText(leftheader1[i-1]);
+                        editText.setKeyListener(null);
                     } else {
                         continue;
                     }
@@ -312,29 +388,36 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mViewList.get(4).getGridLayout().addView(editText,params);
+                mViewList.get(index).getGridLayout().addView(editText,params);
             }
         }
-
+        mViewList.get(index).setShiYanData(datas);
     }
 
     private void initGridLayout5(){
+        int index = 5;
         String[] header = {"检测部位","技术标准","检测方法","检测结果"};
         String[] leftheader = {"柜体外壳","隔板","活门","盖板"};
         String[] leftheader1 = {"柜体外壳防护等级\n达到IP4X及以上，\n隔室之间\n达到IP2X及以上。"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mViewList.get(5).getGridLayout().setColumnCount(ColumnNum);
-        mViewList.get(5).getGridLayout().setRowCount(RowNum);
+        mViewList.get(index).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(index).getGridLayout().setRowCount(RowNum);
+        ArrayList<EditText> datas = new ArrayList<>();
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
-                TextView editText = new TextView(getContext());
+                EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
                 editText.setBackgroundResource(R.drawable.chart_item_shape);
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
+                    editText.setKeyListener(null);
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
+                    editText.setKeyListener(null);
+                } else {
+                    datas.add(editText);
                 }
                 editText.setPadding(20,20,20,20);
 
@@ -344,9 +427,11 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                 //表示起始位置为m，占据1行
                 rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
                 if(i == 1 && m != 0){
+                    datas.remove(editText);
                     if(m == 1){
                         rowSpec=GridLayout.spec(m, 4, GridLayout.FILL);
                         editText.setText(leftheader1[i-1]);
+                        editText.setKeyListener(null);
                     } else {
                         continue;
                     }
@@ -359,29 +444,36 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mViewList.get(5).getGridLayout().addView(editText,params);
+                mViewList.get(index).getGridLayout().addView(editText,params);
             }
         }
-
+        mViewList.get(index).setShiYanData(datas);
     }
 
     private void initGridLayout6(){
+        int index = 6;
         String[] header = {"检测项目","观察结果"};
         String[] leftheader = {"充入气体性质",
                 "试验前压力","试验后压力","密封罩的体积"};
         int ColumnNum = header.length;
         int RowNum = leftheader.length+1;
-        mViewList.get(6).getGridLayout().setColumnCount(ColumnNum);
-        mViewList.get(6).getGridLayout().setRowCount(RowNum);
+        mViewList.get(index).getGridLayout().setColumnCount(ColumnNum);
+        mViewList.get(index).getGridLayout().setRowCount(RowNum);
+        ArrayList<EditText> datas = new ArrayList<>();
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
-                TextView editText = new TextView(getContext());
+                EditText editText = new EditText(getContext());
+                editText.setTextSize(14);
                 editText.setBackgroundResource(R.drawable.chart_item_shape);
                 editText.setGravity(Gravity.CENTER);
                 if(m == 0){
                     editText.setText(header[i]);
+                    editText.setKeyListener(null);
                 } else if(i == 0){
+                    editText.setKeyListener(null);
                     editText.setText(leftheader[m-1]);
+                } else {
+                    datas.add(editText);
                 }
                 editText.setPadding(20,20,20,20);
 
@@ -398,14 +490,219 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                     columnSpec=GridLayout.spec(i, 1, 1.75f);
                 }
                 GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mViewList.get(6).getGridLayout().addView(editText,params);
+                mViewList.get(index).getGridLayout().addView(editText,params);
             }
         }
-
+        mViewList.get(index).setShiYanData(datas);
     }
+
+    /**
+     * {"code":20000,"msg":"操作成功","data":[{"id":"155","name":"接线形式、相序、空气净距检查","type":"4","sign":"jxxsxxkqjjjc"},{"id":"156","name":"电气联锁试验","type":"4","sign":"dqls"},{"id":"157","name":"柜体尺寸、厚度、材质检测","type":"4","sign":"gygthdcz"},{"id":"158","name":"主回路电阻测量","type":"4","sign":"gyzhldz"},{"id":"159","name":"机械操作和机械特性试验","type":"4","sign":"gyjx"},{"id":"160","name":"辅助和控制回路的绝缘试验","type":"4","sign":"fzhkzhljy"},{"id":"161","name":"隔离开关触头镀银层厚度检测","type":"4","sign":"ctdyc"},{"id":"162","name":"雷电冲击电压试验","type":"4","sign":"gyldcj"},{"id":"163","name":"雷电冲击电压试验2","type":"4","sign":"gyldcj2"},{"id":"164","name":"温升试验","type":"4","sign":"gywssy"},{"id":"166","name":"密封试验（适用于充气柜）","type":"4","sign":"mfsyhwg"},{"id":"196","name":"工频耐压试验","type":"4","sign":"gygpny"},{"id":"197","name":"防护等级检验","type":"4","sign":"fhdj"}],"token":"2902295c-f53b-47a4-9003-a629635a539a"}
+     *
+     * */
     @Override
     public void onClick(View v) {
-//        Router.launchRender3DActivity(getContext(),new Bundle());
-//            ToastUtils.show("视频正在上传中。。。");
+        int buttonId = v.getId();
+        if(buttonId < 10010){  //save action
+            int index = buttonId - 10000;
+            ArrayList<EditText> results = mViewList.get(index).getShiYanData();
+            boolean isCheck = mViewList.get(index).getResult().isChecked();
+            if(index == 0){
+                saveShiyanData(results,isCheck);
+            } else if(index == 1){
+                saveShiyanData1(results,isCheck);
+            } else if(index == 2){
+                saveShiyanData2(results,isCheck);
+            } else if(index == 3){
+                saveShiyanData3(results,isCheck);
+            } else if(index == 4){
+                saveShiyanData4(results,isCheck);
+            } else if(index == 5){
+                saveShiyanData5(results,isCheck);
+            } else if(index == 6){
+                saveShiyanData6(results,isCheck);
+            }
+
+        } else {  // update action
+            int index = buttonId - 10010;
+            updateShiyanData(index);
+        }
+    }
+
+    private void saveShiyanData(ArrayList<EditText> results,boolean isChecked){
+        DoTaskActivity activity = (DoTaskActivity) getActivity();
+        TestItemsBean bean =getTestItems("155");
+        JSONObject json = new JSONObject();
+        try {
+            json.put("sample",activity.dispatchBean.getSampleId());
+            json.put("experiment",bean.getId());
+            json.put("sign",bean.getSign());
+            json.put("experiment_name",bean.getName());
+            for(int i = 0;i<results.size();i++){
+                json.put("d"+(i+1),results.get(i).getText().toString());
+            }
+            if(isChecked){
+                json.put("result","合格");
+            } else {
+                json.put("result","不合格");
+            }
+            Log.e(TAG,"result "+json.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        saveShiyanData(json.toString());
+    }
+
+    private void saveShiyanData1(ArrayList<EditText> results,boolean isChecked ){
+        DoTaskActivity activity = (DoTaskActivity) getActivity();
+        TestItemsBean bean =getTestItems("156");
+        JSONObject json = new JSONObject();
+        try {
+            json.put("sample",activity.dispatchBean.getSampleId());
+            json.put("experiment",bean.getId());
+            json.put("sign",bean.getSign());
+            json.put("experiment_name",bean.getName());
+            for(int i = 0;i<results.size();i++){
+                json.put("d"+(i+1),results.get(i).getText().toString());
+            }
+            if(isChecked){
+                json.put("result","合格");
+            } else {
+                json.put("result","不合格");
+            }
+            Log.e(TAG,"result "+json.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        saveShiyanData(json.toString());
+    }
+
+    private void saveShiyanData2(ArrayList<EditText> results,boolean isChecked ){
+        DoTaskActivity activity = (DoTaskActivity) getActivity();
+        TestItemsBean bean =getTestItems("157");
+        JSONObject json = new JSONObject();
+        try {
+            json.put("sample",activity.dispatchBean.getSampleId());
+            json.put("experiment",bean.getId());
+            json.put("sign",bean.getSign());
+            json.put("experiment_name",bean.getName());
+            for(int i = 0;i<results.size();i++){
+                json.put("d"+(i+1),results.get(i).getText().toString());
+            }
+            if(isChecked){
+                json.put("result","合格");
+            } else {
+                json.put("result","不合格");
+            }
+            Log.e(TAG,"result "+json.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        saveShiyanData(json.toString());
+    }
+
+    private void saveShiyanData3(ArrayList<EditText> results,boolean isChecked ){
+        DoTaskActivity activity = (DoTaskActivity) getActivity();
+        TestItemsBean bean =getTestItems("159");
+        JSONObject json = new JSONObject();
+        try {
+            json.put("sample",activity.dispatchBean.getSampleId());
+            json.put("experiment",bean.getId());
+            json.put("sign",bean.getSign());
+            json.put("experiment_name",bean.getName());
+            for(int i = 0;i<results.size();i++){
+                json.put("d"+(i+1),results.get(i).getText().toString());
+            }
+            if(isChecked){
+                json.put("result","合格");
+            } else {
+                json.put("result","不合格");
+            }
+            Log.e(TAG,"result "+json.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        saveShiyanData(json.toString());
+    }
+
+    private void saveShiyanData4(ArrayList<EditText> results,boolean isChecked ){
+        DoTaskActivity activity = (DoTaskActivity) getActivity();
+        TestItemsBean bean =getTestItems("161");
+        JSONObject json = new JSONObject();
+        try {
+            json.put("sample",activity.dispatchBean.getSampleId());
+            json.put("experiment",bean.getId());
+            json.put("sign",bean.getSign());
+            json.put("experiment_name",bean.getName());
+            for(int i = 0;i<results.size();i++){
+                json.put("d"+(i+1),results.get(i).getText().toString());
+            }
+            if(isChecked){
+                json.put("result","合格");
+            } else {
+                json.put("result","不合格");
+            }
+            Log.e(TAG,"result "+json.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        saveShiyanData(json.toString());
+    }
+
+    private void saveShiyanData5(ArrayList<EditText> results,boolean isChecked ){
+        DoTaskActivity activity = (DoTaskActivity) getActivity();
+        TestItemsBean bean =getTestItems("197");
+        JSONObject json = new JSONObject();
+        try {
+            json.put("sample",activity.dispatchBean.getSampleId());
+            json.put("experiment",bean.getId());
+            json.put("sign",bean.getSign());
+            json.put("experiment_name",bean.getName());
+            for(int i = 0;i<results.size() -1;i=i+2){
+                json.put("ff"+(i/2+1),results.get(i).getText().toString());
+                json.put("res"+((i/2)+1),results.get(i).getText().toString());
+            }
+            if(isChecked){
+                json.put("result","合格");
+            } else {
+                json.put("result","不合格");
+            }
+            Log.e(TAG,"result "+json.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        saveShiyanData(json.toString());
+    }
+
+    private void saveShiyanData6(ArrayList<EditText> results,boolean isChecked ){
+        DoTaskActivity activity = (DoTaskActivity) getActivity();
+        TestItemsBean bean =getTestItems("166");
+        JSONObject json = new JSONObject();
+        try {
+            json.put("sample",activity.dispatchBean.getSampleId());
+            json.put("experiment",bean.getId());
+            json.put("sign",bean.getSign());
+            json.put("experiment_name",bean.getName());
+            for(int i = 0;i<results.size();i++){
+                json.put("d"+(i+1),results.get(i).getText().toString());
+            }
+            json.put("qtxz",results.get(0).getText().toString());
+            json.put("qyl",results.get(1).getText().toString());
+            json.put("hyl",results.get(2).getText().toString());
+            json.put("tj",results.get(3).getText().toString());
+            if(isChecked){
+                json.put("result","合格");
+            } else {
+                json.put("result","不合格");
+            }
+            Log.e(TAG,"result "+json.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        saveShiyanData(json.toString());
+    }
+
+    private void updateShiyanData(int index){
+
     }
 }

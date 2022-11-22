@@ -3,6 +3,7 @@ package com.surface.resourcecenter.ui.shiyan;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -13,11 +14,19 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.Consts;
+import com.surface.resourcecenter.data.network.ApiUrl;
+import com.surface.resourcecenter.data.network.HttpListener;
+import com.surface.resourcecenter.data.network.NetworkService;
 import com.surface.resourcecenter.data.utils.StatusBarUtil;
 import com.surface.resourcecenter.ui.BaseActivity;
+import com.surface.resourcecenter.ui.dispatch.DispatchTaskActivity;
+import com.surface.resourcecenter.ui.dispatch.bean.DispatchBean;
 import com.surface.resourcecenter.ui.home.adapter.bean.PageInfo;
-import com.surface.resourcecenter.ui.shiyan.nativeData.biandianzhan.DianyabiTestIndex3;
+import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
 import com.surface.resourcecenter.ui.shiyan.nativeData.biandianzhan.FanghuDengjiIndexIK17;
 import com.surface.resourcecenter.ui.shiyan.nativeData.biandianzhan.FanghuDengjiIndexIP17;
 import com.surface.resourcecenter.ui.shiyan.nativeData.biandianzhan.GanyingNaiyaIndex7;
@@ -86,8 +95,15 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.zhushang.ZhushangJixieTex
 import com.surface.resourcecenter.ui.shiyan.nativeData.zhushang.ZhushangJueyuan;
 import com.surface.resourcecenter.ui.shiyan.nativeData.zhushang.ZhushangLeidianChongji;
 import com.surface.resourcecenter.ui.shiyan.nativeData.zhushang.ZhushangWensheng;
+import com.yanzhenjie.nohttp.rest.CacheMode;
+import com.yanzhenjie.nohttp.rest.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -99,8 +115,9 @@ public class DoTaskActivity extends BaseActivity {
     public ViewPager viewPager;
     TabLayout tabLayout;
     private MainAdapter pagerAdapter;
-    private final String YJBYQ = "YJBYQ";
-    private String TESTNAME = YJBYQ;
+    private String TESTNAME = "";
+    public DispatchBean dispatchBean;
+    public List<TestItemsBean> mStandardList = new ArrayList<>();
 
     private String[]  yjbyqtest = {"直流绝缘电阻、吸收比测量","直流电阻不平衡率测量","电压比测量和联结组标号检定","空载损耗和空载电流测量","短路阻抗和负载损耗测量",
             "外施耐压试验","感应耐压试验","绝缘液试验","温升试验","雷电冲击试验"};
@@ -108,7 +125,6 @@ public class DoTaskActivity extends BaseActivity {
             "外施耐压试验","感应耐压试验","绝缘液试验","一般检查","机械操作试验","温升试验","雷电冲击试验"};
     private String[]  osxsbdztest = {"绝缘试验","绝缘试验","设计和外观检查","接线正确性检查","接地连续性试验",
             "功能试验","温升试验","耐受电流能力试验","防护等级检验IP","防护等级检验IK","声级试验","内部电弧试验"};
-
 
     private String[]  gsbyqtest = {"绕组电阻测量，介损测量","空负载损耗测量","外施耐压感应耐压","温升试验","雷电冲击试验",
             "压力及声级测定"};
@@ -132,8 +148,39 @@ public class DoTaskActivity extends BaseActivity {
         pagerAdapter = new MainAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        dispatchBean = (DispatchBean) getIntent().getSerializableExtra("data");
+        TESTNAME = dispatchBean.getSampleName();
+
+        if(dispatchBean.getSampleType().equals(Consts.HWKGG)){
+            initHuanwangGuiFragment();
+        } else if(dispatchBean.getSampleType().equals(Consts.JPKGG)){
+            initJPGuiFragment();
+        } else if(dispatchBean.getSampleType().equals(Consts.BILEIQI)){
+
+        } else if(dispatchBean.getSampleType().equals(Consts.DIYAKGG)){
+            initDiyaGuiFragment();
+        } else if(dispatchBean.getSampleType().equals(Consts.DIANLANBAOHUGUAN)){
+
+        } else if(dispatchBean.getSampleType().equals(Consts.DIANLIDIANLAN)){
+
+        } else if(dispatchBean.getSampleType().equals(Consts.DIANNENGJILIANGXIANG)){
+
+        } else if(dispatchBean.getSampleType().equals(Consts.GAOYAKGG)){
+            initGaoyaKaiguanguiFragment();
+        } else if(dispatchBean.getSampleType().equals(Consts.GELIKGG)){
+            initGelikaiguanFragment();
+        } else if(dispatchBean.getSampleType().equals(Consts.ZHUSHANGKGG)){
+            initZhushangkaiguanFragment();
+        } else if(dispatchBean.getSampleType().equals(Consts.GAOYADIANLANFENZHIXIANG)){
+            initFenzhixiangFragment();
+        } else if(dispatchBean.getSampleType().equals(Consts.GANSHIBYQ)){
+            initYjByqFragment();
+        }else if(dispatchBean.getSampleType().equals(Consts.YOUJINBYQ)){
+            initYjByqFragment();
+        }
+
         initTitle();
-        initYjByqFragment();
+        getTestItems(dispatchBean.getSampleType());
     }
 
 
@@ -146,11 +193,37 @@ public class DoTaskActivity extends BaseActivity {
                 finish();
             }
         });
-        toolbar.setTitle("试验信息");
+        toolbar.setTitle(TESTNAME+"试验信息");
 
     }
 
+    private void getTestItems(String sampleTypeId){
+        HashMap params = new HashMap();
+        params.put("type",sampleTypeId);
+        NetworkService service = new NetworkService();
+        service.setGetRequestForData(0, params, ApiUrl.URL_TEST_ITEMS, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
+            @Override
+            public void onSucceed(int what, Response<String> response) {
+                Log.e("TAG",""+response.get().toString());
+                try {
+                    JSONObject json = new JSONObject(response.get());
+                    String datas = json.getString("data");
+                    Gson gson = new Gson();
+                    Type userListType = new TypeToken<List<TestItemsBean>>(){}.getType();
+                    mStandardList.clear();
+                    mStandardList = gson.fromJson(datas, userListType);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
+            }
+
+            @Override
+            public void onFailed(int what, Response<String> response) {
+
+            }
+        });
+    }
     private void initYjByqFragment(){
         pageInfos.clear();
         int i = 0;
@@ -168,7 +241,6 @@ public class DoTaskActivity extends BaseActivity {
         int i = 0;
         pageInfos.add(new PageInfo(msxsbdztest[i++],new ZhiliudianzuIndex1()));
         pageInfos.add(new PageInfo(msxsbdztest[i++],new ZhiliudianzuBupinighenglvIndex2()));
-        pageInfos.add(new PageInfo(msxsbdztest[i++],new DianyabiTestIndex3()));
         pageInfos.add(new PageInfo(msxsbdztest[i++],new KongzaiSunhaoIndex4()));
         pageInfos.add(new PageInfo(msxsbdztest[i++],new ZukangFuzaiSunhaoIndex5()));
         pageInfos.add(new PageInfo(msxsbdztest[i++],new WaishiNaiyaIndex6()));
@@ -303,9 +375,12 @@ public class DoTaskActivity extends BaseActivity {
         }
     }
 
-    public static void launch(Context context) {
+    public static void launch(Context context, DispatchBean bean) {
         Intent intent = new Intent(context, DoTaskActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data",bean);
+        intent.putExtras(bundle);
         context.startActivity(intent);
     }
 }

@@ -1,38 +1,30 @@
 package com.surface.resourcecenter.data;
 
-import java.net.PortUnreachableException;
-
 public class Consts {
-    public static String YJSBYQ = "YJSBYQ";
-    public static String GSBYQ = "GSBYQ";
-    public static String MSXSBYQ = "MSXSBYQ";
-    public static String OSXSBYQ = "OSXSBYQ";
-    public static String GYKGG = "GYKGG";
-    public static String HWG = "HWG";
-    public static String DLQ = "DLQ";
-    public static String GLKG = "GLKG";
-    public static String JPG = "JPG";
-    public static String ZSKG = "ZSKG";
-    public static String DYKGG = "DYKGG";
 
-    public static String GAOYAKGG = "高压开关柜";
-    public static String DIYAKGG = "低压开关柜";
-    public static String JPKGG = "JP柜";
-    public static String ZHUSHANGKGG = "柱上开关";
-    public static String GELIKGG = "隔离开关";
-    public static String DIANLIDIANLAN = "电力电缆";
-    public static String DIANLANBAOHUGUAN = "电缆保护管";
-    public static String DIANLANFENZHIXIANG = "0.4kV电缆分支箱";
-    public static String DIANNENGJILIANGXIANG = "电能计量箱";
-    public static String GANSHIBYQ = "干式变压器";
-    public static String YOUJINBYQ = "油浸式变压器";
-    public static String MEISHIBYQ = "美式箱变";
-    public static String OUSHIBYQ = "欧式箱变";
+    public static String GANSHIBYQ = "1"; //干式配电变压器
+    public static String YOUJINBYQ = "2"; //油浸式配电变压器
+    public static String MEISHIBYQ = "3";  //美式箱变
+    public static String GAOYAKGG = "4";//高压开关柜
+    public static String ZHUSHANGKGG = "5"; //柱上断路器
+    public static String GELIKGG = "6";//隔离开关
+    public static String HWKGG = "7";//环网柜（充气柜）
+    public static String GAOYADIANLANFENZHIXIANG = "8";//高压电缆分支箱
+    public static String DIYAKGG = "9";//低压开关柜
+    public static String DIYADIANLANFENZHIXIANG = "10"; //低压电缆分支箱
+    public static String JPKGG = "11"; //JP柜
+    public static String DIANNENGJILIANGXIANG = "12";//电能计量箱
+    public static String DIANLIDIANLAN = "13";//电力电缆
+    public static String DIANLANBAOHUGUAN = "14";//电缆保护管
+    public static String BILEIQI = "15";//避雷器
+    public static String OUSHIBYQ = "16";//欧式箱变
+
 
     public static String USRNAME = "USRNAME";
     public static String USRID = "USRID";
     public static String LOGINPASSWORD = "LOGINPASSWORD";
     public static String LOGINNAME = "LOGINNAME";
     public static String LOGINROLES = "LOGINNAME";
+    public static String TOKEN= "";
 
 }
