@@ -4,6 +4,7 @@ import android.app.Application;
 import android.text.TextUtils;
 
 import com.luck.picture.lib.tools.StringUtils;
+import com.surface.resourcecenter.data.Consts;
 import com.yanzhenjie.nohttp.BasicBinary;
 import com.yanzhenjie.nohttp.Binary;
 import com.yanzhenjie.nohttp.FileBinary;
@@ -48,6 +49,7 @@ public class NetworkService {
             Request<String> request = NoHttp.createStringRequest(url, RequestMethod.POST);
             request.setCacheMode(cacheMode);
             request.setDefineRequestBodyForJson(jsonBody);
+            request.addHeader("Authorization", Consts.TOKEN);
             SSLContext sslContext = SSLContextUtil.getDefaultSLLContext();
             if (sslContext != null)
                 request.setSSLSocketFactory(sslContext.getSocketFactory());
@@ -78,6 +80,7 @@ public class NetworkService {
 
         url = getAppendUrl(url,map);
         Request<String> request = new StringRequest(url, RequestMethod.GET);
+        request.addHeader("Authorization", Consts.TOKEN);
         SSLContext sslContext = SSLContextUtil.getDefaultSLLContext();
         if (sslContext != null)
             request.setSSLSocketFactory(sslContext.getSocketFactory());
@@ -92,6 +95,7 @@ public class NetworkService {
     public void upload(int what,String url, File file,
                        HttpListener<String> listener){
         Request<String> request = new StringRequest(url, RequestMethod.POST);
+        request.addHeader("Authorization", Consts.TOKEN);
         List<Binary> binaries = new ArrayList<>();
         BasicBinary binary1 = new FileBinary(file);
         binaries.add(binary1);

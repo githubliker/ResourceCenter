@@ -18,6 +18,8 @@ public class ApiUrl {
     public static String URL_TEST_AREAS_ITEMS= URL+"/ptwz/area-project/list";
 
     public static String URL_MY_TEST_DETAIL = URL+"/ptwz/task/page";
+    public static String URL_SAVE_TEST_DATA = URL+"/ptwz/test-data/save";
+    public static String URL_GET_TEST_DATA = URL+"/ptwz/test-data/get";
 
     public static String URL_REPORT_LIST = URL+"/ptwz/report/page";
     public static String URL_USRINFO_UPDATE = URL+"/ptwz/sys-user/save";

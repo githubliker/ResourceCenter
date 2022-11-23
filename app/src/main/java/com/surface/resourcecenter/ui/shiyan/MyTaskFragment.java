@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.impl.LoadingPopupView;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.simple.SimpleMultiListener;
@@ -49,6 +51,11 @@ public class MyTaskFragment extends BaseFragment implements View.OnClickListener
                     DispatchTaskActivity.launch(getContext(),dispatchList.get(position));
                     break;
                 case 1:
+//                    final LoadingPopupView loadingPopup = (LoadingPopupView) new XPopup.Builder(getContext())
+//                            .dismissOnBackPressed(false)
+//                            .asLoading("正在加载中...")
+//                            .show();
+//                    loadingPopup.delayDismissWith(400, null);
                     DoTaskActivity.launch(getContext(),dispatchList.get(position));
                     break;
                 case 2:

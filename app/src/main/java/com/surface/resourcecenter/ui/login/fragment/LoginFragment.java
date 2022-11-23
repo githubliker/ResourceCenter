@@ -123,12 +123,7 @@ public class LoginFragment extends Fragment implements LoginView {
         new XPopup.Builder(getContext())
                 .asConfirm("登录失败", message,
                         "取消", "确定",
-                        new OnConfirmListener() {
-                            @Override
-                            public void onConfirm() {
-
-                            }
-                        }, null, false).show();
+                        null, null, true).show();
     }
 
     /**

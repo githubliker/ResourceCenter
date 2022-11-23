@@ -496,10 +496,6 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
         mViewList.get(index).setShiYanData(datas);
     }
 
-    /**
-     * {"code":20000,"msg":"操作成功","data":[{"id":"155","name":"接线形式、相序、空气净距检查","type":"4","sign":"jxxsxxkqjjjc"},{"id":"156","name":"电气联锁试验","type":"4","sign":"dqls"},{"id":"157","name":"柜体尺寸、厚度、材质检测","type":"4","sign":"gygthdcz"},{"id":"158","name":"主回路电阻测量","type":"4","sign":"gyzhldz"},{"id":"159","name":"机械操作和机械特性试验","type":"4","sign":"gyjx"},{"id":"160","name":"辅助和控制回路的绝缘试验","type":"4","sign":"fzhkzhljy"},{"id":"161","name":"隔离开关触头镀银层厚度检测","type":"4","sign":"ctdyc"},{"id":"162","name":"雷电冲击电压试验","type":"4","sign":"gyldcj"},{"id":"163","name":"雷电冲击电压试验2","type":"4","sign":"gyldcj2"},{"id":"164","name":"温升试验","type":"4","sign":"gywssy"},{"id":"166","name":"密封试验（适用于充气柜）","type":"4","sign":"mfsyhwg"},{"id":"196","name":"工频耐压试验","type":"4","sign":"gygpny"},{"id":"197","name":"防护等级检验","type":"4","sign":"fhdj"}],"token":"2902295c-f53b-47a4-9003-a629635a539a"}
-     *
-     * */
     @Override
     public void onClick(View v) {
         int buttonId = v.getId();
@@ -525,13 +521,37 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
         } else {  // update action
             int index = buttonId - 10010;
-            updateShiyanData(index);
+            DoTaskActivity activity = (DoTaskActivity) getActivity();
+            String sampleId = activity.dispatchBean.getSampleId();
+            if(index == 0){
+                TestItemsBean bean =getTestItems(GaoyaShiyanItem.jxxsxxkqjjjc);
+                getShiyanData(sampleId,bean.getId());
+            } else if(index == 1){
+                TestItemsBean bean =getTestItems(GaoyaShiyanItem.dqls);
+                getShiyanData(sampleId,bean.getId());
+            } else if(index == 2){
+                TestItemsBean bean =getTestItems(GaoyaShiyanItem.gygthdcz);
+                getShiyanData(sampleId,bean.getId());
+            } else if(index == 3){
+                TestItemsBean bean =getTestItems(GaoyaShiyanItem.gyjx);
+                getShiyanData(sampleId,bean.getId());
+            } else if(index == 4){
+                TestItemsBean bean =getTestItems(GaoyaShiyanItem.ctdyc);
+                getShiyanData(sampleId,bean.getId());
+            } else if(index == 5){
+                TestItemsBean bean =getTestItems(GaoyaShiyanItem.fhdj);
+                getShiyanData(sampleId,bean.getId());
+            } else if(index == 6){
+                TestItemsBean bean =getTestItems(GaoyaShiyanItem.mfsyhwg);
+                getShiyanData(sampleId,bean.getId());
+            }
+
         }
     }
 
     private void saveShiyanData(ArrayList<EditText> results,boolean isChecked){
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems("155");
+        TestItemsBean bean =getTestItems(GaoyaShiyanItem.jxxsxxkqjjjc);
         JSONObject json = new JSONObject();
         try {
             json.put("sample",activity.dispatchBean.getSampleId());
@@ -555,7 +575,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
     private void saveShiyanData1(ArrayList<EditText> results,boolean isChecked ){
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems("156");
+        TestItemsBean bean =getTestItems(GaoyaShiyanItem.dqls);
         JSONObject json = new JSONObject();
         try {
             json.put("sample",activity.dispatchBean.getSampleId());
@@ -579,7 +599,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
     private void saveShiyanData2(ArrayList<EditText> results,boolean isChecked ){
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems("157");
+        TestItemsBean bean =getTestItems(GaoyaShiyanItem.gygthdcz);
         JSONObject json = new JSONObject();
         try {
             json.put("sample",activity.dispatchBean.getSampleId());
@@ -602,8 +622,16 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
     }
 
     private void saveShiyanData3(ArrayList<EditText> results,boolean isChecked ){
+        String[] leftheader = {"合闸电压低于额定30%，操作5次可靠不动作"
+                ,"合闸电压85%~110%范围内操作5次可靠动作"
+                ,"分闸电压低于额定30%，操作5次可靠不动作"
+                ,"分闸电压65%~110%范围内操作5次可靠动作"
+                ,"额定操作电压下操作5次，可靠动作"
+                ,"人力操作5次，可靠动作"
+                ,"额定操作电压“分-0.3-合分”，操作5次可靠动作"
+                ,"储能电机85%和110%操作电压，操作5次储能可靠动作"};
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems("159");
+        TestItemsBean bean =getTestItems(GaoyaShiyanItem.gyjx);
         JSONObject json = new JSONObject();
         try {
             json.put("sample",activity.dispatchBean.getSampleId());
@@ -611,7 +639,8 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
             json.put("sign",bean.getSign());
             json.put("experiment_name",bean.getName());
             for(int i = 0;i<results.size();i++){
-                json.put("d"+(i+1),results.get(i).getText().toString());
+                json.put("res"+(i+1),results.get(i).getText().toString());
+                json.put("yq"+(i+1),leftheader[i]);
             }
             if(isChecked){
                 json.put("result","合格");
@@ -627,7 +656,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
     private void saveShiyanData4(ArrayList<EditText> results,boolean isChecked ){
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems("161");
+        TestItemsBean bean =getTestItems(GaoyaShiyanItem.ctdyc);
         JSONObject json = new JSONObject();
         try {
             json.put("sample",activity.dispatchBean.getSampleId());
@@ -651,7 +680,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
     private void saveShiyanData5(ArrayList<EditText> results,boolean isChecked ){
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems("197");
+        TestItemsBean bean =getTestItems(GaoyaShiyanItem.fhdj);
         JSONObject json = new JSONObject();
         try {
             json.put("sample",activity.dispatchBean.getSampleId());
@@ -676,7 +705,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
     private void saveShiyanData6(ArrayList<EditText> results,boolean isChecked ){
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems("166");
+        TestItemsBean bean =getTestItems(GaoyaShiyanItem.mfsyhwg);
         JSONObject json = new JSONObject();
         try {
             json.put("sample",activity.dispatchBean.getSampleId());
