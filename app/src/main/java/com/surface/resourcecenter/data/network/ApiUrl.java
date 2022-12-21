@@ -2,7 +2,7 @@ package com.surface.resourcecenter.data.network;
 
 public class ApiUrl {
 
-    public static String URL = "http://172.27.63.1:8080";
+    public static String URL = "http://59.110.23.39:9540";
 
     public static String URL_LOGIN = URL+"/login";
     public static String URL_UPLOAD = URL+"/ptwz/sample/sampleUpload";

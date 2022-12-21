@@ -34,6 +34,7 @@ import java.util.Map;
  * Create by dance, at 2018/12/9
  */
 public abstract class BaseFragment extends Fragment {
+    public String TAG = "BaseFragment";
     View view;
     boolean isInit = false;
     StateLayout stateLayout;
@@ -107,28 +108,12 @@ public abstract class BaseFragment extends Fragment {
         });
     }
 
-    protected void getShiyanData(String sampleId,String experimentId){
+    protected void getShiyanData(int index,String sampleId,String experimentId,HttpListener<String> listener){
         HashMap params = new HashMap();
         params.put("sample",sampleId);
         params.put("experiment",experimentId);
         NetworkService service = new NetworkService();
-        service.setGetRequestForData(0, params, ApiUrl.URL_GET_TEST_DATA, CacheMode.ONLY_REQUEST_NETWORK, new HttpListener<String>() {
-            @Override
-            public void onSucceed(int what, Response<String> response) {
-                Log.e("TAG",""+response.get().toString());
-                try {
-                    JSONObject json = null;
-                    json = new JSONObject(response.get());
-                    String msg = json.getString("msg");
-                    ToastUtils.ShowCenterToast(getContext(),msg);
-                }catch (Exception e){}
-            }
-
-            @Override
-            public void onFailed(int what, Response<String> response) {
-
-            }
-        });
+        service.setGetRequestForData(index, params, ApiUrl.URL_GET_TEST_DATA, CacheMode.ONLY_REQUEST_NETWORK, listener);
     }
 
 }

@@ -57,6 +57,7 @@ import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiYaYibanJianceIn
 import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaLeidianChongji;
 import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.DiyaWensheng;
 import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.Diyadianjifanghu;
+import com.surface.resourcecenter.ui.shiyan.nativeData.diyagui.Diyagongpinnaiya;
 import com.surface.resourcecenter.ui.shiyan.nativeData.fenzhixiang.FenZhiDianjiFanghu;
 import com.surface.resourcecenter.ui.shiyan.nativeData.fenzhixiang.FenZhiLeidianChongji;
 import com.surface.resourcecenter.ui.shiyan.nativeData.fenzhixiang.FenZhiWensheng;
@@ -135,7 +136,7 @@ public class DoTaskActivity extends BaseActivity {
     private String[]  huanwangguitest = {"一般检查","主回路电阻测量","机械特性试验","工频耐压试验","辅助和控制回路的绝缘试验","温升试验","雷电冲击电压试验",
             "局部放电试验"};
     private String[]  jpguitest = {"一般检查1","一般检查2","电击防护和保护电路完整性","工频耐压试验","配电回路温升试验","补偿电路温升试验"};
-    private String[]  dyguitest = {"一般检查1","电击防护和保护电路完整性","工频耐压试验","温升试验"};
+    private String[]  dyguitest = {"一般检查1","电击防护和保护电路完整性","介电性性能试验","温升试验"};
     private String[]  gaoyakaiguanguitest = {"一般检查","主回路电阻测量","机械特性试验","工频耐压试验","绝缘试验","雷电冲击试验","温升试验"};
 
     @Override
@@ -348,7 +349,8 @@ public class DoTaskActivity extends BaseActivity {
         int i = 0;
         pageInfos.add(new PageInfo(dyguitest[i++],new DiYaYibanJianceIndex1()));
         pageInfos.add(new PageInfo(dyguitest[i++],new Diyadianjifanghu()));
-        pageInfos.add(new PageInfo(dyguitest[i++],new DiyaLeidianChongji()));
+        pageInfos.add(new PageInfo(dyguitest[i++],new Diyagongpinnaiya()));
+//        pageInfos.add(new PageInfo(dyguitest[i++],new DiyaLeidianChongji()));
         pageInfos.add(new PageInfo(dyguitest[i++],new DiyaWensheng()));
         pagerAdapter.notifyDataSetChanged();
     }

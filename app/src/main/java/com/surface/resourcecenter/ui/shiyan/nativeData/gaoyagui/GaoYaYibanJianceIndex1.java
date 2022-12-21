@@ -2,6 +2,7 @@ package com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -14,12 +15,17 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.gson.JsonObject;
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.network.HttpListener;
+import com.surface.resourcecenter.data.utils.ToastUtils;
 import com.surface.resourcecenter.ui.BaseFragment;
 import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
 import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
 import com.surface.resourcecenter.ui.shiyan.nativeData.GridLayoutBean;
+import com.yanzhenjie.nohttp.rest.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,7 +45,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
     private String TAG = "GaoYaYibanJianceIndex1";
     private List<GridLayoutBean> mViewList = new ArrayList<>();
     private LinearLayout mFatherLayout;
-    private String[] gridHeader = {"接线形式、相序、空气净距检查","电气联锁试验","柜体尺寸、厚度、材质检测","机械操作","隔离开关触头镀银层厚度检测","防护等级检验","密封试验（适用于气体绝缘环网柜）"};
+    private String[] gridHeader = {"接线形式、相序、空气净距检查","电气联锁试验","柜体尺寸、厚度、材质检测","隔离开关触头镀银层厚度检测","防护等级检验","密封试验（适用于气体绝缘环网柜）"};
     public GaoYaYibanJianceIndex1(){
 
     }
@@ -53,7 +59,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
     @Override
     public void init(View view) {
         mFatherLayout = view.findViewById(R.id.grid_father);
-
+        view.findViewById(R.id.bottom_layout).setVisibility(View.GONE);
         initView();
         initGridLayout();
         initGridLayout1();
@@ -61,7 +67,6 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
         initGridLayout3();
         initGridLayout4();
         initGridLayout5();
-        initGridLayout6();
     }
 
     private void initView(){
@@ -287,59 +292,6 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
     }
     private void initGridLayout3(){
         int index = 3;
-        String[] header = {"检验要求","测量或观察结果"};
-        String[] leftheader = {"合闸电压低于额定30%，操作5次可靠不动作"
-                ,"合闸电压85%~110%范围内操作5次可靠动作"
-                ,"分闸电压低于额定30%，操作5次可靠不动作"
-                ,"分闸电压65%~110%范围内操作5次可靠动作"
-                ,"额定操作电压下操作5次，可靠动作"
-                ,"人力操作5次，可靠动作"
-                ,"额定操作电压“分-0.3-合分”，操作5次可靠动作"
-                ,"储能电机85%和110%操作电压，操作5次储能可靠动作"};
-        int ColumnNum = header.length;
-        int RowNum = leftheader.length+1;
-        mViewList.get(3).getGridLayout().setColumnCount(ColumnNum);
-        mViewList.get(3).getGridLayout().setRowCount(RowNum);
-        ArrayList<EditText> datas = new ArrayList<>();
-        for(int m = 0 ;m<RowNum;m++){
-            for(int i = 0;i<ColumnNum;i++){
-                EditText editText = new EditText(getContext());
-                editText.setTextSize(14);
-                editText.setBackgroundResource(R.drawable.chart_item_shape);
-                editText.setGravity(Gravity.CENTER);
-                if(m == 0){
-                    editText.setText(header[i]);
-                    editText.setKeyListener(null);
-                } else if(i == 0){
-                    editText.setText(leftheader[m-1]);
-                    editText.setKeyListener(null);
-                } else {
-                    datas.add(editText);
-                }
-                editText.setPadding(20,10,20,10);
-
-                GridLayout.Spec rowSpec;
-                GridLayout.Spec columnSpec;
-
-                //表示起始位置为m，占据1行
-                rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                if(i  == ColumnNum -1){
-                    //表示起始位置为i，占据1列
-                    columnSpec=GridLayout.spec(i, 1,0.25f);
-                } else {
-                    //表示起始位置为i，占据1列
-                    columnSpec=GridLayout.spec(i, 1, 1.75f);
-                }
-                GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mViewList.get(index).getGridLayout().addView(editText,params);
-            }
-
-
-        }
-        mViewList.get(index).setShiYanData(datas);
-    }
-    private void initGridLayout4(){
-        int index = 4;
         String[] header = {"测量部位","检测要求（um）","测量或观察结果（um）"};
         String[] leftheader = {"A上触头","A下触头","B上触头","B下触头","C上触头","C下触头"};
         String[] leftheader1 = {"≥8"};
@@ -394,8 +346,8 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
         mViewList.get(index).setShiYanData(datas);
     }
 
-    private void initGridLayout5(){
-        int index = 5;
+    private void initGridLayout4(){
+        int index = 4;
         String[] header = {"检测部位","技术标准","检测方法","检测结果"};
         String[] leftheader = {"柜体外壳","隔板","活门","盖板"};
         String[] leftheader1 = {"柜体外壳防护等级\n达到IP4X及以上，\n隔室之间\n达到IP2X及以上。"};
@@ -450,8 +402,8 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
         mViewList.get(index).setShiYanData(datas);
     }
 
-    private void initGridLayout6(){
-        int index = 6;
+    private void initGridLayout5(){
+        int index = 5;
         String[] header = {"检测项目","观察结果"};
         String[] leftheader = {"充入气体性质",
                 "试验前压力","试验后压力","密封罩的体积"};
@@ -515,8 +467,6 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
                 saveShiyanData4(results,isCheck);
             } else if(index == 5){
                 saveShiyanData5(results,isCheck);
-            } else if(index == 6){
-                saveShiyanData6(results,isCheck);
             }
 
         } else {  // update action
@@ -525,25 +475,22 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
             String sampleId = activity.dispatchBean.getSampleId();
             if(index == 0){
                 TestItemsBean bean =getTestItems(GaoyaShiyanItem.jxxsxxkqjjjc);
-                getShiyanData(sampleId,bean.getId());
+                getShiyanData(index,sampleId,bean.getId(),mDataCallback);
             } else if(index == 1){
                 TestItemsBean bean =getTestItems(GaoyaShiyanItem.dqls);
-                getShiyanData(sampleId,bean.getId());
+                getShiyanData(index,sampleId,bean.getId(),mDataCallback);
             } else if(index == 2){
                 TestItemsBean bean =getTestItems(GaoyaShiyanItem.gygthdcz);
-                getShiyanData(sampleId,bean.getId());
+                getShiyanData(index,sampleId,bean.getId(),mDataCallback);
             } else if(index == 3){
-                TestItemsBean bean =getTestItems(GaoyaShiyanItem.gyjx);
-                getShiyanData(sampleId,bean.getId());
-            } else if(index == 4){
                 TestItemsBean bean =getTestItems(GaoyaShiyanItem.ctdyc);
-                getShiyanData(sampleId,bean.getId());
-            } else if(index == 5){
+                getShiyanData(index,sampleId,bean.getId(),mDataCallback);
+            } else if(index == 4){
                 TestItemsBean bean =getTestItems(GaoyaShiyanItem.fhdj);
-                getShiyanData(sampleId,bean.getId());
-            } else if(index == 6){
+                getShiyanData(index,sampleId,bean.getId(),mDataCallback);
+            } else if(index == 5){
                 TestItemsBean bean =getTestItems(GaoyaShiyanItem.mfsyhwg);
-                getShiyanData(sampleId,bean.getId());
+                getShiyanData(index,sampleId,bean.getId(),mDataCallback);
             }
 
         }
@@ -559,7 +506,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
             json.put("sign",bean.getSign());
             json.put("experiment_name",bean.getName());
             for(int i = 0;i<results.size();i++){
-                json.put("d"+(i+1),results.get(i).getText().toString());
+                json.put(GaoyaShiyanItem.jxxsxxkqjjjc_data[i],results.get(i).getText().toString());
             }
             if(isChecked){
                 json.put("result","合格");
@@ -583,7 +530,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
             json.put("sign",bean.getSign());
             json.put("experiment_name",bean.getName());
             for(int i = 0;i<results.size();i++){
-                json.put("d"+(i+1),results.get(i).getText().toString());
+                json.put(GaoyaShiyanItem.dqls_data[i],results.get(i).getText().toString());
             }
             if(isChecked){
                 json.put("result","合格");
@@ -607,7 +554,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
             json.put("sign",bean.getSign());
             json.put("experiment_name",bean.getName());
             for(int i = 0;i<results.size();i++){
-                json.put("d"+(i+1),results.get(i).getText().toString());
+                json.put(GaoyaShiyanItem.gygthdcz_data[i],results.get(i).getText().toString());
             }
             if(isChecked){
                 json.put("result","合格");
@@ -622,16 +569,8 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
     }
 
     private void saveShiyanData3(ArrayList<EditText> results,boolean isChecked ){
-        String[] leftheader = {"合闸电压低于额定30%，操作5次可靠不动作"
-                ,"合闸电压85%~110%范围内操作5次可靠动作"
-                ,"分闸电压低于额定30%，操作5次可靠不动作"
-                ,"分闸电压65%~110%范围内操作5次可靠动作"
-                ,"额定操作电压下操作5次，可靠动作"
-                ,"人力操作5次，可靠动作"
-                ,"额定操作电压“分-0.3-合分”，操作5次可靠动作"
-                ,"储能电机85%和110%操作电压，操作5次储能可靠动作"};
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems(GaoyaShiyanItem.gyjx);
+        TestItemsBean bean =getTestItems(GaoyaShiyanItem.ctdyc);
         JSONObject json = new JSONObject();
         try {
             json.put("sample",activity.dispatchBean.getSampleId());
@@ -639,8 +578,7 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
             json.put("sign",bean.getSign());
             json.put("experiment_name",bean.getName());
             for(int i = 0;i<results.size();i++){
-                json.put("res"+(i+1),results.get(i).getText().toString());
-                json.put("yq"+(i+1),leftheader[i]);
+                json.put(GaoyaShiyanItem.ctdyc_data[i],results.get(i).getText().toString());
             }
             if(isChecked){
                 json.put("result","合格");
@@ -656,15 +594,17 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
     private void saveShiyanData4(ArrayList<EditText> results,boolean isChecked ){
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems(GaoyaShiyanItem.ctdyc);
+        TestItemsBean bean =getTestItems(GaoyaShiyanItem.fhdj);
         JSONObject json = new JSONObject();
         try {
             json.put("sample",activity.dispatchBean.getSampleId());
             json.put("experiment",bean.getId());
             json.put("sign",bean.getSign());
             json.put("experiment_name",bean.getName());
-            for(int i = 0;i<results.size();i++){
-                json.put("d"+(i+1),results.get(i).getText().toString());
+            for(int i = 0;i<results.size() -1;i++){
+                json.put(GaoyaShiyanItem.fhdj_data[i],results.get(i).getText().toString());
+                i++;
+                json.put(GaoyaShiyanItem.fhdj_data[i],results.get(i).getText().toString());
             }
             if(isChecked){
                 json.put("result","合格");
@@ -680,31 +620,6 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
 
     private void saveShiyanData5(ArrayList<EditText> results,boolean isChecked ){
         DoTaskActivity activity = (DoTaskActivity) getActivity();
-        TestItemsBean bean =getTestItems(GaoyaShiyanItem.fhdj);
-        JSONObject json = new JSONObject();
-        try {
-            json.put("sample",activity.dispatchBean.getSampleId());
-            json.put("experiment",bean.getId());
-            json.put("sign",bean.getSign());
-            json.put("experiment_name",bean.getName());
-            for(int i = 0;i<results.size() -1;i=i+2){
-                json.put("ff"+(i/2+1),results.get(i).getText().toString());
-                json.put("res"+((i/2)+1),results.get(i).getText().toString());
-            }
-            if(isChecked){
-                json.put("result","合格");
-            } else {
-                json.put("result","不合格");
-            }
-            Log.e(TAG,"result "+json.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        saveShiyanData(json.toString());
-    }
-
-    private void saveShiyanData6(ArrayList<EditText> results,boolean isChecked ){
-        DoTaskActivity activity = (DoTaskActivity) getActivity();
         TestItemsBean bean =getTestItems(GaoyaShiyanItem.mfsyhwg);
         JSONObject json = new JSONObject();
         try {
@@ -712,13 +627,11 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
             json.put("experiment",bean.getId());
             json.put("sign",bean.getSign());
             json.put("experiment_name",bean.getName());
-            for(int i = 0;i<results.size();i++){
-                json.put("d"+(i+1),results.get(i).getText().toString());
-            }
-            json.put("qtxz",results.get(0).getText().toString());
-            json.put("qyl",results.get(1).getText().toString());
-            json.put("hyl",results.get(2).getText().toString());
-            json.put("tj",results.get(3).getText().toString());
+
+            json.put(GaoyaShiyanItem.mfsyhwg_data[0],results.get(0).getText().toString());
+            json.put(GaoyaShiyanItem.mfsyhwg_data[1],results.get(1).getText().toString());
+            json.put(GaoyaShiyanItem.mfsyhwg_data[2],results.get(2).getText().toString());
+            json.put(GaoyaShiyanItem.mfsyhwg_data[3],results.get(3).getText().toString());
             if(isChecked){
                 json.put("result","合格");
             } else {
@@ -731,7 +644,150 @@ public class GaoYaYibanJianceIndex1 extends BaseFragment implements View.OnClick
         saveShiyanData(json.toString());
     }
 
-    private void updateShiyanData(int index){
+    HttpListener<String> mDataCallback = new HttpListener<String>() {
+        @Override
+        public void onSucceed(int what, Response<String> response) {
+            try {
+                JSONObject json = null;
+                json = new JSONObject(response.get());
+                String msg = json.getString("msg");
+                String result = json.getString("data");
+                Log.e(TAG,"mDataCallback result "+response.get().toString());
+                if(what == 0){
+                    updateShiyanData(result);
+                } else if(what == 1){
+                    updateShiyanData1(result);
+                } else if(what == 2){
+                    updateShiyanData2(result);
+                } else if(what == 3){
+                    updateShiyanData3(result);
+                } else if(what == 4){
+                    updateShiyanData4(result);
+                } else if(what == 5){
+                    updateShiyanData5(result);
+                }
+            }catch (Exception e){}
+        }
 
+        @Override
+        public void onFailed(int what, Response<String> response) {
+
+        }
+    };
+    private void updateShiyanData(String result){
+        int index = 0;
+        ArrayList<EditText> results = mViewList.get(index).getShiYanData();
+        CheckBox checkBox = mViewList.get(index).getResult();
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            for(int i = 0;i<GaoyaShiyanItem.jxxsxxkqjjjc_data.length;i++){
+                String data = jsonObject.getString(GaoyaShiyanItem.jxxsxxkqjjjc_data[i]);
+                results.get(i).requestFocus();
+                results.get(i).setText(data);
+            }
+            String r = jsonObject.getString("result");
+            if(!TextUtils.isEmpty(r) && "合格".equals(r)){
+                checkBox.setChecked(true);
+            } else {
+                checkBox.setChecked(false);
+            }
+        }catch (Exception e){}
     }
+    private void updateShiyanData1(String result){
+        int index = 1;
+        ArrayList<EditText> results = mViewList.get(index).getShiYanData();
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            for(int i = 0;i<GaoyaShiyanItem.dqls_data.length;i++){
+                String data = jsonObject.getString(GaoyaShiyanItem.dqls_data[i]);
+                results.get(i).requestFocus();
+                results.get(i).setText(data);
+            }
+            CheckBox checkBox = mViewList.get(index).getResult();
+            String r = jsonObject.getString("result");
+            if(!TextUtils.isEmpty(r) && "合格".equals(r)){
+                checkBox.setChecked(true);
+            } else {
+                checkBox.setChecked(false);
+            }
+        }catch (Exception e){}
+    }
+    private void updateShiyanData2(String result){
+        int index = 2;
+        ArrayList<EditText> results = mViewList.get(index).getShiYanData();
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            for(int i = 0;i<GaoyaShiyanItem.gygthdcz_data.length;i++){
+                String data = jsonObject.getString(GaoyaShiyanItem.gygthdcz_data[i]);
+                results.get(i).requestFocus();
+                results.get(i).setText(data);
+            }
+            CheckBox checkBox = mViewList.get(index).getResult();
+            String r = jsonObject.getString("result");
+            if(!TextUtils.isEmpty(r) && "合格".equals(r)){
+                checkBox.setChecked(true);
+            } else {
+                checkBox.setChecked(false);
+            }
+        }catch (Exception e){}
+    }
+
+    private void updateShiyanData3(String result){
+        int index = 3;
+        ArrayList<EditText> results = mViewList.get(index).getShiYanData();
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            for(int i = 0;i<GaoyaShiyanItem.ctdyc_data.length;i++){
+                String data = jsonObject.getString(GaoyaShiyanItem.ctdyc_data[i]);
+                results.get(i).requestFocus();
+                results.get(i).setText(data);
+            }
+            CheckBox checkBox = mViewList.get(index).getResult();
+            String r = jsonObject.getString("result");
+            if(!TextUtils.isEmpty(r) && "合格".equals(r)){
+                checkBox.setChecked(true);
+            } else {
+                checkBox.setChecked(false);
+            }
+        }catch (Exception e){}
+    }
+    private void updateShiyanData4(String result){
+        int index = 4;
+        ArrayList<EditText> results = mViewList.get(index).getShiYanData();
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            for(int i = 0;i<GaoyaShiyanItem.fhdj_data.length;i++){
+                String data = jsonObject.getString(GaoyaShiyanItem.fhdj_data[i]);
+                results.get(i).requestFocus();
+                results.get(i).setText(data);
+            }
+            CheckBox checkBox = mViewList.get(index).getResult();
+            String r = jsonObject.getString("result");
+            if(!TextUtils.isEmpty(r) && "合格".equals(r)){
+                checkBox.setChecked(true);
+            } else {
+                checkBox.setChecked(false);
+            }
+        }catch (Exception e){}
+    }
+    private void updateShiyanData5(String result){
+        int index = 5;
+        ArrayList<EditText> results = mViewList.get(index).getShiYanData();
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            for(int i = 0;i<GaoyaShiyanItem.mfsyhwg_data.length;i++){
+                String data = jsonObject.getString(GaoyaShiyanItem.mfsyhwg_data[i]);
+                results.get(i).requestFocus();
+                results.get(i).setText(data);
+            }
+            CheckBox checkBox = mViewList.get(index).getResult();
+            String r = jsonObject.getString("result");
+            if(!TextUtils.isEmpty(r) && "合格".equals(r)){
+                checkBox.setChecked(true);
+            } else {
+                checkBox.setChecked(false);
+            }
+        }catch (Exception e){}
+    }
+
 }

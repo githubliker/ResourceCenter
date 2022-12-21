@@ -17,116 +17,44 @@
 
 
             <LinearLayout
+                android:id="@+id/bottom_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="40dp"
                 android:orientation="horizontal">
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="结论"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#111"
+                    android:textSize="20sp" />
+                <CheckBox
+                    android:id="@+id/test_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="结论"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"
-                            android:textColor="#111"
-                            android:textSize="20sp" />
-                        <RadioGroup
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="10dp"
-                            android:gravity="left"
-                            android:orientation="horizontal">
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:checked="false"
-                                android:text="合格" />
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:checked="true"
-                                android:text="不合格" />
-                        </RadioGroup>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:text="备注:"
-                            android:textColor="#111"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/remark"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_weight="1"
-                            android:enabled="false"
-                            android:background="@null"
-                            android:minHeight="50dp"/>
-
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
+                    android:text="合格"/>
+                <Button
+                    android:id="@+id/test_refresh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center"
-                        android:background="@drawable/login_commit_shape"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:paddingLeft="30dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="30dp"
-                        android:paddingBottom="10dp"
-                        android:text="保存"
-                        android:textColor="#111"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center"
-                        android:background="@drawable/login_commit_shape"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="20dp"
-                        android:paddingLeft="30dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="30dp"
-                        android:paddingBottom="10dp"
-                        android:text="刷新"
-                        android:textColor="#111"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="刷新" />
+                <Button
+                    android:id="@+id/test_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:text="保存" />
 
             </LinearLayout>
         </LinearLayout>

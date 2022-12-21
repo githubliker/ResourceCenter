@@ -2,8 +2,11 @@ package com.surface.resourcecenter.ui.shiyan.nativeData.diyagui;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -12,8 +15,16 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import com.surface.resourcecenter.R;
+import com.surface.resourcecenter.data.network.HttpListener;
 import com.surface.resourcecenter.ui.BaseFragment;
+import com.surface.resourcecenter.ui.sample.bean.TestItemsBean;
+import com.surface.resourcecenter.ui.shiyan.DoTaskActivity;
 import com.surface.resourcecenter.ui.shiyan.nativeData.GridLayoutBean;
+import com.surface.resourcecenter.ui.shiyan.nativeData.gaoyagui.GaoyaShiyanItem;
+import com.yanzhenjie.nohttp.rest.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +41,8 @@ public class Diyadianjifanghu extends BaseFragment implements View.OnClickListen
 
     private List<GridLayoutBean> mViewList = new ArrayList<>();
     private LinearLayout mFatherLayout;
+    private CheckBox mTestResult;
+    private Button mRefresh,mSave;
     private String[] gridHeader = {"电击防护和保护电路完整性"};
     public Diyadianjifanghu(){
 
@@ -44,7 +57,11 @@ public class Diyadianjifanghu extends BaseFragment implements View.OnClickListen
     @Override
     public void init(View view) {
         mFatherLayout = view.findViewById(R.id.grid_father);
-
+        mTestResult = view.findViewById(R.id.test_result);
+        mRefresh = view.findViewById(R.id.test_refresh);
+        mRefresh.setOnClickListener(this);
+        mSave = view.findViewById(R.id.test_save);
+        mSave.setOnClickListener(this);
         initView();
         initGridLayout();
     }
@@ -88,6 +105,7 @@ public class Diyadianjifanghu extends BaseFragment implements View.OnClickListen
         int RowNum = leftheader.length+1;
         mViewList.get(0).getGridLayout().setColumnCount(ColumnNum);
         mViewList.get(0).getGridLayout().setRowCount(RowNum);
+        ArrayList<EditText> datas = new ArrayList<>();
         for(int m = 0 ;m<RowNum;m++){
             for(int i = 0;i<ColumnNum;i++){
                 EditText editText = new EditText(getContext());
@@ -100,6 +118,8 @@ public class Diyadianjifanghu extends BaseFragment implements View.OnClickListen
                 } else if(i == 0){
                     editText.setText(leftheader[m-1]);
                     editText.setKeyListener(null);
+                } else {
+                    datas.add(editText);
                 }
                 editText.setPadding(20,20,20,20);
 
@@ -127,55 +147,89 @@ public class Diyadianjifanghu extends BaseFragment implements View.OnClickListen
                 mViewList.get(0).getGridLayout().addView(editText,params);
             }
         }
-
+        mViewList.get(0).setShiYanData(datas);
     }
-
-    private void initGridLayout2(){
-        String[] header = {"检测项目及检验要求","观察结果"};
-        String[] leftheader = {"用直径为 1.0 mm的试验棒，试验用力为（1.0±0.1）N进行试验，试具不得进入壳内。","防止溅水，向外壳各方面溅水应无有害影响。"};
-        int ColumnNum = header.length;
-        int RowNum = leftheader.length+1;
-        mViewList.get(2).getGridLayout().setColumnCount(ColumnNum);
-        mViewList.get(2).getGridLayout().setRowCount(RowNum);
-        for(int m = 0 ;m<RowNum;m++){
-            for(int i = 0;i<ColumnNum;i++){
-                EditText editText = new EditText(getContext());
-                editText.setTextSize(14);
-                editText.setBackgroundResource(R.drawable.chart_item_shape);
-                editText.setGravity(Gravity.CENTER);
-                if(m == 0){
-                    editText.setText(header[i]);
-                    editText.setKeyListener(null);
-                } else if(i == 0){
-                    editText.setText(leftheader[m-1]);
-                    editText.setKeyListener(null);
-                }
-                editText.setPadding(20,20,20,20);
-
-                GridLayout.Spec rowSpec;
-                GridLayout.Spec columnSpec;
-
-                //表示起始位置为m，占据1行
-                rowSpec=GridLayout.spec(m, 1, GridLayout.FILL);
-                if(i  == ColumnNum -1){
-                    //表示起始位置为i，占据1列
-                    columnSpec=GridLayout.spec(i, 1,0.25f);
-                } else {
-                    //表示起始位置为i，占据1列
-                    columnSpec=GridLayout.spec(i, 1, 1.75f);
-                }
-                GridLayout.LayoutParams params=new GridLayout.LayoutParams(rowSpec, columnSpec);
-                mViewList.get(2).getGridLayout().addView(editText,params);
-            }
-
-
-        }
-
-    }
-
     @Override
     public void onClick(View v) {
-//        Router.launchRender3DActivity(getContext(),new Bundle());
-//            ToastUtils.show("视频正在上传中。。。");
+        switch (v.getId()){
+            case R.id.test_refresh:
+                DoTaskActivity activity = (DoTaskActivity) getActivity();
+                String sampleId = activity.dispatchBean.getSampleId();
+                TestItemsBean bean =getTestItems(DiyaShiyanItem.dydjfhbhdl);
+                getShiyanData(0,sampleId,bean.getId(),mDataCallback);
+                break;
+            case R.id.test_save:
+                saveShiyanData(mViewList.get(0).getShiYanData(),mTestResult.isChecked());
+                break;
+        }
+    }
+
+    private void saveShiyanData(ArrayList<EditText> results,boolean isChecked){
+        DoTaskActivity activity = (DoTaskActivity) getActivity();
+        TestItemsBean bean =getTestItems(DiyaShiyanItem.dydjfhbhdl);
+        JSONObject json = new JSONObject();
+        try {
+            json.put("sample",activity.dispatchBean.getSampleId());
+            json.put("experiment",bean.getId());
+            json.put("sign",bean.getSign());
+            json.put("experiment_name",bean.getName());
+            if(!TextUtils.isEmpty(resultId)){
+                json.put("id",resultId);
+            }
+            for(int i = 0;i<results.size();i++){
+                json.put(DiyaShiyanItem.getDydjfhbhdl_data()[i],results.get(i).getText().toString());
+            }
+            if(isChecked){
+                json.put("result","合格");
+            } else {
+                json.put("result","不合格");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        saveShiyanData(json.toString());
+    }
+
+    HttpListener<String> mDataCallback = new HttpListener<String>() {
+        @Override
+        public void onSucceed(int what, Response<String> response) {
+            try {
+                JSONObject json = null;
+                json = new JSONObject(response.get());
+                String msg = json.getString("msg");
+                String result = json.getString("data");
+//                Log.e(TAG,"mDataCallback result "+response.get().toString());
+                updateShiyanData(result);
+
+            }catch (Exception e){}
+        }
+
+        @Override
+        public void onFailed(int what, Response<String> response) {
+
+        }
+    };
+    private String resultId = "";
+    private void updateShiyanData(String result){
+        mSave.setEnabled(true);
+        int index = 0;
+        ArrayList<EditText> results = mViewList.get(index).getShiYanData();
+
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            resultId = jsonObject.getString("id");
+            for(int i = 0;i<DiyaShiyanItem.getDydjfhbhdl_data().length;i++){
+                String data = jsonObject.getString(DiyaShiyanItem.getDydjfhbhdl_data()[i]);
+                results.get(i).requestFocus();
+                results.get(i).setText(data);
+            }
+            String r = jsonObject.getString("result");
+            if(!TextUtils.isEmpty(r) && "合格".equals(r)){
+                mTestResult.setChecked(true);
+            } else {
+                mTestResult.setChecked(false);
+            }
+        }catch (Exception e){}
     }
 }
+
